@@ -115,6 +115,17 @@ const Products: React.FC = () => {
     }
   };
 
+  // Reset currentPage to 1 whenever filters change
+  const prevFilterKeyRef = useRef('');
+  const currentFilterKey = `${[...selectedCategorySlugs].sort().join(',')}|${selectedFilter || ''}|${priceRange.join('-')}|${searchTerm}`;
+
+  useEffect(() => {
+    if (prevFilterKeyRef.current !== '' && prevFilterKeyRef.current !== currentFilterKey) {
+      setCurrentPage(1);
+    }
+    prevFilterKeyRef.current = currentFilterKey;
+  }, [currentFilterKey]);
+
   useEffect(() => {
     // Prevent double request when URL params are being synchronized to Redux state
     const isSyncingFilter = (filterParam ?? null) !== (selectedFilter ?? null);
@@ -150,12 +161,14 @@ const Products: React.FC = () => {
         const minPrice = priceRange[0] > 0 ? priceRange[0] : undefined;
         const maxPrice = priceRange[1] > 0 ? priceRange[1] : undefined;
 
+        const targetPage = (prevFilterKeyRef.current !== currentFilterKey && prevFilterKeyRef.current !== '') ? 1 : currentPage;
+
         const response = await ApiClient.shop.getProductsByFilter(
           filterString,
           minPrice,
           maxPrice,
           searchTerm || undefined,
-          currentPage
+          targetPage
         );
 
         const responseData = response.data?.data;

@@ -190,7 +190,16 @@ class ShopPageRepository
 
         $industrialCategories = $industrialCategoriesQuery->orderBy('name')->get();
 
-        $products = $query->paginate(15);
+        $perPage = 15;
+        $requestedPage = (int) request('page', 1);
+        $total = (clone $query)->count();
+        $lastPage = max((int) ceil($total / $perPage), 1);
+
+        if ($requestedPage > $lastPage) {
+            $products = $query->paginate($perPage, ['*'], 'page', 1);
+        } else {
+            $products = $query->paginate($perPage);
+        }
 
         return [
             'products' => $products,
