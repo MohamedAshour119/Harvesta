@@ -26,6 +26,38 @@ import arShowProduct from './locales/ar/showProduct.json';
 import arCheckout from './locales/ar/checkout.json';
 import arProfile from './locales/ar/profile.json';
 
+// Helper function to set document direction based on language
+export const setDocumentDirection = (language: string) => {
+  document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = language;
+};
+
+// Helper function to detect initial language from cookies / localStorage
+export const getInitialLanguage = (): string => {
+  if (typeof document === 'undefined') return 'ar';
+  
+  // 1. Check user_locale cookie
+  const match = document.cookie.match(/(?:^|;\s*)user_locale=([^;]+)/);
+  if (match && (match[1] === 'ar' || match[1] === 'en')) {
+    return match[1];
+  }
+  
+  // 2. Check localStorage
+  try {
+    const savedLocal = localStorage.getItem('i18nextLng') || localStorage.getItem('user_locale');
+    if (savedLocal && (savedLocal === 'ar' || savedLocal === 'en')) {
+      return savedLocal;
+    }
+  } catch (e) {
+    // LocalStorage access restricted
+  }
+  
+  return document.documentElement.lang || 'ar';
+};
+
+const initialLanguage = getInitialLanguage();
+setDocumentDirection(initialLanguage);
+
 // Initialize i18next
 i18n
   .use(LanguageDetector)
@@ -59,27 +91,19 @@ i18n
         profile: arProfile,
       },
     },
-    lng: document.documentElement.lang || 'ar', // Get language from HTML lang attribute
+    lng: initialLanguage,
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false, // React already escapes values
     },
     detection: {
-      order: ['htmlTag', 'localStorage', 'navigator'],
-      caches: ['localStorage'],
+      order: ['cookie', 'localStorage', 'htmlTag', 'navigator'],
+      lookupCookie: 'user_locale',
+      lookupLocalStorage: 'i18nextLng',
+      caches: ['localStorage', 'cookie'],
     },
     ns: ['common', 'home', 'auth', 'products', 'shop', 'cart', 'customProduct', 'dashboard', 'showProduct', 'checkout', 'profile'],
     defaultNS: 'common',
   });
 
 export default i18n;
-
-// Helper function to set document direction based on language
-export const setDocumentDirection = (language: string) => {
-  document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-  document.documentElement.lang = language;
-};
-
-// Set initial document direction
-const currentLanguage = document.documentElement.lang || 'ar';
-setDocumentDirection(currentLanguage);

@@ -35,20 +35,25 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
 
   const notRefreshInTheseRoutes = [''];
 
-  // Language switching function
+  // Language switching function - store preference and reload without intermediate DOM mutation
   const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
-    setDocumentDirection(language);
+    if (language === (i18n.language || 'ar')) return;
 
     const expires = new Date();
     expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
     document.cookie = `user_locale=${language};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
-    if (!notRefreshInTheseRoutes.includes(window.location.pathname)) {
-      window.location.reload();
+    
+    try {
+      localStorage.setItem('i18nextLng', language);
+      localStorage.setItem('user_locale', language);
+    } catch (e) {
+      // Storage access restricted
     }
+
+    window.location.reload();
   };
 
-  const currentLanguage = i18n.language || 'en';
+  const currentLanguage = i18n.language || 'ar';
 
   return (
     <footer className="w-full bg-white dark:bg-[#070A10] pt-12 pb-8 border-t border-gray-200 dark:border-slate-800/80 transition-colors duration-300">

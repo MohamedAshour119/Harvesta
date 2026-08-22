@@ -76,18 +76,21 @@ export default function Header({ setSidebarOpen, title }: HeaderProps) {
         }
     };
 
-    const notRefreshInTheseRoutes = ['/custom-product-request'];
-
     const changeLanguage = (language: string) => {
-        i18n.changeLanguage(language);
-        setDocumentDirection(language);
+        if (language === (i18n.language || 'ar')) return;
 
         const expires = new Date();
         expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
         document.cookie = `user_locale=${language};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
-        if (!notRefreshInTheseRoutes.includes(window.location.pathname)) {
-            window.location.reload();
+        
+        try {
+            localStorage.setItem('i18nextLng', language);
+            localStorage.setItem('user_locale', language);
+        } catch (e) {
+            // Storage access restricted
         }
+
+        window.location.reload();
     };
 
     return (
