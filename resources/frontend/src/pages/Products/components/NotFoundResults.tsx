@@ -31,7 +31,7 @@ export default function NotFoundResults({ searchQuery, className }: NotFoundResu
                     <p className="text-lg text-gray-600 dark:text-slate-400 mb-4">
                         {hasSearchQuery 
                             ? t('results.notFoundSubtitle') 
-                            : t('results.noFilterResultsSubtitle', { defaultValue: 'لم نتمكن من العثور على أي منتجات تطابق الفلاتر المحددة' })
+                            : t('results.noFilterResultsSubtitle')
                         }
                     </p>
 

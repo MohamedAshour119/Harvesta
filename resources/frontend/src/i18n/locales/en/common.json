@@ -150,7 +150,8 @@
   },
   "results": {
     "notFoundTitle": "No Products Found",
-    "notFoundSubtitle": "We couldn't find any products matching",
+    "notFoundSubtitle": "We couldn't find any products matching your search",
+    "noFilterResultsSubtitle": "We couldn't find any products matching the selected filters.",
     "tryAgain": "Try adjusting your search or filters to find what you're looking for.",
     "searchTipsTitle": "Search Tips",
     "tipGeneral": "Use more general terms",
