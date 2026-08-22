@@ -44,7 +44,7 @@ class SemanticSearchService
 
             $similarity = $this->cosineSimilarity($queryVector, $pe->vector);
 
-            if ($similarity >= 0.20) {
+            if ($similarity >= 0.45) {
                 $scored[] = [
                     'product' => $pe->product,
                     'score' => $similarity,
@@ -97,8 +97,7 @@ class SemanticSearchService
 
             $similarity = $this->cosineSimilarity($queryVector, $currentVector);
 
-            // Images usually need a slightly higher or different threshold
-            if ($similarity >= 0.25) { 
+            if ($similarity >= 0.45) { 
                 $scored[] = [
                     'product' => $ie->product,
                     'score' => $similarity,
