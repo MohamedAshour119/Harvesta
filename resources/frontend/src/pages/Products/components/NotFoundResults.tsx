@@ -3,12 +3,13 @@ import { FaSearch } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 interface NotFoundResultsProps {
-    searchQuery: string;
+    searchQuery?: string;
     className?: string;
 }
 
-export default function NotFoundResults({ searchQuery = "wireless headphones", className }: NotFoundResultsProps) {
+export default function NotFoundResults({ searchQuery, className }: NotFoundResultsProps) {
     const { t } = useTranslation('common');
+    const hasSearchQuery = Boolean(searchQuery && searchQuery.trim().length > 0);
 
     return (
         <div className={`flex justify-center items-center py-12 px-4 ${className || ''}`}>
@@ -28,13 +29,18 @@ export default function NotFoundResults({ searchQuery = "wireless headphones", c
                     </h1>
 
                     <p className="text-lg text-gray-600 dark:text-slate-400 mb-4">
-                        {t('results.notFoundSubtitle')}
+                        {hasSearchQuery 
+                            ? t('results.notFoundSubtitle') 
+                            : t('results.noFilterResultsSubtitle', { defaultValue: 'لم نتمكن من العثور على أي منتجات تطابق الفلاتر المحددة' })
+                        }
                     </p>
 
-                    <div className="inline-flex items-center gap-2 bg-white dark:bg-[#151D2C] px-4 py-2 rounded-full border border-gray-200 dark:border-slate-700 shadow-sm">
-                        <FaSearch className="w-4 h-4 text-gray-400 dark:text-slate-500" />
-                        <span className="font-semibold text-gray-800 dark:text-slate-200">"{searchQuery}"</span>
-                    </div>
+                    {hasSearchQuery && (
+                        <div className="inline-flex items-center gap-2 bg-white dark:bg-[#151D2C] px-4 py-2 rounded-full border border-gray-200 dark:border-slate-700 shadow-sm">
+                            <FaSearch className="w-4 h-4 text-gray-400 dark:text-slate-500" />
+                            <span className="font-semibold text-gray-800 dark:text-slate-200">"{searchQuery!.trim()}"</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
