@@ -136,44 +136,40 @@ const Products: React.FC = () => {
         let pagination: { current_page: number, last_page: number } = { current_page: 1, last_page: 1 };
         let industrialCategoriesFromResponse: any[] | undefined;
 
-        const filterParts: string[] = [];
+        const filterSegments: string[] = [];
 
-        // Add special filter if it exists
-        if (selectedFilter) {
-          filterParts.push(`filter:${selectedFilter}`);
-        }
-
-        // Add categories if they exist
         if (selectedCategorySlugs && selectedCategorySlugs.length > 0) {
-          filterParts.push(`categories:${selectedCategorySlugs.join(',')}`);
+          filterSegments.push(selectedCategorySlugs.join(','));
         }
 
-        // Add price range if set
-        if (priceRange[0] > 0 || priceRange[1] > 0) {
-          filterParts.push(`price_range:${priceRange[0]}-${priceRange[1]}`);
+        if (selectedFilter) {
+          filterSegments.push(selectedFilter);
         }
 
-        const filterQuery = filterParts.join(';');
+        const filterString = filterSegments.join('/');
+        const minPrice = priceRange[0] > 0 ? priceRange[0] : undefined;
+        const maxPrice = priceRange[1] > 0 ? priceRange[1] : undefined;
 
-        if (filterQuery) {
-          const response = await ApiClient.products.getProductsWithFilter(filterQuery, currentPage);
-          const responseData = response.data.data;
-          newProducts = responseData.data;
-          pagination = {
-            current_page: responseData.current_page,
-            last_page: responseData.last_page
-          };
-          industrialCategoriesFromResponse = responseData.industrial_categories;
-        } else {
-          const response = await ApiClient.products.getAllProducts(currentPage);
-          const responseData = response.data.data;
-          newProducts = responseData.data;
-          pagination = {
-            current_page: responseData.current_page,
-            last_page: responseData.last_page
-          };
-          industrialCategoriesFromResponse = responseData.industrial_categories;
-        }
+        const response = await ApiClient.shop.getProductsByFilter(
+          filterString,
+          minPrice,
+          maxPrice,
+          searchTerm || undefined,
+          currentPage
+        );
+
+        const responseData = response.data?.data;
+        
+        // Extract products safely from paginator or array response
+        const rawProducts = responseData?.products?.data || responseData?.products || responseData?.data || (Array.isArray(responseData) ? responseData : []);
+        newProducts = Array.isArray(rawProducts) ? rawProducts : [];
+
+        pagination = {
+          current_page: responseData?.products?.current_page || responseData?.pagination?.current_page || responseData?.current_page || 1,
+          last_page: responseData?.products?.last_page || responseData?.pagination?.last_page || responseData?.last_page || 1
+        };
+
+        industrialCategoriesFromResponse = responseData?.industrial_categories || responseData?.categories;
 
         if (industrialCategoriesFromResponse && industrialCategoriesFromResponse.length > 0) {
           dispatch(setCategories(industrialCategoriesFromResponse));
@@ -194,7 +190,7 @@ const Products: React.FC = () => {
     };
 
     fetchProducts();
-  }, [selectedCategorySlugs, selectedFilter, priceRange, dispatch, pathname, currentPage, categoryParam, filterParam]);
+  }, [selectedCategorySlugs, selectedFilter, priceRange, dispatch, pathname, currentPage, categoryParam, filterParam, searchTerm]);
 
   useEffect(() => {
     const handleLanguageChange = async () => {

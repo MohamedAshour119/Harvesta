@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCategory } from '../../../store/slices/filterSlice';
+import { toggleCategory, setCategories } from '../../../store/slices/filterSlice';
 import type { RootState } from '../../../store/store';
 import i18n from '../../../i18n';
 import { useTranslation } from 'react-i18next';
+import ApiClient from '../../../ApiClient';
 
 const CategoryFilter: React.FC = () => {
   const { t } = useTranslation(['shop']);
   const isRTL = i18n.language === 'ar';
   const dispatch = useDispatch();
   const categories = useSelector((state: RootState) => state.filter?.categories || []);
+
+  useEffect(() => {
+    if (categories.length === 0) {
+      ApiClient.industrialCategory.getIndustrialCategories()
+        .then((response) => {
+          const cats = response.data?.data;
+          if (cats && Array.isArray(cats) && cats.length > 0) {
+            dispatch(setCategories(cats));
+          }
+        })
+        .catch((err) => console.error('Error loading industrial categories:', err));
+    }
+  }, [categories.length, dispatch]);
 
   const handleCategoryToggle = (categorySlug: string) => {
     dispatch(toggleCategory(categorySlug));
@@ -51,7 +65,7 @@ const CategoryFilter: React.FC = () => {
                         >
                           <path
                             fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z"
                             clipRule="evenodd"
                           />
                         </svg>
