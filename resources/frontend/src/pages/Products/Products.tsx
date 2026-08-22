@@ -11,6 +11,7 @@ import FilterSection from './components/FilterSection';
 import ProductGrid from './components/ProductGrid';
 import { useLocation, useNavigate } from 'react-router-dom';
 import NotFoundResults from './components/NotFoundResults';
+import MaxWidthWrapper from '../../components/MaxWidthWrapper';
 
 const Products: React.FC = () => {
   const dispatch = useDispatch();
@@ -29,53 +30,55 @@ const Products: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  const searchParams = location.search;
-  const searchQuery = new URLSearchParams(searchParams).get('query');
-  const categoryParam = new URLSearchParams(searchParams).get('category');
-  const filterParam = new URLSearchParams(searchParams).get('filter');
 
+  // Extract query params directly from URL for bidirectional sync
+  const queryParams = new URLSearchParams(location.search);
+  const categoryParam = queryParams.get('category');
+  const filterParam = queryParams.get('filter');
+
+  // Sync state FROM URL on initial load and back/forward navigation
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const urlCategorySlugs = (params.get('category') ?? '')
-      .split(',')
-      .map((slug) => slug.trim())
-      .filter(Boolean);
-    const urlFilter = params.get('filter');
-
     if (isUpdatingUrlFromState.current) {
       isUpdatingUrlFromState.current = false;
       return;
     }
 
-    if (selectedCategorySlugs.join(',') !== urlCategorySlugs.join(',')) {
-      dispatch(setSelectedCategorySlugs(urlCategorySlugs));
+    const categoriesFromUrl = categoryParam
+      ? categoryParam.split(',').map((slug) => slug.trim()).filter(Boolean)
+      : [];
+
+    if (categoriesFromUrl.length > 0) {
+      dispatch(setSelectedCategorySlugs(categoriesFromUrl));
     }
 
-    if ((selectedFilter ?? null) !== (urlFilter ?? null)) {
-      dispatch(setSelectedSortFilter(urlFilter));
+    if (filterParam) {
+      dispatch(setSelectedSortFilter(filterParam));
     }
-  }, [location.search, dispatch]);
+  }, [categoryParam, filterParam, dispatch]);
 
+  // Sync state TO URL when Redux state changes
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const nextCategory = selectedCategorySlugs.length > 0 ? selectedCategorySlugs.join(',') : null;
-    const currentCategory = params.get('category');
-    const currentFilter = params.get('filter');
 
-    if (currentCategory === nextCategory && currentFilter === selectedFilter) {
-      return;
-    }
-
-    if (nextCategory) {
-      params.set('category', nextCategory);
+    // Update or delete 'category'
+    if (selectedCategorySlugs.length > 0) {
+      params.set('category', selectedCategorySlugs.join(','));
     } else {
       params.delete('category');
     }
 
+    // Update or delete 'filter'
     if (selectedFilter) {
       params.set('filter', selectedFilter);
     } else {
       params.delete('filter');
+    }
+
+    // Don't push identical URL
+    const currentParamsString = location.search.replace(/^\?/, '');
+    const newParamsString = params.toString();
+    if (currentParamsString === newParamsString) {
+      return;
     }
 
     isUpdatingUrlFromState.current = true;
@@ -112,8 +115,6 @@ const Products: React.FC = () => {
     }
   };
 
-
-
   useEffect(() => {
     // Prevent double request when URL params are being synchronized to Redux state
     const isSyncingFilter = (filterParam ?? null) !== (selectedFilter ?? null);
@@ -138,45 +139,55 @@ const Products: React.FC = () => {
         const filterParts: string[] = [];
 
         // Add special filter if it exists
-        if (selectedFilter && selectedFilter !== 'none') {
-            filterParts.push(selectedFilter);
+        if (selectedFilter) {
+          filterParts.push(`filter:${selectedFilter}`);
         }
 
-        if (selectedCategorySlugs.length > 0) {
-            filterParts.push(selectedCategorySlugs.join(','));
+        // Add categories if they exist
+        if (selectedCategorySlugs && selectedCategorySlugs.length > 0) {
+          filterParts.push(`categories:${selectedCategorySlugs.join(',')}`);
         }
 
-        const filterString = filterParts.join('/');
+        // Add price range if set
+        if (priceRange[0] > 0 || priceRange[1] > 0) {
+          filterParts.push(`price_range:${priceRange[0]}-${priceRange[1]}`);
+        }
 
-        const response = await ApiClient.shop.getProductsByFilter(
-          filterString,
-          priceRange[0],
-          priceRange[1],
-          searchQuery || '',
-          currentPage
-        );
+        const filterQuery = filterParts.join(';');
 
-        newProducts = response.data.data.products.data;
-        pagination.current_page = response.data.data.products.current_page;
-        pagination.last_page = response.data.data.products.last_page;
-        industrialCategoriesFromResponse = response.data.data.industrial_categories;
-
-        if (newProducts.length === 0) {
-          setShowNotFoundResults(true);
+        if (filterQuery) {
+          const response = await ApiClient.products.getProductsWithFilter(filterQuery, currentPage);
+          const responseData = response.data.data;
+          newProducts = responseData.data;
+          pagination = {
+            current_page: responseData.current_page,
+            last_page: responseData.last_page
+          };
+          industrialCategoriesFromResponse = responseData.industrial_categories;
         } else {
-          setShowNotFoundResults(false);
+          const response = await ApiClient.products.getAllProducts(currentPage);
+          const responseData = response.data.data;
+          newProducts = responseData.data;
+          pagination = {
+            current_page: responseData.current_page,
+            last_page: responseData.last_page
+          };
+          industrialCategoriesFromResponse = responseData.industrial_categories;
         }
-        setProducts(newProducts);
-        setCurrentPage(pagination.current_page);
-        setLastPage(pagination.last_page);
-        await updateProductLanguages(newProducts);
 
-        if (industrialCategoriesFromResponse) {
+        if (industrialCategoriesFromResponse && industrialCategoriesFromResponse.length > 0) {
           dispatch(setCategories(industrialCategoriesFromResponse));
         }
 
+        setProducts(newProducts);
+        setCurrentPage(pagination.current_page);
+        setLastPage(pagination.last_page);
+        setShowNotFoundResults(newProducts.length === 0);
+
       } catch (error) {
         console.error('Error fetching products:', error);
+        setProducts([]);
+        setShowNotFoundResults(true);
       } finally {
         setLoading(false);
       }
@@ -200,25 +211,27 @@ const Products: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen px-4 md:px-0">
-      <div className={`py-6 flex flex-col lg:flex-row gap-6 w-full`}>
-        <FilterSection />
-        {!showNotFoundResults ? (
-          <ProductGrid
-            products={products}
-            currentPage={currentPage}
-            lastPage={lastPage}
-            setCurrentPage={setCurrentPage}
-            setLastPage={setLastPage}
-            setProducts={setProducts}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            isLoading={loading}
-          />
-        ) : (
-          <NotFoundResults searchQuery={searchTerm} className="w-full" />
-        )}
-      </div>
+    <div className="min-h-screen flex flex-col justify-between w-full">
+      <MaxWidthWrapper className="flex-1 w-full px-4 md:px-0">
+        <div className="py-6 flex flex-col lg:flex-row gap-6 w-full">
+          <FilterSection />
+          {!showNotFoundResults ? (
+            <ProductGrid
+              products={products}
+              currentPage={currentPage}
+              lastPage={lastPage}
+              setCurrentPage={setCurrentPage}
+              setLastPage={setLastPage}
+              setProducts={setProducts}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              isLoading={loading}
+            />
+          ) : (
+            <NotFoundResults searchQuery={searchTerm} className="w-full" />
+          )}
+        </div>
+      </MaxWidthWrapper>
       <FooterSection />
     </div>
   );

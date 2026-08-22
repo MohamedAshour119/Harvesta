@@ -51,7 +51,7 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
   const currentLanguage = i18n.language || 'en';
 
   return (
-    <footer className="bg-white dark:bg-[#070A10] pt-12 pb-8 border-t border-gray-200 dark:border-slate-800/80 transition-colors duration-300">
+    <footer className="w-full bg-white dark:bg-[#070A10] pt-12 pb-8 border-t border-gray-200 dark:border-slate-800/80 transition-colors duration-300">
       <MaxWidthWrapper className={maxWidthWrapperClassName}>
         {/* Logo */}
         <div className="col-span-1">

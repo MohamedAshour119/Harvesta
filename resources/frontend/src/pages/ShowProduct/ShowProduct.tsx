@@ -516,120 +516,120 @@ export function ShowProduct() {
   }
 
   return (
-    <MaxWidthWrapper>
-      {/* Toast Notification */}
-      <div className={`fixed top-4 right-4 z-50 transform transition-all duration-500 ease-in-out ${addToCartState.showToast
-        ? 'translate-x-0 opacity-100'
-        : 'translate-x-full opacity-0'
-        }`}>
-        <div className="bg-white border-l-4 border-green-500 rounded-lg shadow-lg p-4 min-w-[300px]">
-          <div className="flex items-center">
-            <FaCheckCircle className="text-green-500 text-xl mr-3" />
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">{t('showProduct:actions.addedToCart')}</p>
-              <p className="text-xs text-gray-600 mt-1">{product?.name}</p>
+    <div className="min-h-screen flex flex-col justify-between w-full">
+      <MaxWidthWrapper className="flex-1 w-full">
+        {/* Toast Notification */}
+        <div className={`fixed top-4 right-4 z-50 transform transition-all duration-500 ease-in-out ${addToCartState.showToast
+          ? 'translate-x-0 opacity-100'
+          : 'translate-x-full opacity-0'
+          }`}>
+          <div className="bg-white border-l-4 border-green-500 rounded-lg shadow-lg p-4 min-w-[300px]">
+            <div className="flex items-center">
+              <FaCheckCircle className="text-green-500 text-xl mr-3" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-gray-900">{t('showProduct:actions.addedToCart')}</p>
+                <p className="text-xs text-gray-600 mt-1">{product?.name}</p>
+              </div>
+              <button
+                onClick={() => setAddToCartState(prev => ({ ...prev, showToast: false }))}
+                className="ml-4 text-gray-400 hover:text-gray-600"
+              >
+                <FaTimes />
+              </button>
             </div>
-            <button
-              onClick={() => setAddToCartState(prev => ({ ...prev, showToast: false }))}
-              className="ml-4 text-gray-400 hover:text-gray-600"
-            >
-              <FaTimes />
-            </button>
           </div>
         </div>
-      </div>
 
-      {/* Error Toast Notification */}
-      <div className={`fixed top-4 right-4 z-50 transform transition-all duration-500 ease-in-out ${addToCartState.errorToast
-        ? 'translate-x-0 opacity-100'
-        : 'translate-x-full opacity-0'
-        }`}>
-        <div className="bg-white border-l-4 border-red-500 rounded-lg shadow-lg p-4 min-w-[300px]">
-          <div className="flex items-center">
-            <FaExclamationCircle className="text-red-500 text-xl mr-3" />
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">{addToCartState.errorToast}</p>
+        {/* Error Toast Notification */}
+        <div className={`fixed top-4 right-4 z-50 transform transition-all duration-500 ease-in-out ${addToCartState.errorToast
+          ? 'translate-x-0 opacity-100'
+          : 'translate-x-full opacity-0'
+          }`}>
+          <div className="bg-white border-l-4 border-red-500 rounded-lg shadow-lg p-4 min-w-[300px]">
+            <div className="flex items-center">
+              <FaExclamationCircle className="text-red-500 text-xl mr-3" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-gray-900">{addToCartState.errorToast}</p>
+              </div>
+              <button
+                onClick={() => setAddToCartState(prev => ({ ...prev, errorToast: null }))}
+                className="ml-4 text-gray-400 hover:text-gray-600"
+              >
+                <FaTimes />
+              </button>
             </div>
-            <button
-              onClick={() => setAddToCartState(prev => ({ ...prev, errorToast: null }))}
-              className="ml-4 text-gray-400 hover:text-gray-600"
-            >
-              <FaTimes />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="py-8 space-y-16">
-        {/* Product Details Section */}
-        <div className="grid grid-cols-1 tablet-small:grid-cols-2 tablet-small:gap-6 lg:gap-12">
-          {/* Product Images */}
-          <ProductImageGallery
-            images={getDisplayImages()}
-            productName={product.name}
-            selectedImage={selectedImage}
-            onImageSelect={setSelectedImage}
-          />
-
-          {/* Product Info and Actions */}
-          <div className="space-y-8 relative">
-            <ProductInfo
-              product={product}
-              variantRatingData={getSelectedVariantRatingData()}
-              selectedVariant={selectedVariant}
-              onVariantSelect={handleVariantSelect}
-            />
-            <ProductActions
-              product={product}
-              selectedVariant={selectedVariant}
-              quantity={quantity}
-              isFavorite={!can_add_to_favorites}
-              isAgent={user?.is_agent || false}
-              agentCode={user?.code || ''}
-              onQuantityChange={setQuantity}
-              onAddToCart={handleAddToCart}
-              onBuyNow={handleBuyNow}
-              onToggleFavorite={handleToggleFavorite}
-              addToCartState={addToCartState}
-            />
           </div>
         </div>
 
-        {/* Customer Reviews Section */}
-        <CustomerReviews
-          variantRatingData={getSelectedVariantRatingData()}
-          productId={product?.id || null}
-        />
+        <div className="py-8 space-y-16">
+          {/* Product Details Section */}
+          <div className="grid grid-cols-1 tablet-small:grid-cols-2 tablet-small:gap-6 lg:gap-12">
+            {/* Product Images */}
+            <ProductImageGallery
+              images={getDisplayImages()}
+              productName={product.name}
+              selectedImage={selectedImage}
+              onImageSelect={setSelectedImage}
+            />
 
-        {/* AI Recommendations */}
-        <div className="mt-8">
-            {product && !isLoadingFbt && fbtRecommendations.length > 0 && (
-              <FrequentlyBoughtTogether 
-                mainProduct={product}
+            {/* Product Info and Actions */}
+            <div className="space-y-8 relative">
+              <ProductInfo
+                product={product}
+                variantRatingData={getSelectedVariantRatingData()}
                 selectedVariant={selectedVariant}
-                recommendations={fbtRecommendations}
+                onVariantSelect={handleVariantSelect}
               />
-            )}
-            
-            {(isLoadingRecommendations || productRecommendations.length > 0) && (
-              <RelatedProducts
-                title={t('common:recommendations.similar', 'Similar Products')}
-                relatedProducts={productRecommendations}
-                isLoading={isLoadingRecommendations}
+              <ProductActions
+                product={product}
+                selectedVariant={selectedVariant}
+                quantity={quantity}
+                isFavorite={!can_add_to_favorites}
+                isAgent={user?.is_agent || false}
+                agentCode={user?.code || ''}
+                onQuantityChange={setQuantity}
+                onAddToCart={handleAddToCart}
+                onBuyNow={handleBuyNow}
+                onToggleFavorite={handleToggleFavorite}
+                addToCartState={addToCartState}
               />
-            )}
-        </div>
+            </div>
+          </div>
 
-        {/* Related Products (Fallback if no AI recommendations) */}
-        {productRecommendations.length === 0 && !isLoadingRecommendations && similarProducts.length > 0 && (
-          <RelatedProducts
-            relatedProducts={similarProducts}
+          {/* Customer Reviews Section */}
+          <CustomerReviews
+            variantRatingData={getSelectedVariantRatingData()}
+            productId={product?.id || null}
           />
-        )}
 
-        {/* Footer */}
-        <FooterSection />
-      </div>
-    </MaxWidthWrapper>
+          {/* AI Recommendations */}
+          <div className="mt-8">
+              {product && !isLoadingFbt && fbtRecommendations.length > 0 && (
+                <FrequentlyBoughtTogether 
+                  mainProduct={product}
+                  selectedVariant={selectedVariant}
+                  recommendations={fbtRecommendations}
+                />
+              )}
+              
+              {(isLoadingRecommendations || productRecommendations.length > 0) && (
+                <RelatedProducts
+                  title={t('common:recommendations.similar', 'Similar Products')}
+                  relatedProducts={productRecommendations}
+                  isLoading={isLoadingRecommendations}
+                />
+              )}
+          </div>
+
+          {/* Related Products (Fallback if no AI recommendations) */}
+          {productRecommendations.length === 0 && !isLoadingRecommendations && similarProducts.length > 0 && (
+            <RelatedProducts
+              relatedProducts={similarProducts}
+            />
+          )}
+        </div>
+      </MaxWidthWrapper>
+      <FooterSection />
+    </div>
   );
 }

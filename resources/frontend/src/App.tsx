@@ -57,7 +57,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setIsShowCartSummary(false); // Default to false for now, as /shop is removed
+    setIsShowCartSummary(false);
   }, [pathname]);
 
   // Set the document direction based on the current language
@@ -80,66 +80,60 @@ function App() {
   const dashboardPathnames = ['/dashboard', '/dashboard/overview', '/dashboard/field-sales', '/dashboard/commission-bonus', '/dashboard/promotions-offers'];
 
   return (
-    <div className={`${isShowCartSummary ? 'flex justify-center flex-row-reverse' : ''}`}>
-      {/* {isShowCartSummary && <div className="hidden min-[1130px]:block relative z-50 h-svh bg-blue-500 2xl:min-w-[24rem] xl:min-w-[20rem] lg:min-w-[17rem]"></div>} */}
-      <div className="min-h-screen bg-white dark:bg-[#0B0F17] text-gray-900 dark:text-slate-100 flex justify-center transition-colors duration-300">
-        {!dashboardPathnames.includes(pathname) ? <MaxWidthWrapper className="!mx-0">
+    <div className={`min-h-screen bg-white dark:bg-[#0B0F17] text-gray-900 dark:text-slate-100 flex flex-col w-full transition-colors duration-300 ${isShowCartSummary ? 'flex-row-reverse' : ''}`}>
+      {!dashboardPathnames.includes(pathname) && (
+        <div className="w-full flex flex-col flex-1">
           <Header />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/all-products" element={<Products />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/returns" element={<Return />} />
-            <Route path="/products/:slug" element={<ShowProduct />} />
-            <Route element={<RequireNotAuthRoute />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-            </Route>
-            <Route element={<PreventAgentCheckoutRoute />}>
-              <Route path="/checkout" element={<CheckoutPage />} />
-            </Route>
-            <Route path="/show-results" element={<ShowResults />} />
-            <Route path="/custom-product-request" element={<CustomProductRequest />} />
-            <Route element={<RequireAuthRoute />}>
-              <Route path="/profile" element={<Profile />} />
-            </Route>
-          </Routes>
-        </MaxWidthWrapper> : <></>}
+          <main className="flex-1 w-full">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/all-products" element={<Products />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/about" element={<MaxWidthWrapper><About /></MaxWidthWrapper>} />
+              <Route path="/privacy" element={<MaxWidthWrapper><Privacy /></MaxWidthWrapper>} />
+              <Route path="/terms" element={<MaxWidthWrapper><Terms /></MaxWidthWrapper>} />
+              <Route path="/returns" element={<MaxWidthWrapper><Return /></MaxWidthWrapper>} />
+              <Route path="/products/:slug" element={<ShowProduct />} />
+              <Route element={<RequireNotAuthRoute />}>
+                <Route path="/login" element={<MaxWidthWrapper><Login /></MaxWidthWrapper>} />
+                <Route path="/signup" element={<MaxWidthWrapper><SignUp /></MaxWidthWrapper>} />
+                <Route path="/forgot-password" element={<MaxWidthWrapper><ForgotPassword /></MaxWidthWrapper>} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+              </Route>
+              <Route element={<PreventAgentCheckoutRoute />}>
+                <Route path="/checkout" element={<MaxWidthWrapper><CheckoutPage /></MaxWidthWrapper>} />
+              </Route>
+              <Route path="/show-results" element={<ShowResults />} />
+              <Route path="/custom-product-request" element={<MaxWidthWrapper><CustomProductRequest /></MaxWidthWrapper>} />
+              <Route element={<RequireAuthRoute />}>
+                <Route path="/profile" element={<MaxWidthWrapper><Profile /></MaxWidthWrapper>} />
+              </Route>
+            </Routes>
+          </main>
+        </div>
+      )}
 
-        {/* Add overlay for mobile when cart sidebar is open */}
-        {((isSmallScreen && isCartSummarySidebarOpen) || isHeaderSidebarOpen) && (
-          <div
-            className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
-            onClick={() => dispatch(setIsCartSummarySidebarOpen(false))}
-          />
-        )}
+      {/* Add overlay for mobile when cart sidebar is open */}
+      {((isSmallScreen && isCartSummarySidebarOpen) || isHeaderSidebarOpen) && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+          onClick={() => dispatch(setIsCartSummarySidebarOpen(false))}
+        />
+      )}
 
-        {/* {isShowCartSummary && (
-          <CartSummary />
-        )} */}
-        <Routes>
-          <Route element={<DashboardAuthRoute />}>
-            <Route path="/dashboard" element={<Overview />} />
-            <Route path="/dashboard/field-sales" element={<FieldSales />} />
-            <Route path="/dashboard/commission-bonus" element={<CommissionAndBonus />} />
-            <Route path="/dashboard/promotions-offers" element={<PromotionsAndOffers />} />
-            {/* <Route path="/dashboard/products-catalog" element={<ProductsCatalog />} />
-            <Route path="/dashboard/calendar" element={<Calendar />} /> */}
-          </Route>
-        </Routes>
+      <Routes>
+        <Route element={<DashboardAuthRoute />}>
+          <Route path="/dashboard" element={<Overview />} />
+          <Route path="/dashboard/field-sales" element={<FieldSales />} />
+          <Route path="/dashboard/commission-bonus" element={<CommissionAndBonus />} />
+          <Route path="/dashboard/promotions-offers" element={<PromotionsAndOffers />} />
+        </Route>
+      </Routes>
 
-
-        <FavoritesSidebar />
-        <TokenRefresher />
-        {!dashboardPathnames.includes(pathname) && <ChatWidget />}
-
-        <LoginPrompt />
-      </div>
+      <FavoritesSidebar />
+      <TokenRefresher />
+      {!dashboardPathnames.includes(pathname) && <ChatWidget />}
+      <LoginPrompt />
     </div>
   )
 }
