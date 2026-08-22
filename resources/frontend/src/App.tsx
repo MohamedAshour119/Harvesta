@@ -1,0 +1,147 @@
+import { Routes, Route, useLocation } from 'react-router-dom'
+import ChatWidget from './components/chatbot/ChatWidget'
+import './App.css'
+import HomePage from './pages/Home/HomePage'
+import CartPage from './pages/Cart/CartPage'
+import { useState, useEffect } from 'react'
+import Login from './pages/Login/Login'
+import MaxWidthWrapper from './components/MaxWidthWrapper'
+import SignUp from './pages/SignUp/SignUp'
+import { TokenRefresher } from './components/TokenRefresher'
+import CustomProductRequest from './pages/CustomProductRequest/CustomProductRequest'
+import FavoritesSidebar from './components/FavoritesSidebar'
+import Header from './components/Header'
+import LoginPrompt from './components/LoginPrompt'
+import i18n, { setDocumentDirection } from './i18n'
+import { Overview } from './pages/Dashboard/pages/Overview/Overview'
+import { FieldSales } from './pages/Dashboard/pages/FieldSales/FieldSales'
+import DashboardAuthRoute from './auth/DashboardAuthRoute'
+import CommissionAndBonus from './pages/Dashboard/pages/CommissionAndBonus/CommissionAndBonus'
+import { PromotionsAndOffers } from './pages/Dashboard/pages/PromotionsAndOffers/PromotionsAndOffers'
+import ShowResults from './pages/ShowResults/ShowResults'
+import Products from './pages/Products/Products'
+import { About } from './pages/About/About'
+import { Privacy } from './pages/Privacy/Privacy'
+import { Terms } from './pages/Terms/Terms'
+import { Return } from './pages/Return/Return'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from './store/store'
+import { setIsCartSummarySidebarOpen } from './store/slices/isCartSummarySidebarOpenSlice'
+import { ShowProduct } from './pages/ShowProduct/ShowProduct'
+import CheckoutPage from './pages/Checkout/CheckoutPage'
+import RequireNotAuthRoute from './auth/RequireNotAuthRoute'
+import RequireAuthRoute from './auth/RequireAuthRoute'
+import ForgotPassword from './pages/Login/ForgotPassword/ForgotPassword'
+import ResetPassword from './pages/Login/ResetPassword/ResetPassword'
+import Profile from './pages/Profile/Profile';
+import PreventAgentCheckoutRoute from './auth/PreventAgentCheckoutRoute';
+
+function App() {
+  const pathname = useLocation().pathname;
+
+  // State for cart summary visibility
+  const [isShowCartSummary, setIsShowCartSummary] = useState(false);
+  const isCartSummarySidebarOpen = useSelector((state: RootState) => state.isCartSummarySidebarOpen);
+  const isHeaderSidebarOpen = useSelector((state: RootState) => state.isHeaderSidebarOpen);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1130);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1130);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    setIsShowCartSummary(false); // Default to false for now, as /shop is removed
+  }, [pathname]);
+
+  // Set the document direction based on the current language
+  useEffect(() => {
+    setDocumentDirection(i18n.language);
+  }, [i18n.language]);
+
+  // Capture agent referral code from URL (?ref=CODE) and persist in sessionStorage
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const refCode = params.get('ref');
+    if (refCode) {
+      sessionStorage.setItem('agent_ref_code', refCode);
+      params.delete('ref');
+      const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [pathname]);
+
+  const dashboardPathnames = ['/dashboard', '/dashboard/overview', '/dashboard/field-sales', '/dashboard/commission-bonus', '/dashboard/promotions-offers'];
+
+  return (
+    <div className={`${isShowCartSummary ? 'flex justify-center flex-row-reverse' : ''}`}>
+      {/* {isShowCartSummary && <div className="hidden min-[1130px]:block relative z-50 h-svh bg-blue-500 2xl:min-w-[24rem] xl:min-w-[20rem] lg:min-w-[17rem]"></div>} */}
+      <div className="min-h-screen bg-white dark:bg-[#0B0F17] text-gray-900 dark:text-slate-100 flex justify-center transition-colors duration-300">
+        {!dashboardPathnames.includes(pathname) ? <MaxWidthWrapper className="!mx-0">
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/all-products" element={<Products />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/returns" element={<Return />} />
+            <Route path="/products/:slug" element={<ShowProduct />} />
+            <Route element={<RequireNotAuthRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+            </Route>
+            <Route element={<PreventAgentCheckoutRoute />}>
+              <Route path="/checkout" element={<CheckoutPage />} />
+            </Route>
+            <Route path="/show-results" element={<ShowResults />} />
+            <Route path="/custom-product-request" element={<CustomProductRequest />} />
+            <Route element={<RequireAuthRoute />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+          </Routes>
+        </MaxWidthWrapper> : <></>}
+
+        {/* Add overlay for mobile when cart sidebar is open */}
+        {((isSmallScreen && isCartSummarySidebarOpen) || isHeaderSidebarOpen) && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+            onClick={() => dispatch(setIsCartSummarySidebarOpen(false))}
+          />
+        )}
+
+        {/* {isShowCartSummary && (
+          <CartSummary />
+        )} */}
+        <Routes>
+          <Route element={<DashboardAuthRoute />}>
+            <Route path="/dashboard" element={<Overview />} />
+            <Route path="/dashboard/field-sales" element={<FieldSales />} />
+            <Route path="/dashboard/commission-bonus" element={<CommissionAndBonus />} />
+            <Route path="/dashboard/promotions-offers" element={<PromotionsAndOffers />} />
+            {/* <Route path="/dashboard/products-catalog" element={<ProductsCatalog />} />
+            <Route path="/dashboard/calendar" element={<Calendar />} /> */}
+          </Route>
+        </Routes>
+
+
+        <FavoritesSidebar />
+        <TokenRefresher />
+        {!dashboardPathnames.includes(pathname) && <ChatWidget />}
+
+        <LoginPrompt />
+      </div>
+    </div>
+  )
+}
+
+export default App

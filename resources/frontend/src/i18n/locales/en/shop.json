@@ -1,0 +1,22 @@
+{
+  "filterSection": {
+    "title": "Filters",
+    "clear": "Clear Filters",
+    "appliedFilters": "Applied",
+    "popular": "Most Popular",
+    "latest": "Newest First",
+    "categories": "Categories",
+    "priceRange": "Price Range",
+    "saleDeals": {
+      "title": "Sale-Deals",
+      "allDiscounts": "All Discounts",
+      "todayDeals": "Today's Deals"
+    },
+    "availability": {
+      "title": "Availability",
+      "inStock": "In Stock",
+      "outOfStock": "Out of Stock"
+    }
+  },
+  "searchPlaceholder": "...Search products"
+}

@@ -1,0 +1,24 @@
+{
+  "filterSection": {
+    "title": "فلاتر",
+    "clear": "مسح الفلاتر",
+    "appliedFilters": "فلاتر",
+    "popular": "الإكثر شيوعا",
+    "latest": "الأحدث",
+    "categories": "التصنيفات",
+    "priceRange": "نطاق السعر",
+    "saleDeals": {
+      "title": "العروض والتخفيضات",
+      "allDiscounts": "جميع الخصومات",
+      "todayDeals": "عروض اليوم"
+    },
+    "availability": {
+      "title": "التوفر",
+      "inStock": "متوفر",
+      "outOfStock": "غير متوفر"
+    },
+    "showFilters": "إظهار الفلاتر",
+    "hideFilters": "إخفاء الفلاتر"
+  },
+  "searchPlaceholder": "ابحث عن المنتجات..."
+}

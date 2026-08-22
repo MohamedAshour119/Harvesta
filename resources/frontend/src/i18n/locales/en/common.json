@@ -1,0 +1,174 @@
+{
+  "title": "CAIRO 3A",
+  "title_part_1": "CAIRO ",
+  "title_part_2": "3A",
+  "header": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "cart": "Cart",
+    "favorites": "Favorites",
+    "search": "Search",
+    "language": "Language",
+    "signedInAs": "Signed in as"
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact Us",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "returns": "Returns",
+    "categories": "Categories"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "addToCart": "Add to Cart",
+    "addToFavorites": "Add to Favorites",
+    "seeMore": "See More",
+    "viewAll": "View All",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "goToHome": "Go to Home",
+    "startNow": "Start Now",
+    "contactUs": "Contact Us",
+    "loading": "Loading..."
+  },
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "profile": "Profile",
+    "orders": "Orders",
+    "deals": "Deals",
+    "about": "About"
+  },
+  "languageNames": {
+    "en": "English",
+    "ar": "العربية"
+  },
+  "paymentStatus": {
+    "success": {
+      "title": "Order Confirmed!",
+      "message": "Your payment was successful. Your order has been confirmed and will be processed soon.",
+      "buttonText": "Continue Shopping"
+    },
+    "cancel": {
+      "title": "Payment Cancelled",
+      "message": "Your payment was cancelled. No charges have been made to your account.",
+      "buttonText": "Continue Shopping"
+    }
+  },
+  "categories": {
+    "altText": "{{category}} category",
+    "barbershops": "Barbershops",
+    "electronics": "Electronics",
+    "officeSupplies": "Office Supplies",
+    "supermarket": "Supermarket",
+    "carWash": "Car Wash / Workshop",
+    "cleaningSupplies": "Cleaning Supplies",
+    "healthBeauty": "Health & Beauty",
+    "toolsEquipment": "Tools & Equipment",
+    "cafesRestaurants": "Cafes & Restaurants",
+    "bakery": "Bakery",
+    "packaging": "Packaging"
+  },
+  "userProfile": {
+    "myProfile": "My Profile",
+    "myOrders": "My Orders",
+    "settings": "Settings",
+    "logout": "Logout",
+    "greeting": "Hi, {{name}}"
+  },
+  "about": {
+    "title": "About Us",
+    "vision": "Vision",
+    "visionText": "Reliable B2B sourcing with fast logistics and bulk friendly pricing"
+  },
+  "howItWorks": {
+    "title": "How it Works",
+    "subtitle": "Fast, easy ordering process designed for busy business owners",
+    "step1": "Choose your business category",
+    "step2": "Add products to cart (or request quote)",
+    "step3": "Choose payment (card, or installments)",
+    "step4": "Receive delivery within 1-3 business days"
+  },
+  "whyChooseUs": {
+    "title": "Why Choose Us",
+    "quality": {
+      "title": "Verified Quality & Trusted Stock",
+      "description": "Products sourced from reliable vendors. Quality checks ensure customer satisfaction"
+    },
+    "delivery": {
+      "title": "Fast Delivery Across KSA",
+      "description": "Warehouses and suppliers located in Riyadh and major cities. Most deliveries arrive in 1-3 days"
+    },
+    "prices": {
+      "title": "Bulk Prices for Businesses",
+      "description": "Get exclusive B2B rates with tiered discounts based on quantity and order frequency"
+    }
+  },
+  "faq": {
+    "title": "Got Questions? We've Got Answers",
+    "subtitle": "Find clear and helpful answers to frequently asked questions about Cairo 3A",
+    "button": "FAQs"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We're here to help. Connect with us through any of these channels",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "phone": "Phone"
+  },
+  "submitting": "Submitting...",
+  "returnHome": "Return to Home",
+  "favorites": {
+    "title": "Favorites",
+    "emptyList": "Your favorites list is empty",
+    "emptyMessage": "Items you favorite will appear here",
+    "continueShopping": "Continue Shopping"
+  },
+  "agentCheckoutBlocker": {
+    "title": "Purchase Restricted",
+    "message": "Agent accounts are not permitted to make purchases. Please contact your administrator if you need assistance."
+  },
+  "recommendations": {
+    "forYou": "Recommended for You",
+    "similar": "Similar Products"
+  },
+  "search": {
+    "semanticTitle": "You might also be looking for",
+    "aiPowered": "AI Powered",
+    "resultsFor": "Search results for: ",
+    "searching": "Searching...",
+    "analyzingImage": "Analyzing your image...",
+    "matchingPatterns": "Comparing visual patterns with thousands of products"
+  },
+  "results": {
+    "notFoundTitle": "No Products Found",
+    "notFoundSubtitle": "We couldn't find any products matching",
+    "tryAgain": "Try adjusting your search or filters to find what you're looking for.",
+    "searchTipsTitle": "Search Tips",
+    "tipGeneral": "Use more general terms",
+    "tipSpelling": "Check your spelling",
+    "tipFilters": "Try removing filters",
+    "requestTitle": "Can't find what you're looking for?",
+    "requestSubtitle": "Tell us what you need and we'll source it for you through our network of suppliers.",
+    "requestButton": "Request Custom Product"
+  },
+  "chatbot": {
+    "title": "Sales Assistant",
+    "placeholder": "Ask about products, pricing, shipping...",
+    "error": "Sorry, something went wrong. Please try again.",
+    "welcome": "Hi! 👋 I'm your AI sales assistant. Ask me about our products, pricing, minimum orders, or shipping details.",
+    "welcome_user": "Hi {{name}}! 👋 Welcome back. How can I help you today?",
+    "powered_by": "Powered by AI",
+    "send": "Send",
+    "close": "Close chat",
+    "open": "Chat with us"
+  }
+}

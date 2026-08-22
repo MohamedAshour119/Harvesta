@@ -1,0 +1,52 @@
+.fbt-image-card {
+    width: 140px;
+    height: 140px;
+    background: white;
+    border: 2px solid #f3f4f6;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fbt-image-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+    border-color: #B12C2E;
+}
+
+.fbt-image-card.inactive {
+    border-color: #e5e7eb;
+}
+
+.fbt-image-card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.fbt-plus-icon {
+    font-size: 28px;
+    color: #B12C2E;
+    font-weight: 500;
+}
+
+/* Custom checkbox color for the primary brand */
+.fbt-container input[type="checkbox"] {
+    accent-color: #B12C2E;
+}
+
+.fbt-container input[type="checkbox"]:checked {
+    background-color: #B12C2E;
+    border-color: #B12C2E;
+}
+
+@media (max-width: 640px) {
+    .fbt-images-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

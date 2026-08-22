@@ -1,0 +1,165 @@
+{
+  "productCard": {
+    "addToCart": "Add to Cart",
+    "addToFavorites": "Add to Favorites",
+    "viewDetails": "View Details",
+    "outOfStock": "Out of Stock",
+    "sale": "Sale",
+    "new": "New",
+    "discount": "Discount"
+  },
+  "productFilters": {
+    "title": "Filters",
+    "categories": "Categories",
+    "price": "Price",
+    "brands": "Brands",
+    "ratings": "Ratings",
+    "availability": "Availability",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "apply": "Apply Filters",
+    "clear": "Clear Filters",
+    "priceRange": "Price Range",
+    "sortBy": "Sort By",
+    "lowToHigh": "Price: Low to High",
+    "highToLow": "Price: High to Low",
+    "newest": "Newest First",
+    "popular": "Most Popular"
+  },
+  "productDetails": {
+    "description": "Description",
+    "specifications": "Specifications",
+    "reviews": "Reviews",
+    "relatedProducts": "Related Products",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "quantity": "Quantity",
+    "totalPrice": "Total Price",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "sku": "SKU",
+    "category": "Category",
+    "brand": "Brand",
+    "tags": "Tags",
+    "shareProduct": "Share Product"
+  },
+  "reviews": {
+    "customerReviews": "Customer Reviews",
+    "writeReview": "Write a Review",
+    "rating": "Rating",
+    "comment": "Comment",
+    "submitReview": "Submit Review",
+    "noReviews": "No reviews yet",
+    "beFirstToReview": "Be the first to review this product",
+    "ratingRequired": "Rating is required",
+    "commentRequired": "Comment is required"
+  },
+  "barbershops": {
+    "title": "Barbershops"
+  },
+  "supermarket": {
+    "title": "Supermarket",
+    "groceries": "Groceries",
+    "freshFood": "Fresh Food",
+    "beverages": "Beverages",
+    "snacks": "Snacks & Confectionery",
+    "dairy": "Dairy & Eggs",
+    "bakery": "Bakery"
+  },
+  "electronics": {
+    "title": "Electronics",
+    "phones": "Smartphones & Accessories",
+    "computers": "Computers & Laptops",
+    "tv": "TV & Home Entertainment",
+    "audio": "Audio & Headphones",
+    "cameras": "Cameras & Photography",
+    "gaming": "Gaming & Consoles"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "removeFromCart": "Remove from Cart",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites",
+    "addedOneToCart": "Added 1 item to cart",
+    "addedMultipleToCart": "Added {{count}} items to cart",
+    "increaseQuantity": "Increase quantity",
+    "decreaseQuantity": "Decrease quantity"
+  },
+  "howItWorks": {
+    "title": "How it Works",
+    "subtitle": "Fast, easy ordering process designed for busy business owners",
+    "startNow": "Start Now",
+    "step1": "Choose your business category",
+    "step2": "Add products to cart (or request quote)",
+    "step3": "Choose payment (card, or installments)",
+    "step4": "Receive delivery within 1–3 business days"
+  },
+  "whyChooseUs": {
+    "title": "Why Choose Us?",
+    "bulkPrices": {
+      "title": "Bulk Prices for Businesses",
+      "description": "Get exclusive B2B rates with tiered discounts based on quantity and order frequency"
+    },
+    "fastDelivery": {
+      "title": "Fast Delivery Across KSA",
+      "description": "Warehouses and suppliers located in Riyadh and major cities. Most deliveries arrive in 1-3 days"
+    },
+    "verifiedQuality": {
+      "title": "Verified Quality & Trusted Stock",
+      "description": "Products sourced from reliable vendors. Quality checks ensure customer satisfaction"
+    }
+  },
+  "faqs": {
+    "title": "Got Questions? We've Got Answers",
+    "subtitle": "Find clear and helpful answers to frequently asked questions about Qayedny.",
+    "buttonText": "Find More Answers",
+    "badge": "FAQs",
+    "questions": {
+      "businessRequirement": {
+        "question": "Do I need to be a business to buy from this platform?",
+        "answer": "No, you can purchase without verification. However, the platform is tailored for business customers."
+      },
+      "minimumOrder": {
+        "question": "Is there a minimum order value?",
+        "answer": "Yes, orders must meet a minimum value requirement that varies by category."
+      },
+      "productVariants": {
+        "question": "Can I order different sizes, colors, or versions of a product?",
+        "answer": "Yes, many products offer variations. You can select your preferred options during checkout."
+      },
+      "shippingTime": {
+        "question": "How long does shipping take?",
+        "answer": "Most deliveries arrive within 1-3 business days, depending on your location."
+      },
+      "paymentMethods": {
+        "question": "What payment methods are accepted?",
+        "answer": "We accept credit/debit cards, bank transfers, and installment plans for qualified business accounts."
+      },
+      "customProducts": {
+        "question": "Can I request a custom product not listed on the site?",
+        "answer": "Yes, you can submit custom product requests through our business support team."
+      }
+    }
+  },
+  "contactUs": {
+    "title": "Contact Us",
+    "subtitle": "We're here to help. Connect with us through any of these channels.",
+    "phone": {
+      "title": "Phone",
+      "number": "+966 50 000 0000"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "number": "+966 50 000 0000"
+    },
+    "email": {
+      "title": "Email",
+      "address": "support@qayedny.com"
+    }
+  },
+  "bundles": {
+    "offer_details": "Buy {{count}} pieces and get {{discount}}% off the total product price!",
+    "cart_warning": "Add {{count}} more pieces to activate {{discount}}% discount on this item!",
+    "cart_success": "Congratulations! {{discount}}% discount has been applied."
+  }
+}

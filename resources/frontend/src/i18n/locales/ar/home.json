@@ -1,0 +1,81 @@
+{
+  "hero": {
+    "title": "وجهتك للتسوق التجاري",
+    "subtitle": "تسوق من أفضل الموردين لاحتياجات عملك",
+    "searchPlaceholder": "ابحث عن منتجات أو فئات أو موردين",
+    "requestCustomButton": "طلب منتج مخصص",
+    "browseAllProducts": "تصفح جميع المنتجات",
+    "noProductsFound": "لا توجد منتجات مطابقة لـ: {{query}}",
+    "visualResultsTitle": "نتائج مطابقة بصرياً",
+    "visualResultsSubtitle": "تم العثور على منتجات مشابهة بناءً على صورتك",
+    "visualSearchTip": "بحث بالصورة",
+    "noVisualMatches": "لم يتم العثور على منتجات مماثلة بصرياً",
+    "visualSearchError": "خطأ في معالجة البحث بالصورة"
+  },
+  "categories": {
+    "title": "الفئات الشائعة",
+    "viewAll": "عرض جميع الفئات"
+  },
+  "products": {
+    "supermarket": {
+      "title": "منتجات السوبرماركت",
+      "viewAll": "عرض جميع منتجات السوبرماركت"
+    },
+    "electronics": {
+      "title": "منتجات إلكترونية",
+      "viewAll": "عرض جميع الإلكترونيات"
+    },
+    "featured": {
+      "title": "منتجات مميزة",
+      "viewAll": "عرض جميع المنتجات المميزة"
+    },
+    "new": {
+      "title": "وصل حديثاً",
+      "viewAll": "عرض جميع المنتجات الجديدة"
+    }
+  },
+  "banners": {
+    "discount": "خصم خاص",
+    "freeShipping": "شحن مجاني",
+    "bulkOffers": "عروض الشراء بالجملة"
+  },
+  "callToAction": {
+    "register": "سجل الآن",
+    "login": "تسجيل الدخول إلى حسابك",
+    "shopNow": "تسوق الآن"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "deals": "العروض",
+    "about": "عن الشركة"
+  },
+  "user": {
+    "greeting": "مرحباً، {{name}}"
+  },
+  "aboutUs": {
+    "AboutUs": "حول كايرو 3A",
+    "LoremipsumdolorsitametconsecteturTinciduntnonaliquamtristiquefacilisiInataliquamconsequatorcitinciduntamet": "كايرو 3A هي منصة تجارة إلكترونية رائدة بنظام B2B، متخصصة في المنتجات الصناعية ومبيعات الجملة بكميات كبيرة. نحن نربط الشركات مع كبار الموردين لضمان عملية توريد سلسة وموثوقة.",
+    "LoremipsumdolorsitametconsecteturTinciduntnonaliquamtristiquefacilisiInataliquamconsequatorcitinciduntametNullanullautultricesvitaeilibquamdiamsitMaurisliberofeugiatdiamsuspendisseTortortinciduntmaecenasnatoqueimperdietDuiegestasnetusipsumsedscelerisqueligulaquamclassparturient": "في كايرو 3A، نوفر نظاماً متكاملاً للتجارة الصناعية. تمنح منصتنا الشركات القدرة على تصفح آلاف المنتجات عالية الجودة، وإدارة طلبات الجملة بكفاءة، والاستفادة من شبكة مخصصة من وكلاء المبيعات المحترفين. مع التركيز على الموثوقية والخدمات اللوجستية، نساعد الشركات على النمو من خلال توفير أسعار شفافة، وتوافر المخزون، وعملية شراء مبسطة تبدأ من الطلب وحتى التسليم النهائي.",
+    "Vision": "رؤيتنا",
+    "ReliableB2Bsourcingwithfastlogisticsandbulkfriendlypricing": "أن نصبح المركز العالمي الأكثر موثوقية لتوريدات B2B الصناعية، مع تمكين الشركات من خلال حلول لوجستية متطورة وأسعار جملة تنافسية.",
+    "500HappyCustomers": "500 عميل سعيد",
+    "Business": "أعمال",
+    "ContactUs": "اتصل بنا",
+    "MessageSent": "تم إرسال الرسالة!",
+    "MessageSentDescription": "شكرًا لتواصلك معنا. سنعاود الاتصال بك قريبًا.",
+    "Close": "إغلاق",
+    "GetInTouch": "تواصل معنا",
+    "ContactFormDescription": "نود سماعك. أرسل لنا رسالة وسنرد في أقرب وقت ممكن.",
+    "name": "الإسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "message": "الرسالة",
+    "YourName": "اسمك",
+    "YourEmail": "بريدك الإلكتروني",
+    "YourPhoneOptional": "هاتفك (اختياري)",
+    "YourMessage": "رسالتك",
+    "Sending": "جارٍ الإرسال...",
+    "SendMessage": "إرسال الرسالة"
+  }
+}

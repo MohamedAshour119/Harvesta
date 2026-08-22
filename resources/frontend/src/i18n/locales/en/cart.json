@@ -1,0 +1,14 @@
+{
+  "showMore": "Show More",
+  "showLess": "Show Less",
+  "cart": "Cart",
+  "emptyCart": "Your cart is empty",
+  "orderSummary": "Order Summary",
+  "subtotal_one": "Subtotal ({{count}} item)",
+  "subtotal_other": "Subtotal ({{count}} items)",
+  "total": "Total",
+  "shippingFee": "Shipping Fee",
+  "proceedToCheckout": "Proceed to Checkout",
+  "all_categories": "All Categories",
+  "goToCart": "Go to Cart"
+}

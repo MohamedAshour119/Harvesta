@@ -1,0 +1,14 @@
+{
+  "showMore": "عرض المزيد",
+  "showLess": "عرض أقل",
+  "cart": "عربة التسوق",
+  "emptyCart": "عربة التسوق فارغة",
+  "orderSummary": "الطلب",
+  "subtotal_one": "إجمالى الفرعي ({{count}} منتج)",
+  "subtotal_other": "إجمالى الفرعي ({{count}} منتجات)",
+  "total": "إجمالى",
+  "shippingFee": "رسوم الشحن",
+  "proceedToCheckout": "إتمام الشراء",
+  "all_categories": "جميع الفئات",
+  "goToCart": "إذهب إلى عربة التسوق"
+}

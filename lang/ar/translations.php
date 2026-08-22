@@ -1,0 +1,47 @@
+<?php
+
+return [
+    "invalid-coupon"=> "كوبون غير صحيح.",
+    "coupon-expired"=> "هذا الكوبون تم انتهاء صلاحيته.",
+    "coupon-already-used"=> "هذا الكوبون تم استخدامه.",
+    "coupon-already-applied"=> "هذا الكوبون تم تطبيقه.",
+    "coupon-reached-limit"=> "هذا الكوبون وصل للحد الاقصى للإستخدام.",
+    "minimum-order-value"=> "الحد الادنى للطلب أقل من 50 جنيه مصري.",
+
+    // Warnings translations
+    "page-label" => "تحذيرات",
+    "low-stock-warnings" => "تحذيرات انخفاض المخزون",
+    "low-stock-summary" => ":count منتجات قاربت على النفاذ",
+    "running-low-suffix" => " على وشك النفاذ. الحالي: :quantity وحدات، الحد الأدنى: :threshold وحدات.",
+    "left" => ":count متبقي",
+    "low-stock" => "انخفاض المخزون",
+    "default-variant" => "النوع الافتراضي",
+    "current" => "الحالي:",
+    "threshold" => "الحد الأدنى:",
+    "units" => "وحدات",
+    "all-stock-levels-good" => "جميع مستويات المخزون جيدة",
+    "no-products-below-threshold" => "لا توجد منتجات حالياً دون الحد الأدنى للتنبيه الخاص بها. مستويات المخزون لديك صحية.",
+    "n_a" => "غير متوفر",
+    "total_delivered_commissions"=> "إجمالي العمولات المسلمة",
+    "total_pending_commissions"=> "إجمالي العمولات المعلقة",
+    "total_sales" => "إجمالي المبيعات",
+    "top_selling_category" => "الفئة الأكثر مبيعاً",
+    "orders" => "طلبات",
+    "currency"=> "جنيه مصري",
+    "orders_count"=> "إجمالي الطلبات",
+
+    'attributes' => [
+        'firstName' => 'الاسم الأول',
+        'lastName' => 'الاسم الأخير',
+        'phone' => 'رقم الهاتف',
+        'streetAddress' => 'عنوان الشارع',
+        'companyName' => 'اسم الشركة',
+        'city' => 'المدينة',
+        'province' => 'المحافظة',
+        'postalCode' => 'الرمز البريدي',
+        'country' => 'الدولة',
+        'email' => 'البريد الإلكتروني',
+        'products' => 'المنتجات',
+        'coupon' => 'الكوبون',
+    ],
+];

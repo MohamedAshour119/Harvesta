@@ -1,0 +1,269 @@
+{
+    "dashboard": {
+        "overview": "نظرة عامة",
+        "welcome": {
+            "title": "مرحباً، {{name}}",
+            "subtitle": "ركز على علاقات العملاء اليوم. العملاء المتكررون يحققون 70% من عمولتك!"
+        },
+        "sidebar": {
+            "overview": "نظرة عامة",
+            "fieldSales": "مبيعات ميدانية",
+            "commissionBonus": "العمولة والمكافآت",
+            "promotionsOffers": "العروض والخصومات",
+            "productsCatalog": "كتالوج المنتجات",
+            "calendar": "التقويم"
+        },
+        "header": {
+            "overview": "نظرة عامة",
+            "searchPlaceholder": "ابحث عن أي شيء...",
+            "english": "الإنجليزية",
+            "arabic": "العربية"
+        },
+        "metrics": {
+            "totalCommissionMonth": "إجمالي العمولة هذا الشهر",
+            "pendingCommissions": "العمولات المعلقة",
+            "commissionLastMonth": "العمولة (الشهر الماضي)",
+            "topCommissionSources": "أعلى مصادر العمولة",
+            "fromLastMonth": "من الشهر الماضي",
+            "waitingDelivery": "في انتظار تأكيدات تسليم الطلبات",
+            "paidDate": "تم الدفع في 30 أبريل 2025",
+            "paidOnDate": "تم الحصول على المكافأة في {{date}}",
+            "notPaidYet": "لم يتم الدفع بعد",
+            "carCleaningSupplies": "مستلزمات تنظيف السيارات"
+        },
+        "charts": {
+            "salesPerformance": "أداء المبيعات",
+            "yearly": "سنوي",
+            "emptyState": {
+                "badge": "مؤشر المبيعات",
+                "title": "لا توجد بيانات مبيعات لعرضها بعد",
+                "description": "عندما تبدأ الطلبات بالظهور، سيتحول هذا القسم إلى منحنى أداء حي يوضح الحركة الشهرية بشكل أوضح.",
+                "metric1Label": "العام الحالي",
+                "metric1Value": "بانتظار أول عملية بيع مسجلة",
+                "metric2Label": "حالة المخطط",
+                "metric2Value": "لا توجد حركة مرسومة حتى الآن",
+                "metric3Label": "التحديث القادم",
+                "metric3Value": "يتجدد تلقائياً بعد إضافة طلبات جديدة"
+            },
+            "categoriesEmptyState": {
+                "badge": "نبض الفئات",
+                "title": "لا توجد فئات متصدرة بعد",
+                "description": "عند بدء تسجيل المبيعات حسب الفئات، سيعرض هذا القسم الفئات التي تشهد أعلى نمو في الطلب.",
+                "footerLabel": "ما الذي سيظهر هنا",
+                "footerValue": "ستظهر الفئات الأكثر مبيعاً تلقائياً هنا"
+            },
+            "monthlyTargetProgress": "تقدم الهدف الشهري",
+            "target": "الهدف:",
+            "customerAcquisition": "اكتساب العملاء (شهري)",
+            "newClientsMonth": "عملاء جدد هذا الشهر",
+            "repeatBuyers": "المشترون المتكررون",
+            "conversionRate": "معدل التحويل",
+            "topSellingCategories": "الفئات الأكثر مبيعاً",
+            "mutualFund": "صندوق استثمار مشترك",
+            "stocks": "الأسهم",
+            "propertyInvestment": "الاستثمار العقاري",
+            "other": "أخرى"
+        },
+        "values": {
+            "egp": "جنيه مصري",
+            "sar6450": "6,450.00 جنيه مصري",
+            "sar1800": "1,800.00 جنيه مصري",
+            "sar5750": "5,750.00 جنيه مصري",
+            "sar1240": "1,240 جنيه مصري (35.9%)",
+            "65percent": "65%",
+            "7clients": "7",
+            "15buyers": "15",
+            "38percent": "38%",
+            "sar1000": "1,000 جنيه مصري",
+            "sar7250": "7,250 جنيه مصري"
+        },
+        "ordersTable": {
+            "recentOrders": "الطلبات الأخيرة",
+            "orderId": "رقم الطلب",
+            "customer": "العميل",
+            "category": "الفئة",
+            "status": "الحالة",
+            "date": "التاريخ",
+            "time": "الوقت",
+            "commission": "العمولة ({{commission}}%)",
+            "commissionText": "(جنيه مصري) العمولة",
+            "action": "الإجراء",
+            "statusOptions": {
+                "pending": "معلق",
+                "approved": "تمت الموافقة",
+                "shipped": "تم الشحن",
+                "rejected": "مرفوض",
+                "delivered": "تم التسليم",
+                "cancelled": "ملغي"
+            },
+            "empty": {
+                "title": "لا توجد طلبات حتى الآن",
+                "subtitle": "ستظهر طلباتك الأخيرة هنا بمجرد بدء العملاء في تقديم الطلبات. عُد لاحقاً لمتابعة نشاط مبيعاتك."
+            }
+        },
+        "commission": "عمولة",
+        "commissionAndBonus": {
+            "headerTitle": "العمولة والمكافأت",
+            "title": "نظرة عامة على العمولة",
+            "totalCommission": "إجمالي العمولة",
+            "pendingCommissions": "العمولات المعلقة",
+            "commissionLastMonth": "العمولة الشهر الماضي",
+            "topCategory": "أكثر تصنيف",
+            "BonusEarned": "المكافأة المكتسبة",
+            "target": "الهدف: {{target}}",
+            "weeklyCommission": "{{month}} - العمولة الأسبوعية",
+            "liveData": "بيانات من {{month}} 1st to today",
+            "monthlySummary": "ملخص الشهر",
+            "totalOrders": "إجمالي الطلبات",
+            "averageCommissions": "متوسط العمولات",
+            "highestCommission": "العمولة الأعلى",
+            "totalSalesValue": "إجمالي قيمة المبيعات",
+            "exportCSV": "تصدير كـ CSV",
+            "downloadChartAsCSV": "تحميل كـ CSV",
+            "commissionTimeline": "تتبع العمولات",
+            "downloading": "جاري التحميل...",
+            "noCommissionsTitle": "لا توجد عمولات حتى الآن",
+            "noCommissions": "ستظهر أرباح عمولتك هنا عندما تقوم بالمبيعات والإحالات."
+        },
+        "csvHeaders": {
+            "orderNumber": "رقم الطلب",
+            "customerName": "اسم العميل",
+            "commission": "العمولة (جنيه مصري)",
+            "date": "التاريخ"
+        },
+        "promotionsAndOffers": {
+            "headerTitle": "العروض والخصومات",
+            "offerPerformanceTable": {
+                "title": "أداء العروض"
+            }
+        },
+        "fieldSales": {
+            "locale": "ar-SA",
+            "headerTitle": "مبيعات ميدانية",
+            "heroBadge": "مكتب مبيعات الوكلاء",
+            "heroTitle": "أنشئ طلبات ميدانية بطريقة أوضح للمراجعة.",
+            "heroDescription": "التقط إثبات الزيارة، جهّز الطلب، ثم أرسله لفريق التشغيل مع بيانات العميل والمنتج بشكل دقيق.",
+            "stats": {
+                "pendingReview": "قيد المراجعة",
+                "approvedValue": "قيمة الطلبات الموافق عليها",
+                "signedInAgent": "الوكيل المسجل"
+            },
+            "composer": {
+                "eyebrow": "إنشاء طلب بيع",
+                "title": "مكوّن الطلب الميداني",
+                "unitsSelected": "تم اختيار {{count}} وحدة"
+            },
+            "feedback": {
+                "submitted": "تم إرسال طلب البيع للمراجعة.",
+                "approved": "تمت الموافقة تلقائياً على الطلب (تحت الحد المسموح).",
+                "validationSummary": "يرجى مراجعة هذه الحقول: {{fields}}.",
+                "error": "تعذر إرسال طلب البيع."
+            },
+            "feedbackPopup": {
+                "successBadge": "تم بنجاح",
+                "successTitle": "تم إرسال الطلب اليدوي",
+                "successHint": "تم إرسال الطلب للمراجعة وسيظهر الآن ضمن أحدث الطلبات في مسار المتابعة.",
+                "successAction": "متابعة",
+                "errorBadge": "تعذر الإجراء",
+                "errorTitle": "تعذر إرسال الطلب",
+                "errorHint": "راجع الحقول المطلوبة أو تفاصيل الخطأ من الخادم ثم حاول إرسال الطلب مرة أخرى.",
+                "errorAction": "إغلاق"
+            },
+            "customer": {
+                "title": "بيانات العميل",
+                "description": "ابحث عن عميل موجود أو أدخل بيانات الطلب بشكل يدوي.",
+                "searchPlaceholder": "ابحث باسم العميل أو البريد الإلكتروني",
+                "firstName": "الاسم الأول",
+                "lastName": "اسم العائلة",
+                "email": "البريد الإلكتروني",
+                "phoneNumber": "رقم الجوال",
+                "companyName": "اسم الشركة",
+                "address": "العنوان",
+                "city": "المدينة",
+                "province": "المنطقة",
+                "postalCode": "الرمز البريدي",
+                "soldAt": "تاريخ البيع"
+            },
+            "proof": {
+                "title": "إثبات الزيارة",
+                "description": "ارفع صورة خارجية واحدة للمنتج قبل إرسال الطلب للمراجعة.",
+                "dropzoneTitle": "أفلت صورة الزيارة هنا أو اضغط للرفع",
+                "dropzoneHint": "JPG أو PNG بحجم حتى 5 ميجا",
+                "checklistTitle": "قائمة قبل الإرسال",
+                "checklistCustomer": "تم اكتمال بيانات العميل",
+                "checklistProducts": "تمت مراجعة المنتجات والكميات",
+                "checklistReview": "بانتظار مراجعة الإدارة بعد الإرسال"
+            },
+            "datePicker": {
+                "placeholder": "الجدولة",
+                "today": "الآن",
+                "clear": "مسح",
+                "hour": "الساعة",
+                "minute": "الدقيقة",
+                "period": "الفترة",
+                "weekdaysCompact": ["ح", "ن", "ث", "ر", "خ", "ج", "س"]
+            },
+            "products": {
+                "title": "بناء الطلب",
+                "eyebrow": "اختيار المنتجات",
+                "helper": "ابحث واضغط على أي متغير لإضافته",
+                "searchPlaceholder": "ابحث عن منتجات",
+                "empty": "ابدأ بالكتابة لتحميل المنتجات المعتمدة واختر المتغير المناسب للطلب.",
+                "defaultVariant": "المتغير الافتراضي",
+                "stock": "المخزون {{count}}"
+            },
+            "summary": {
+                "eyebrow": "بنود الطلب",
+                "title": "ملخص البيع",
+                "lineCount_one": "بند واحد",
+                "lineCount_other": "{{count}} بنود",
+                "empty": "لا توجد أصناف مختارة حتى الآن. استخدم بحث المنتجات أعلاه لإضافة المتغيرات.",
+                "stockAvailable": "المخزون المتاح: {{count}}",
+                "units": "الوحدات",
+                "subtotal": "المجموع الفرعي",
+                "ready": "جاهز للمراجعة",
+                "submit": "إرسال طلب البيع",
+                "submitting": "جاري الإرسال...",
+                "autoApproveNotice": "الطلبات التي تقل قيمتها عن {{threshold}} جنيه مصري تتم الموافقة عليها تلقائياً."
+            },
+            "pipeline": {
+                "eyebrow": "مسار المراجعة",
+                "title": "أحدث الطلبات",
+                "description": "ستبقى أحدث الطلبات الميدانية هنا حتى يراجعها فريق التشغيل ويتم تسجيل القرار النهائي عليها.",
+                "loading": "جاري تحميل الطلبات الميدانية...",
+                "empty": "لا توجد طلبات ميدانية حتى الآن. سيظهر طلبك التالي هنا.",
+                "guestCustomer": "عميل ضيف",
+                "orderNumber": "طلب رقم {{id}}",
+                "total": "الإجمالي",
+                "submitted": "تاريخ الإرسال",
+                "itemsCount_one": "صنف واحد في هذا الطلب",
+                "itemsCount_other": "{{count}} أصناف في هذا الطلب"
+            },
+            "status": {
+                "added": "تم الإضافة",
+                "approved": "تمت الموافقة",
+                "rejected": "مرفوض",
+                "submitted": "بانتظار المراجعة"
+            },
+            "ops": {
+                "eyebrow": "تسليم للتشغيل",
+                "title": "تتم مراجعة التشغيل من خلال قائمة الطلبات",
+                "description": "يمكن لفريق التشغيل مراجعة صور الإثبات، وفحص بنود الطلب، ثم اعتماد أو رفض طلبات البيع اليدوية من خلال مسار الطلبات المركزي.",
+                "point1": "يتم فصل طلبات المبيعات اليدوية حسب المصدر وحالة المراجعة.",
+                "point2": "تحول الموافقة الطلب الحالي إلى بيعة مكتملة ومسلمة.",
+                "point3": "يبقي الرفض الطلب متاحاً للمراجعة دون التأثير على المخزون."
+            }
+        },
+        "trackingLink": {
+            "title": "إنشاء رابط تتبع",
+            "description": "ابحث عن أي منتج لإنشاء رابط إحالة فريد يمكنك مشاركته مع عملائك.",
+            "searchPlaceholder": "ابحث عن منتج...",
+            "searching": "جاري البحث...",
+            "generatedLink": "رابط التتبع الخاص بك:",
+            "copyLink": "نسخ الرابط",
+            "copied": "تم النسخ!",
+            "noResults": "لا توجد منتجات",
+            "yourCode": "رمز الوكيل الخاص بك"
+        }
+    }
+}

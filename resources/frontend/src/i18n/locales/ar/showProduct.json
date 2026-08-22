@@ -1,0 +1,54 @@
+{
+    "stockAvailability": {
+        "inStock": "متوفر",
+        "outOfStock": "غير متوفر",
+        "lowStock": "يوجد فقط {{count}} قطعة في المخزون",
+        "minOrderPrice": "الحد الأدنى لقيمة الطلب",
+        "minOrderQty": "الحد الأدنى لكمية الطلب"
+    },
+    "reviews": {
+        "customerReviews": "المراجعات",
+        "writeReview": "كتابة مراجعة",
+        "rating": "تقييم",
+        "ratings": "تقييمات",
+        "comment": "تعليق",
+        "submitReview": "إرسال المراجعة",
+        "noReviews": "لا يوجد مراجعات",
+        "beFirstToReview": "كن أول من يراجع هذا المنتج",
+        "loadingReviews": "جاري تحميل المراجعات...",
+        "page": "الصفحة",
+        "of": "من",
+        "characters": "حرف",
+        "overallRating": "تقييم عام",
+        "yourRating": "تقييمك",
+        "yourReview": "مراجعةك",
+        "yourReviewPlaceholder": "اكتب مراجعتك هنا...",
+        "submitting": "جاري إرسال المراجعة...",
+        "updateReview": "تحديث المراجعة",
+        "basedOn": "بناءً على",
+        "updateYourReview": "تحديث مراجعتك",
+        "writeAReview": "كتابة مراجعة",
+        "loginToWriteReview": "الرجاء تسجيل الدخول لكتابة مراجعة."
+    },
+    "Qty": "الكمية",
+    "actions": {
+        "addToCart": "إضافة إلى السلة",
+        "buyNow": "شراء الآن",
+        "favorite": "إضافة إلى المفضلة",
+        "removeFavorite": "إزالة من المفضلة",
+        "loadingAddToCart": "جاري إضافة إلى السلة...",
+        "successAddToCart": "تم إضافة المنتج إلى السلة بنجاح",
+        "copyReferralLink": "نسخ رابط التسويق",
+        "referralLinkCopied": "تم نسخ الرابط بنجاح!",
+        "addedToCart": "تم إضافة المنتج إلى السلة",
+        "minOrderValueRequired": "يجب أن تكون قيمة الطلب على الأقل {{value}} جنيه مصري لهذا المنتج."
+    },
+    "similarProducts": "منتجات مماثلة",
+    "rate_this": "قيم هذا",
+    "fbt": {
+        "title": "منتجات مرتبطة ببعضها",
+        "thisItem": "هذا المنتج",
+        "totalPrice": "السعر الإجمالي",
+        "addSelected": "إضافة المنتجات المحددة للسلة"
+    }
+}

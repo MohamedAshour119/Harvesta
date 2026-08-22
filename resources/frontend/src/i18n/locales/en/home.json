@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "title": "Your Business Shopping Destination",
+    "subtitle": "Shop from the best suppliers for your business needs",
+    "searchPlaceholder": "Search for products, categories, or suppliers",
+    "requestCustomButton": "Request Custom Product",
+    "browseAllProducts": "Browse All Products",
+    "noProductsFound": "No products found matching: {{query}}"
+  },
+  "categories": {
+    "title": "Popular Categories",
+    "viewAll": "View All Categories"
+  },
+  "products": {
+    "supermarket": {
+      "title": "Supermarket Products",
+      "viewAll": "View All Supermarket Products"
+    },
+    "electronics": {
+      "title": "Electronics Products",
+      "viewAll": "View All Electronics"
+    },
+    "featured": {
+      "title": "Featured Products",
+      "viewAll": "View All Featured Products"
+    },
+    "new": {
+      "title": "New Arrivals",
+      "viewAll": "View All New Arrivals"
+    }
+  },
+  "banners": {
+    "discount": "Special Discount",
+    "freeShipping": "Free Shipping",
+    "bulkOffers": "Bulk Purchase Offers"
+  },
+  "callToAction": {
+    "register": "Register Now",
+    "login": "Login to Your Account",
+    "shopNow": "Shop Now"
+  },
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "deals": "Deals",
+    "about": "About"
+  },
+  "user": {
+    "greeting": "Hi, {{name}}"
+  },
+  "aboutUs": {
+    "AboutUs": "About Cairo 3A",
+    "LoremipsumdolorsitametconsecteturTinciduntnonaliquamtristiquefacilisiInataliquamconsequatorcitinciduntamet": "Cairo 3A is a leading B2B e-commerce platform specializing in industrial products and high-volume wholesale. We connect businesses with premium suppliers to ensure seamless sourcing.",
+    "LoremipsumdolorsitametconsecteturTinciduntnonaliquamtristiquefacilisiInataliquamconsequatorcitinciduntametNullanullautultricesvitaeilibquamdiamsitMaurisliberofeugiatdiamsuspendisseTortortinciduntmaecenasnatoqueimperdietDuiegestasnetusipsumsedscelerisqueligulaquamclassparturient": "At Cairo 3A, we provide a comprehensive ecosystem for industrial trade. Our platform empowers businesses to browse thousands of high-quality products, manage bulk orders efficiently, and leverage a dedicated network of professional sales agents. With a focus on reliability and logistics, we help businesses scale by providing transparent pricing, stock availability, and a streamlined procurement process from checkout to delivery.",
+    "Vision": "Our Vision",
+    "ReliableB2Bsourcingwithfastlogisticsandbulkfriendlypricing": "To become the most reliable global hub for B2B industrial sourcing, empowering businesses with cutting-edge logistics and competitive bulk pricing.",
+    "500HappyCustomers": "500 Happy Customers",
+    "Business": "Business",
+    "ContactUs": "Contact Us",
+    "MessageSent": "Message Sent!",
+    "MessageSentDescription": "Thank you for contacting us. We'll get back to you shortly.",
+    "Close": "Close",
+    "GetInTouch": "Get in Touch",
+    "ContactFormDescription": "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+    "name": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "message": "Message",
+    "YourName": "Your Name",
+    "YourEmail": "Your Email",
+    "YourPhoneOptional": "Your Phone (Optional)",
+    "YourMessage": "Your Message",
+    "Sending": "Sending...",
+    "SendMessage": "Send Message"
+  }
+}

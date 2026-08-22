@@ -1,0 +1,42 @@
+import React from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+
+interface NotFoundResultsProps {
+    searchQuery: string;
+    className?: string;
+}
+
+export default function NotFoundResults({ searchQuery = "wireless headphones", className }: NotFoundResultsProps) {
+    const { t } = useTranslation('common');
+
+    return (
+        <div className={`flex justify-center items-center py-12 px-4 ${className || ''}`}>
+            <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-12">
+                    <div className="relative inline-block mb-6">
+                        <div className="w-24 h-24 bg-gradient-to-r from-red-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <FaSearch className="w-10 h-10 text-white" />
+                        </div>
+                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-[#B12C2E] rounded-full flex items-center justify-center shadow-md">
+                            <span className="text-white font-bold text-sm">0</span>
+                        </div>
+                    </div>
+
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-slate-100 mb-4">
+                        {t('results.notFoundTitle')}
+                    </h1>
+
+                    <p className="text-lg text-gray-600 dark:text-slate-400 mb-4">
+                        {t('results.notFoundSubtitle')}
+                    </p>
+
+                    <div className="inline-flex items-center gap-2 bg-white dark:bg-[#151D2C] px-4 py-2 rounded-full border border-gray-200 dark:border-slate-700 shadow-sm">
+                        <FaSearch className="w-4 h-4 text-gray-400 dark:text-slate-500" />
+                        <span className="font-semibold text-gray-800 dark:text-slate-200">"{searchQuery}"</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

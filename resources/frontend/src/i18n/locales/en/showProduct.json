@@ -1,0 +1,54 @@
+{
+    "stockAvailability": {
+        "inStock": "In Stock",
+        "outOfStock": "Out of Stock",
+        "lowStock": "Only {{count}} items left in stock",
+        "minOrderPrice": "Minimum Order Price",
+        "minOrderQty": "Minimum Order Quantity"
+    },
+    "reviews": {
+        "customerReviews": "Customer Reviews",
+        "writeReview": "Write a Review",
+        "rating": "Rating",
+        "ratings": "Ratings",
+        "comment": "Comment",
+        "submitReview": "Submit Review",
+        "noReviews": "No reviews yet",
+        "beFirstToReview": "Be the first to review this product",
+        "loadingReviews": "Loading reviews...",
+        "page": "Page",
+        "of": "of",
+        "characters": "characters",
+        "overallRating": "Overall Rating",
+        "yourRating": "Your Rating",
+        "yourReview": "Your Review",
+        "yourReviewPlaceholder": "Write your review here...",
+        "submitting": "Submitting...",
+        "updateReview": "Update Review",
+        "basedOn": "Based on",
+        "updateYourReview": "Update Your Review",
+        "writeAReview": "Write a Review",
+        "loginToWriteReview": "Please log in to write a review."
+    },
+    "Qty": "Qty",
+    "actions": {
+        "addToCart": "Add to Cart",
+        "buyNow": "Buy Now",
+        "favorite": "Add to Favorites",
+        "removeFavorite": "Remove from Favorites",
+        "loadingAddToCart": "Loading Add to Cart",
+        "successAddToCart": "Successfully added!",
+        "copyReferralLink": "Copy Referral Link",
+        "referralLinkCopied": "Link copied successfully!",
+        "addedToCart": "Added to Cart",
+        "minOrderValueRequired": "The order value must be at least {{value}} EGP for this product."
+    },
+    "similarProducts": "Similar Products",
+    "rate_this": "Rate this",
+    "fbt": {
+        "title": "Frequently Bought Together",
+        "thisItem": "This item",
+        "totalPrice": "Total Price",
+        "addSelected": "Add Selected to Cart"
+    }
+}

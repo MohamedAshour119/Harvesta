@@ -1,0 +1,268 @@
+{
+    "dashboard": {
+        "overview": "Overview",
+        "welcome": {
+            "title": "Welcome, {{name}}",
+            "subtitle": "Focus on client relationships today. Repeat customers drive 70% of your commission!"
+        },
+        "sidebar": {
+            "overview": "Overview",
+            "fieldSales": "Field Sales",
+            "commissionBonus": "Commission & Bonus",
+            "promotionsOffers": "Promotions & Offers",
+            "productsCatalog": "Products Catalog",
+            "calendar": "Calendar"
+        },
+        "header": {
+            "overview": "Overview",
+            "searchPlaceholder": "Search for anything...",
+            "english": "English",
+            "arabic": "Arabic"
+        },
+        "metrics": {
+            "totalCommissionMonth": "Total Commission this month",
+            "pendingCommissions": "Pending Commissions",
+            "commissionLastMonth": "Commission (Last Month)",
+            "topCommissionSources": "Top Commission Sources",
+            "fromLastMonth": "from last month",
+            "waitingDelivery": "Waiting for order delivery confirmations",
+            "paidOnDate": "Reward was obtained in {{date}}",
+            "notPaidYet": "Not paid yet",
+            "carCleaningSupplies": "Car Cleaning Supplies"
+        },
+        "charts": {
+            "salesPerformance": "Sales Performance",
+            "yearly": "Yearly",
+            "emptyState": {
+                "badge": "Sales insight",
+                "title": "No sales data to visualize yet",
+                "description": "Once your orders start moving, this panel will turn into a live performance curve with monthly momentum and clearer trend visibility.",
+                "metric1Label": "Current year",
+                "metric1Value": "Waiting for the first recorded sale",
+                "metric2Label": "Chart status",
+                "metric2Value": "No plotted activity yet",
+                "metric3Label": "Next update",
+                "metric3Value": "Refreshes automatically after new orders"
+            },
+            "categoriesEmptyState": {
+                "badge": "Category pulse",
+                "title": "No category leaders yet",
+                "description": "Once category-driven sales start coming in, this card will highlight where demand is building fastest.",
+                "footerLabel": "What happens next",
+                "footerValue": "Your top-selling categories will appear here automatically"
+            },
+            "monthlyTargetProgress": "Monthly Target Progress",
+            "target": "Target:",
+            "customerAcquisition": "Customer Acquisition (monthly)",
+            "newClientsMonth": "New Clients This Month",
+            "repeatBuyers": "Repeat Buyers",
+            "conversionRate": "Conversion Rate",
+            "topSellingCategories": "Top-Selling Categories",
+            "mutualFund": "Mutual Fund",
+            "stocks": "Stocks",
+            "propertyInvestment": "Property Investment",
+            "other": "Other"
+        },
+        "values": {
+            "egp": "EGP",
+            "sar6450": "EGP 6,450.00",
+            "sar1800": "EGP 1,800.00",
+            "sar5750": "EGP 5,750.00",
+            "sar1240": "EGP 1,240 (35.9%)",
+            "65percent": "65%",
+            "7clients": "7",
+            "15buyers": "15",
+            "38percent": "38%",
+            "sar1000": "EGP 1,000",
+            "sar7250": "EGP 7,250"
+        },
+        "ordersTable": {
+            "recentOrders": "Recent Orders",
+            "orderId": "Order ID",
+            "customer": "Customer",
+            "category": "Category",
+            "status": "Status",
+            "date": "Date",
+            "time": "Time",
+            "commission": "Commission ({{commission}}%)",
+            "commissionText": "Commission (EGP)",
+            "action": "Action",
+            "statusOptions": {
+                "pending": "Pending",
+                "approved": "Approved",
+                "shipped": "Shipped",
+                "rejected": "Rejected",
+                "delivered": "Delivered",
+                "cancelled": "Cancelled"
+            },
+            "empty": {
+                "title": "No Orders Yet",
+                "subtitle": "Your recent orders will appear here once customers start placing them. Check back soon to see your sales activity."
+            }
+        },
+        "commission": "Commission",
+        "commissionAndBonus": {
+            "headerTitle": "Commission & Bonus",
+            "title": "Commission Overview",
+            "totalCommission": "Total Commission",
+            "pendingCommissions": "Pending Commissions",
+            "commissionLastMonth": "Commissions Last Month",
+            "topCategory": "Top Category",
+            "BonusEarned": "Bonus Earned",
+            "target": "Target: {{target}} complete",
+            "weeklyCommission": "Weekly Commission - {{month}}",
+            "liveData": "Data from {{month}} 1st to today",
+            "monthlySummary": "Monthly Summary",
+            "totalOrders": "Total orders",
+            "averageCommissions": "Average Commissions",
+            "highestCommission": "Highest Commission",
+            "totalSalesValue": "Total Sales Value",
+            "exportCSV": "Export CSV",
+            "downloadChartAsCSV": "Download as CSV",
+            "commissionTimeline": "Commission Timeline",
+            "downloading": "Downloading...",
+            "noCommissionsTitle": "No Commissions Yet",
+            "noCommissions": "Your commission earnings will appear here as you make sales and referrals."
+        },
+        "csvHeaders": {
+            "orderNumber": "Order Number",
+            "customerName": "Customer Name",
+            "commission": "Commission (EGP)",
+            "date": "Date"
+        },
+        "promotionsAndOffers": {
+            "headerTitle": "Promotions & Offers",
+            "offerPerformanceTable": {
+                "title": "Offer Performance"
+            }
+        },
+        "fieldSales": {
+            "locale": "en-US",
+            "headerTitle": "Field Sales",
+            "heroBadge": "Agent sales desk",
+            "heroTitle": "Build field orders with a cleaner handoff to review.",
+            "heroDescription": "Capture the visit, compose the order, and send it to operations with the exact customer and product snapshot your team needs.",
+            "stats": {
+                "pendingReview": "Pending review",
+                "approvedValue": "Approved value",
+                "signedInAgent": "Signed in agent"
+            },
+            "composer": {
+                "eyebrow": "Create sale order",
+                "title": "Field order composer",
+                "unitsSelected": "{{count}} units selected"
+            },
+            "feedback": {
+                "submitted": "Sale order submitted for review.",
+                "approved": "Order auto-approved (under limit).",
+                "validationSummary": "Please review these fields: {{fields}}.",
+                "error": "Unable to submit the sale order."
+            },
+            "feedbackPopup": {
+                "successBadge": "Success state",
+                "successTitle": "Manual order submitted",
+                "successHint": "The order was sent for review and will now appear in the recent submissions pipeline.",
+                "successAction": "Continue",
+                "errorBadge": "Action blocked",
+                "errorTitle": "Unable to submit order",
+                "errorHint": "Review the required fields or backend response details, then try sending the order again.",
+                "errorAction": "Close"
+            },
+            "customer": {
+                "title": "Customer profile",
+                "description": "Search an existing customer or fill the sale-specific details manually.",
+                "searchPlaceholder": "Search by customer name or email",
+                "firstName": "First name",
+                "lastName": "Last name",
+                "email": "Email",
+                "phoneNumber": "Phone number",
+                "companyName": "Company name",
+                "address": "Address",
+                "city": "City",
+                "province": "Province",
+                "postalCode": "Postal code",
+                "soldAt": "Sold at"
+            },
+            "proof": {
+                "title": "Visit proof",
+                "description": "Upload one exterior product photo before sending the order for review.",
+                "dropzoneTitle": "Drop the visit photo here or click to upload",
+                "dropzoneHint": "JPG or PNG up to 5 MB",
+                "checklistTitle": "Submission checklist",
+                "checklistCustomer": "Customer details captured",
+                "checklistProducts": "Product lines and quantities reviewed",
+                "checklistReview": "Awaiting admin review after submission"
+            },
+            "datePicker": {
+                "placeholder": "Schedule",
+                "today": "Now",
+                "clear": "Clear",
+                "hour": "Hour",
+                "minute": "Minute",
+                "period": "Period",
+                "weekdaysCompact": ["S", "M", "T", "W", "T", "F", "S"]
+            },
+            "products": {
+                "title": "Build the basket",
+                "eyebrow": "Product picker",
+                "helper": "Search and tap any variant to add it",
+                "searchPlaceholder": "Search products, slugs, or translated names",
+                "empty": "Start typing to load approved products and choose a variant for this sale.",
+                "defaultVariant": "Default variant",
+                "stock": "Stock {{count}}"
+            },
+            "summary": {
+                "eyebrow": "Order lines",
+                "title": "Sale summary",
+                "lineCount_one": "{{count}} line",
+                "lineCount_other": "{{count}} lines",
+                "empty": "No items selected yet. Use the product search above to add variants to the order.",
+                "stockAvailable": "Stock available: {{count}}",
+                "units": "Units",
+                "subtotal": "Subtotal",
+                "ready": "Ready for review",
+                "submit": "Submit sale order",
+                "submitting": "Submitting...",
+                "autoApproveNotice": "Orders under {{threshold}} EGP are automatically approved."
+            },
+            "pipeline": {
+                "eyebrow": "Review pipeline",
+                "title": "Recent submissions",
+                "description": "Your latest field orders stay here until the operations team reviews them and records the final decision.",
+                "loading": "Loading manual orders...",
+                "empty": "No manual orders yet. Your next submission will appear here.",
+                "guestCustomer": "Guest customer",
+                "orderNumber": "Order #{{id}}",
+                "total": "Total",
+                "submitted": "Submitted",
+                "itemsCount_one": "{{count}} item in this order",
+                "itemsCount_other": "{{count}} items in this order"
+            },
+            "status": {
+                "added": "Added",
+                "approved": "Approved",
+                "rejected": "Rejected",
+                "submitted": "Awaiting review"
+            },
+            "ops": {
+                "eyebrow": "Ops handoff",
+                "title": "Operations review happens from the order queue",
+                "description": "The operations team can review proof photos, inspect order lines, and approve or reject submitted manual sales from the central order workflow.",
+                "point1": "Submitted manual sales are separated by source and review status.",
+                "point2": "Approval converts the existing order into a delivered and completed sale.",
+                "point3": "Rejection keeps the order visible for audit without touching inventory."
+            }
+        },
+        "trackingLink": {
+            "title": "Generate Tracking Link",
+            "description": "Search for any product to generate a unique referral link you can share with your customers.",
+            "searchPlaceholder": "Search for a product...",
+            "searching": "Searching...",
+            "generatedLink": "Your tracking link:",
+            "copyLink": "Copy Link",
+            "copied": "Copied!",
+            "noResults": "No products found",
+            "yourCode": "Your agent code"
+        }
+    }
+}

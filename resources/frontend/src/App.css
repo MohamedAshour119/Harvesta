@@ -1,0 +1,565 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html,
+body {
+  font-family: "Cairo", "Poppins", sans-serif !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark,
+html.dark body {
+  background-color: #0B0F17;
+  color: #F8FAFC;
+  color-scheme: dark;
+}
+
+@theme {
+  --font-display: "Cairo", "Poppins", "sans-serif";
+  --font-sans: "Cairo", "Poppins", "sans-serif";
+
+  --color-title_and_price: #2C2C2C;
+  --color-primary: #B12C2E;
+  --color-secondary: #144995;
+  --color-pink: #D8546C;
+  --color-yellow: #B12C2E;
+  --color-blue: #144995;
+  --color-card_border: #DDDDDD;
+  --color-success: #26C5A8;
+
+  /* Dark mode surface colors */
+  --color-dark-bg: #0B0F17;
+  --color-dark-surface: #151D2C;
+  --color-dark-card: #1C2638;
+  --color-dark-border: rgba(255, 255, 255, 0.08);
+  --color-dark-text: #F8FAFC;
+  --color-dark-muted: #94A3B8;
+
+  /* Breakpoints */
+  --breakpoint-mobile-tiny: 16rem;
+  /* 256px */
+  --breakpoint-mobile-mini: 18rem;
+  /* 288px */
+  --breakpoint-mobile-small: 20rem;
+  /* 320px */
+  --breakpoint-mobile: 24rem;
+  /* 384px */
+  --breakpoint-mobile-large: 28rem;
+  /* 448px */
+  --breakpoint-tablet-small: 32rem;
+  /* 512px */
+  --breakpoint-tablet: 36rem;
+  /* 576px */
+  --breakpoint-tablet-large: 42rem;
+  /* 672px */
+  --breakpoint-desktop-very-small: 48rem;
+  /* 768px */
+  --breakpoint-desktop-small: 50.625rem;
+  /* 810px */
+  --breakpoint-desktop: 56rem;
+  /* 896px */
+  --breakpoint-desktop-medium: 64rem;
+  /* 1024px */
+  --breakpoint-desktop-large: 72rem;
+  /* 1152px */
+  --breakpoint-desktop-xl: 80rem;
+  /* 1280px */
+  --breakpoint-widescreen: 84.375rem;
+  /* 1350px */
+  --breakpoint-widescreen-large: 93.75rem;
+  /* 1500px */
+  --breakpoint-4k: 106.25rem;
+  /* 1700px */
+
+  --container-wrapper: 73.125rem;
+}
+
+html.dark {
+  --color-title_and_price: #F8FAFC;
+  --color-card_border: rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-yellow);
+  border-radius: 5px;
+}
+
+.orders-table-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.orders-table-scroll::-webkit-scrollbar-track {
+  background: #f6f7fb;
+  border-radius: 999px;
+}
+
+.orders-table-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 999px;
+}
+
+.orders-table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) #f6f7fb;
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+    background: rgba(48, 255, 253, 0.8);
+} */
+
+/* Firefox scrollbar styling */
+/* * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-yellow) var(--color-yellow);
+} */
+
+/* Modal Animation */
+.modal-overlay {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+}
+
+.modal-content {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+
+.modal-content.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.swiper-wrapper {
+  max-width: 96vw;
+}
+
+/* Custom Tailwind utility classes */
+@layer utilities {
+  .shadow-focus {
+    box-shadow: 0px 0px 0px 3px rgba(177, 44, 46, 0.2);
+  }
+
+  .border-focus {
+    border: 2px solid var(--color-primary);
+  }
+
+  .border-default {
+    border: 2px solid #DDDDDD;
+  }
+
+  .text-yellow,
+  .text-yellow-400,
+  .text-yellow-500,
+  .text-yellow-600,
+  .hover\:text-yellow:hover,
+  .hover\:text-yellow-500:hover,
+  .hover\:text-yellow-600:hover,
+  .group:hover .group-hover\:text-yellow,
+  .group:hover .group-hover\:text-yellow-500,
+  .group:hover .group-hover\:text-yellow-600 {
+    color: var(--color-primary) !important;
+  }
+
+  .text-white,
+  .hover\:text-white:hover,
+  .group:hover .group-hover\:text-white {
+    color: #fff !important;
+  }
+
+  .bg-yellow,
+  .bg-yellow-400,
+  .bg-yellow-500,
+  .hover\:bg-yellow-400:hover,
+  .hover\:bg-yellow-500:hover,
+  .hover\:bg-yellow-600:hover {
+    background-color: var(--color-primary) !important;
+  }
+
+  .border-yellow,
+  .border-yellow-200,
+  .border-yellow-300,
+  .border-yellow-400,
+  .hover\:border-yellow:hover,
+  .hover\:border-yellow-500:hover {
+    border-color: var(--color-primary) !important;
+  }
+
+  .focus\:ring-yellow-300:focus,
+  .focus\:ring-yellow-400:focus,
+  .focus\:ring-yellow-500:focus {
+    --tw-ring-color: rgba(177, 44, 46, 0.25) !important;
+  }
+
+  .from-yellow,
+  .from-yellow-400,
+  .from-yellow-500 {
+    --tw-gradient-from: var(--color-primary) var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(177 44 46 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+  }
+
+  .to-yellow-400,
+  .to-yellow-500 {
+    --tw-gradient-to: var(--color-primary) var(--tw-gradient-to-position) !important;
+  }
+
+  .text-blue-500,
+  .text-blue-600,
+  .text-blue-700,
+  .text-sky-600,
+  .text-sky-700,
+  .hover\:text-blue-500:hover,
+  .hover\:text-blue-600:hover {
+    color: var(--color-secondary) !important;
+  }
+
+  .bg-blue-50,
+  .bg-sky-50 {
+    background-color: #eef4ff !important;
+  }
+
+  .bg-blue-100,
+  .bg-sky-100 {
+    background-color: #dbe8ff !important;
+  }
+
+  .border-blue-100,
+  .border-blue-200,
+  .border-sky-100,
+  .border-sky-200 {
+    border-color: rgba(20, 73, 149, 0.18) !important;
+  }
+
+  .focus\:ring-blue-300:focus,
+  .focus\:ring-sky-300:focus {
+    --tw-ring-color: rgba(20, 73, 149, 0.22) !important;
+  }
+
+  .text-amber-500,
+  .text-amber-600,
+  .text-amber-700,
+  .text-amber-800,
+  .hover\:text-amber-500:hover,
+  .hover\:text-amber-600:hover {
+    color: var(--color-primary) !important;
+  }
+
+  .bg-amber-50 {
+    background-color: #fff3f3 !important;
+  }
+
+  .bg-amber-100 {
+    background-color: #fde5e5 !important;
+  }
+
+  .bg-amber-200 {
+    background-color: #f8cfcf !important;
+  }
+
+  .bg-amber-400 {
+    background-color: var(--color-primary) !important;
+  }
+
+  .hover\:bg-amber-50:hover {
+    background-color: #fff6f6 !important;
+  }
+
+  .hover\:bg-amber-100:hover,
+  .hover\:bg-amber-300:hover {
+    background-color: #f8dede !important;
+  }
+
+  .border-amber-100,
+  .border-amber-200,
+  .border-amber-300,
+  .border-amber-400,
+  .hover\:border-amber-200:hover,
+  .hover\:border-amber-300:hover,
+  .hover\:border-amber-500:hover {
+    border-color: rgba(177, 44, 46, 0.22) !important;
+  }
+
+  .focus\:border-amber-400:focus,
+  .focus\:border-amber-500:focus {
+    border-color: var(--color-primary) !important;
+  }
+
+  .focus\:ring-amber-100:focus,
+  .focus\:ring-amber-300:focus {
+    --tw-ring-color: rgba(177, 44, 46, 0.14) !important;
+  }
+
+  .from-amber-400,
+  .from-amber-500 {
+    --tw-gradient-from: var(--color-primary) var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(177 44 46 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+  }
+
+  .to-amber-400,
+  .to-amber-500 {
+    --tw-gradient-to: var(--color-primary) var(--tw-gradient-to-position) !important;
+  }
+}
+
+/* Slide animations for sidebar */
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s forwards;
+}
+
+.slide-out {
+  animation: slideOut 0.3s forwards;
+}
+
+/* Favorites button animation */
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.3);
+  }
+
+  28% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.3);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+}
+
+.heart-beat {
+  animation: heartBeat 1s;
+}
+
+/* Remove background color of autofill */
+input:-webkit-autofill {
+  /*-webkit-text-fill-color: #e5e7eb; !* Text color *!*/
+
+  transition: background-color 5000s ease-in-out 0s;
+  /* Transition background */
+}
+
+/* Override rc-slider handle focus glow */
+/* Uses :focus-visible for better accessibility, falling back to :focus if needed */
+.rc-slider-handle:focus-visible,
+.rc-slider-handle:focus {
+  outline: none !important;
+  /* Remove default outline */
+  /* border-color: var(--color-yellow) !important; /* Ensure border stays yellow, handleStyle prop should also do this */
+  /* Adjust the RGB values (253, 186, 116) if your --color-yellow is different from #FDBA74 */
+  box-shadow: 0 0 0 4px rgba(177, 44, 46, 0.25) !important;
+}
+
+/* Override rc-slider handle dragging state */
+/* The triple class is for high specificity, often used by rc-slider's default antd-like styles */
+.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+  border-color: var(--color-yellow) !important;
+  /* Explicitly set border color during drag */
+  /* Adjust the RGB values (253, 186, 116) if your --color-yellow is different from #FDBA74 */
+  box-shadow: 0 0 0 4px rgba(177, 44, 46, 0.25) !important;
+}
+
+/* Optional: Ensure the handle border color is consistently your yellow, 
+   though your handleStyle prop in PriceRangeFilter.tsx should already cover this for the resting state. */
+/* 
+.rc-slider-handle {
+  border-color: var(--color-yellow) !important; 
+}
+*/
+
+.PhoneInputInput {
+  outline: none !important;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.custom-phone-input {
+  width: 100% !important;
+  height: 44px !important;
+  padding: 8px 8px 8px 58px !important;
+  border: 2px solid #DDDDDD !important;
+  border-radius: 5px !important;
+  font-size: 16px !important;
+  color: #333 !important;
+}
+
+[dir="rtl"] .custom-phone-input {
+  padding: 8px 58px 8px 8px !important;
+}
+
+[dir="rtl"] .react-tel-input .selected-flag {
+  padding: 0px 8px 0px 0px !important;
+}
+
+[dir="rtl"] .arrow {
+  right: 20px !important;
+}
+
+.react-tel-input:focus-within .custom-phone-input,
+.react-tel-input:focus-within .custom-phone-input-button {
+  border-color: var(--color-primary) !important;
+}
+
+
+.custom-phone-input:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(177, 44, 46, 0.2) !important;
+  outline: none !important;
+}
+
+.custom-phone-input:focus+.custom-phone-input-button {
+  border-color: var(--color-primary) !important;
+  border-width: 2px !important;
+}
+
+
+.selected-flag:hover,
+.selected-flag:focus,
+.selected-flag.open {
+  background-color: transparent !important;
+}
+
+.custom-phone-input-button {
+  border: 2px solid #DDDDDD !important;
+  border-radius: 5px 0 0 5px !important;
+}
+
+.custom-phone-input-button.open {
+  border: 2px solid var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(177, 44, 46, 0.2) !important;
+  border-radius: 5px 0 0 5px !important;
+  font-size: 16px !important;
+  color: #333 !important;
+}
+
+.custom-phone-input-checkout {
+  width: 100% !important;
+  height: 52px !important;
+  padding: 8px 8px 8px 58px !important;
+  border: 2px solid #DDDDDD !important;
+  border-radius: 5px !important;
+  font-size: 16px !important;
+  color: #333 !important;
+}
+
+[dir="rtl"] .custom-phone-input-checkout {
+  padding: 8px 58px 8px 8px !important;
+}
+
+[dir="rtl"] .custom-phone-input-checkout .selected-flag {
+  padding: 0px 8px 0px 0px !important;
+}
+
+[dir="rtl"] .arrow {
+  right: 20px !important;
+}
+
+@keyframes scan {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.animate-scan {
+  animation: scan 2s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* Dark mode overrides for special third-party and custom elements */
+html.dark .custom-phone-input,
+html.dark .custom-phone-input-checkout {
+  background-color: #151D2C !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+html.dark .custom-phone-input-button {
+  background-color: #151D2C !important;
+  border-color: #334155 !important;
+}
+
+html.dark .react-tel-input .country-list {
+  background-color: #151D2C !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+html.dark .react-tel-input .country-list .country.highlight,
+html.dark .react-tel-input .country-list .country:hover {
+  background-color: #1E293B !important;
+}
+
+html.dark .react-tel-input .country-list .country-name {
+  color: #F8FAFC !important;
+}
+
+html.dark .rc-slider-rail {
+  background-color: #334155 !important;
+}
+
+html.dark input:-webkit-autofill,
+html.dark input:-webkit-autofill:hover, 
+html.dark input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #F8FAFC !important;
+  -webkit-box-shadow: 0 0 0px 1000px #151D2C inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
