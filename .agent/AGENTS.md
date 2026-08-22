@@ -11,6 +11,8 @@ This profile adapts Superpowers workflows for Antigravity with strict single-flo
 3. Use `browser_subagent` only for browser automation tasks.
 4. Track checklist progress in `<project-root>/docs/plans/task.md` (table-only live tracker).
 5. Keep changes scoped to the requested task and verify before completion claims.
+6. **No Unnecessary `npm run build`**: With `npm run dev` running in the background, changes reflect in real-time via HMR. Do NOT run `npm run build` for minor frontend adjustments.
+7. **Atomic Git Commit & Push**: After finishing any discrete task or modification, automatically stage the files, create a descriptive Conventional Commit (e.g. `feat:`, `fix:`, `style:`, `refactor:`), and push to the remote repository.
 
 ## Tool Translation Contract
 
