@@ -20,12 +20,24 @@ const Products: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [lastPage, setLastPage] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [showNotFoundResults, setShowNotFoundResults] = useState(false);
   const isUpdatingUrlFromState = useRef(false);
   const filterState = useSelector((state: RootState) => state.filter);
   const selectedCategorySlugs = filterState?.selectedCategorySlugs || [];
   const selectedFilter = filterState ? filterState.selectedFilter : null;
   const priceRange = filterState?.priceRange || [0, 0];
+
+  // 500ms debounce on search input to prevent firing requests on every keystroke
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm.trim());
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchTerm]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -117,7 +129,7 @@ const Products: React.FC = () => {
 
   // Reset currentPage to 1 whenever filters change
   const prevFilterKeyRef = useRef('');
-  const currentFilterKey = `${[...selectedCategorySlugs].sort().join(',')}|${selectedFilter || ''}|${priceRange.join('-')}|${searchTerm}`;
+  const currentFilterKey = `${[...selectedCategorySlugs].sort().join(',')}|${selectedFilter || ''}|${priceRange.join('-')}|${debouncedSearchTerm}`;
 
   useEffect(() => {
     if (prevFilterKeyRef.current !== '' && prevFilterKeyRef.current !== currentFilterKey) {
@@ -167,7 +179,7 @@ const Products: React.FC = () => {
           filterString,
           minPrice,
           maxPrice,
-          searchTerm || undefined,
+          debouncedSearchTerm || undefined,
           targetPage
         );
 
@@ -203,7 +215,7 @@ const Products: React.FC = () => {
     };
 
     fetchProducts();
-  }, [selectedCategorySlugs, selectedFilter, priceRange, dispatch, pathname, currentPage, categoryParam, filterParam, searchTerm]);
+  }, [selectedCategorySlugs, selectedFilter, priceRange, dispatch, pathname, currentPage, categoryParam, filterParam, debouncedSearchTerm]);
 
   useEffect(() => {
     const handleLanguageChange = async () => {

@@ -68,34 +68,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, currentPage, lastPa
     if (searchInputRef.current) {
       searchInputRef.current.blur();
     }
-
-    if (searchTerm.length > 0) {
-      setLoadingProducts(true);
-      ApiClient.search.searchForProductsKeyword(searchTerm)
-        .then(response => {
-          const productsResponse = response.data.data.data;
-          setProducts(productsResponse);
-          const paginated = response.data.data.pagination as Paginated<IProductCard>;
-          setCurrentPage(paginated.current_page);
-          setLastPage(paginated.last_page);
-        })
-        .catch(err => {
-          console.error(err);
-          if (err.response?.data?.status === 404) {
-            setShowNotFoundResults(true);
-            setProducts([]);
-          }
-        })
-        .finally(() => {
-          setLoadingProducts(false);
-        });
-    }
   };
 
   const handleClearSearch = () => {
     setSearchTerm('');
-    setProducts([]);
-    setShowNotFoundResults(false);
     if (selectedFilter !== null) {
       dispatch(setSelectedFilter(null));
     }
