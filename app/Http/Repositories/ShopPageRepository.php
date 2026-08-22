@@ -190,7 +190,7 @@ class ShopPageRepository
 
         $industrialCategories = $industrialCategoriesQuery->orderBy('name')->get();
 
-        $perPage = 15;
+        $perPage = 16;
         $requestedPage = (int) request('page', 1);
         $total = (clone $query)->count();
         $lastPage = max((int) ceil($total / $perPage), 1);
