@@ -156,7 +156,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, currentPage, lastPa
                   setCurrentPage(1);
               }}
               disabled={currentPage === 1 || loadingProducts}
-              className="p-2 cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 rounded-lg disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors flex-shrink-0"
+              className={`p-2 rounded-lg border transition-all flex-shrink-0 ${
+                (currentPage === 1 || loadingProducts)
+                  ? "opacity-30 cursor-not-allowed pointer-events-none bg-gray-100 dark:bg-slate-800/50 text-gray-400 dark:text-slate-600 border-gray-200/50 dark:border-slate-800"
+                  : "cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-gray-200 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95"
+              }`}
             >
               {lang === "en" ? (
                 <MdKeyboardDoubleArrowLeft className="w-4 h-4" />
@@ -172,7 +176,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, currentPage, lastPa
                   setCurrentPage(currentPage - 1);
               }}
               disabled={currentPage === 1 || loadingProducts}
-              className="p-2 cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 rounded-lg disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors flex-shrink-0"
+              className={`p-2 rounded-lg border transition-all flex-shrink-0 ${
+                (currentPage === 1 || loadingProducts)
+                  ? "opacity-30 cursor-not-allowed pointer-events-none bg-gray-100 dark:bg-slate-800/50 text-gray-400 dark:text-slate-600 border-gray-200/50 dark:border-slate-800"
+                  : "cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-gray-200 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95"
+              }`}
             >
               {lang === "en" ? (
                 <RiArrowLeftSLine className="w-4 h-4" />
@@ -197,13 +205,14 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, currentPage, lastPa
                   <button
                     key={page}
                     onClick={() => {
-                      if (!loadingProducts) setCurrentPage(page);
+                      if (!loadingProducts && page !== currentPage) setCurrentPage(page);
                     }}
-                    disabled={loadingProducts}
-                    className={`px-3 py-1.5 rounded-lg cursor-pointer text-sm font-semibold min-w-[36px] flex-shrink-0 transition-all ${page === currentPage
-                      ? "bg-[#B12C2E] text-white shadow-sm"
-                      : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-700"
-                      } disabled:opacity-50`}
+                    disabled={loadingProducts || page === currentPage}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-semibold min-w-[36px] flex-shrink-0 transition-all ${
+                      page === currentPage
+                        ? "bg-[#B12C2E] text-white shadow-sm cursor-default"
+                        : "cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95 disabled:opacity-50"
+                    }`}
                   >
                     {page}
                   </button>
@@ -218,7 +227,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, currentPage, lastPa
                   setCurrentPage(currentPage + 1);
               }}
               disabled={currentPage === lastPage || loadingProducts}
-              className="p-2 cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 rounded-lg disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors flex-shrink-0"
+              className={`p-2 rounded-lg border transition-all flex-shrink-0 ${
+                (currentPage === lastPage || loadingProducts)
+                  ? "opacity-30 cursor-not-allowed pointer-events-none bg-gray-100 dark:bg-slate-800/50 text-gray-400 dark:text-slate-600 border-gray-200/50 dark:border-slate-800"
+                  : "cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-gray-200 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95"
+              }`}
             >
               {lang === "en" ? (
                 <RiArrowRightSLine className="w-4 h-4" />
@@ -234,7 +247,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, currentPage, lastPa
                   setCurrentPage(lastPage);
               }}
               disabled={currentPage === lastPage || loadingProducts}
-              className="p-2 cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 rounded-lg disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors flex-shrink-0"
+              className={`p-2 rounded-lg border transition-all flex-shrink-0 ${
+                (currentPage === lastPage || loadingProducts)
+                  ? "opacity-30 cursor-not-allowed pointer-events-none bg-gray-100 dark:bg-slate-800/50 text-gray-400 dark:text-slate-600 border-gray-200/50 dark:border-slate-800"
+                  : "cursor-pointer bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-gray-200 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-95"
+              }`}
             >
               {lang === "en" ? (
                 <MdKeyboardDoubleArrowRight className="w-4 h-4" />
