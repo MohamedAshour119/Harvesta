@@ -109,10 +109,6 @@ const Header: React.FC = () => {
 
   const pathname = useLocation().pathname;
 
-  const isCartSummarySidebarOpen = useSelector((state: RootState) => state.isCartSummarySidebarOpen);
-  const toggleCartSummary = () => {
-    dispatch(setIsCartSummarySidebarOpen(!isCartSummarySidebarOpen));
-  };
 
   return (
     <MaxWidthWrapper className={pathname === '/products' || pathname === '/all-products' ? '!px-0' : '!px-4'}>
@@ -222,9 +218,6 @@ const Header: React.FC = () => {
               {!isAuth &&
                 <Link to="/signup" className="bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#C83437] text-white px-4 min-w-[95px] h-[38px] flex justify-center items-center rounded-full font-medium transition-all shadow-md shadow-red-900/10 text-sm">{t('header.signup')}</Link>
               }
-              {pathname === '/all-products' && (
-                <button onClick={toggleCartSummary} className="bg-[#B12C2E] hover:bg-[#972426] text-white max-lg:hidden min-[1130px]:hidden px-4 -ms-3 min-w-[95px] h-[38px] flex justify-center items-center rounded-full transition-colors font-medium text-sm">{t('header.cart')}</button>
-              )}
             </div>
 
             {/* Mobile Actions (Menu Button) */}
