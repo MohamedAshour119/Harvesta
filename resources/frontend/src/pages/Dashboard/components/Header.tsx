@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import i18n, { setDocumentDirection } from "../../../i18n";
 import { FiSearch } from "react-icons/fi";
 import { clearChatbotForLogout } from "../../../utils/chatbotSessionStorage";
+import { triggerLanguageSwitch } from "../../../utils/languageSwitcher";
 
 interface HeaderProps {
     setSidebarOpen: (open: boolean) => void;
@@ -77,20 +78,7 @@ export default function Header({ setSidebarOpen, title }: HeaderProps) {
     };
 
     const changeLanguage = (language: string) => {
-        if (language === (i18n.language || 'ar')) return;
-
-        const expires = new Date();
-        expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
-        document.cookie = `user_locale=${language};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
-        
-        try {
-            localStorage.setItem('i18nextLng', language);
-            localStorage.setItem('user_locale', language);
-        } catch (e) {
-            // Storage access restricted
-        }
-
-        window.location.reload();
+        triggerLanguageSwitch(language);
     };
 
     return (

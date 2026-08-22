@@ -5,6 +5,7 @@ import i18n, { setDocumentDirection } from '../i18n';
 import MaxWidthWrapper from './MaxWidthWrapper';
 import ApiClient from '../ApiClient';
 import type { IIndustrialCategory } from '../types';
+import { triggerLanguageSwitch } from '../utils/languageSwitcher';
 
 interface FooterProps {
   maxWidthWrapperClassName?: string;
@@ -35,22 +36,9 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
 
   const notRefreshInTheseRoutes = [''];
 
-  // Language switching function - store preference and reload without intermediate DOM mutation
+  // Language switching function - trigger luxury modal overlay and reload
   const changeLanguage = (language: string) => {
-    if (language === (i18n.language || 'ar')) return;
-
-    const expires = new Date();
-    expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
-    document.cookie = `user_locale=${language};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
-    
-    try {
-      localStorage.setItem('i18nextLng', language);
-      localStorage.setItem('user_locale', language);
-    } catch (e) {
-      // Storage access restricted
-    }
-
-    window.location.reload();
+    triggerLanguageSwitch(language);
   };
 
   const currentLanguage = i18n.language || 'ar';

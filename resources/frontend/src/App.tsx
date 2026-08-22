@@ -12,6 +12,7 @@ import CustomProductRequest from './pages/CustomProductRequest/CustomProductRequ
 import FavoritesSidebar from './components/FavoritesSidebar'
 import Header from './components/Header'
 import LoginPrompt from './components/LoginPrompt'
+import LanguageSwitchModal from './components/modals/LanguageSwitchModal'
 import i18n, { setDocumentDirection } from './i18n'
 import { Overview } from './pages/Dashboard/pages/Overview/Overview'
 import { FieldSales } from './pages/Dashboard/pages/FieldSales/FieldSales'
@@ -134,6 +135,7 @@ function App() {
       <TokenRefresher />
       {!dashboardPathnames.includes(pathname) && <ChatWidget />}
       <LoginPrompt />
+      <LanguageSwitchModal />
     </div>
   )
 }
