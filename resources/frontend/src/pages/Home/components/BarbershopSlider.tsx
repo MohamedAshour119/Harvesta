@@ -27,36 +27,28 @@ const BarbershopSlider: React.FC<IBarbershopSliderProps> = ({ products, isLoadin
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
-  // const handleAddToCart = (product: CartItem) => {
-  //   dispatch(addToCart({
-  //     id: product.id,
-  //     name: product.name,
-  //     description: product.description,
-  //     category: {
-  //       id: product.category?.id || 0,
-  //       name: product.category?.name || ""
-  //     },
-  //     price: Number(product.price),
-  //     image: product.image,
-  //     productId: product.productId,
-  //     variantName: product.variantName,
-  //     variantValue: product.variantValue,
-  //     quantity: product.quantity,
-  //   }));
-  // };
+  const updateNavigationState = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+  };
 
   // Effect to handle language changes
   useEffect(() => {
     if (swiperRef.current) {
       const swiper = swiperRef.current;
-      if (isRTL) {
-        swiper.changeLanguageDirection('rtl');
-      } else {
-        swiper.changeLanguageDirection('ltr');
-      }
+      swiper.changeLanguageDirection(isRTL ? 'rtl' : 'ltr');
       swiper.update();
+      updateNavigationState(swiper);
     }
   }, [isRTL]);
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      const swiper = swiperRef.current;
+      swiper.update();
+      updateNavigationState(swiper);
+    }
+  }, [products, isLoading]);
 
   return (
     <div className="mb-16">
@@ -66,6 +58,7 @@ const BarbershopSlider: React.FC<IBarbershopSliderProps> = ({ products, isLoadin
           <div className="flex items-center space-x-2">
             <button 
               ref={prevRef}
+              disabled={isBeginning}
               className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors ${
                 isBeginning 
                   ? 'opacity-40 cursor-not-allowed' 
@@ -86,6 +79,7 @@ const BarbershopSlider: React.FC<IBarbershopSliderProps> = ({ products, isLoadin
             </button>
             <button 
               ref={nextRef}
+              disabled={isEnd}
               className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors ${
                 isEnd 
                   ? 'opacity-40 cursor-not-allowed' 
@@ -116,10 +110,12 @@ const BarbershopSlider: React.FC<IBarbershopSliderProps> = ({ products, isLoadin
           slidesPerView={4}
           slidesPerGroup={4}
           watchSlidesProgress={true}
+          dir={isRTL ? 'rtl' : 'ltr'}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
+            swiper.changeLanguageDirection(isRTL ? 'rtl' : 'ltr');
+            swiper.update();
+            updateNavigationState(swiper);
           }}
           onBeforeInit={(swiper) => {
             // @ts-ignore
@@ -127,11 +123,17 @@ const BarbershopSlider: React.FC<IBarbershopSliderProps> = ({ products, isLoadin
             // @ts-ignore
             swiper.params.navigation.nextEl = nextRef.current;
           }}
-          onSlideChange={(swiper: SwiperType) => {
-            // Update states on slide change
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
-          }}
+          onSlideChange={updateNavigationState}
+          onSlideChangeTransitionEnd={updateNavigationState}
+          onProgress={updateNavigationState}
+          onTouchEnd={updateNavigationState}
+          onReachBeginning={() => setIsBeginning(true)}
+          onReachEnd={() => setIsEnd(true)}
+          onFromEdge={updateNavigationState}
+          onToEdge={updateNavigationState}
+          onActiveIndexChange={updateNavigationState}
+          onResize={updateNavigationState}
+          onBreakpoint={updateNavigationState}
           navigation={{
             prevEl: prevRef.current,
             nextEl: nextRef.current,

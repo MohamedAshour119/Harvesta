@@ -24,14 +24,36 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = ({
   isLoading,
   title
 }) => {
-  const { t } = useTranslation(['showProduct']);
+  const { t, i18n } = useTranslation(['showProduct']);
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
 
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const isRTL = document.documentElement.dir === 'rtl';
+  const isRTL = i18n.language === 'ar' || document.documentElement.dir === 'rtl';
+
+  const updateNavigationState = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+  };
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      const swiper = swiperRef.current;
+      swiper.changeLanguageDirection(isRTL ? 'rtl' : 'ltr');
+      swiper.update();
+      updateNavigationState(swiper);
+    }
+  }, [isRTL]);
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      const swiper = swiperRef.current;
+      swiper.update();
+      updateNavigationState(swiper);
+    }
+  }, [relatedProducts, isLoading]);
 
   return (
     <div className="space-y-6">
@@ -43,6 +65,7 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = ({
           <div className="flex items-center space-x-2">
             <button
               ref={prevRef}
+              disabled={isBeginning}
               className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors ${isBeginning
                   ? 'opacity-40 cursor-not-allowed'
                   : 'hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer'
@@ -56,6 +79,7 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = ({
             </button>
             <button
               ref={nextRef}
+              disabled={isEnd}
               className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors ${isEnd
                   ? 'opacity-40 cursor-not-allowed'
                   : 'hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer'
@@ -78,10 +102,12 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = ({
           slidesPerView={4}
           slidesPerGroup={4}
           watchSlidesProgress={true}
+          dir={isRTL ? 'rtl' : 'ltr'}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
+            swiper.changeLanguageDirection(isRTL ? 'rtl' : 'ltr');
+            swiper.update();
+            updateNavigationState(swiper);
           }}
           onBeforeInit={(swiper) => {
             // @ts-ignore
@@ -89,10 +115,17 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = ({
             // @ts-ignore
             swiper.params.navigation.nextEl = nextRef.current;
           }}
-          onSlideChange={(swiper: SwiperType) => {
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
-          }}
+          onSlideChange={updateNavigationState}
+          onSlideChangeTransitionEnd={updateNavigationState}
+          onProgress={updateNavigationState}
+          onTouchEnd={updateNavigationState}
+          onReachBeginning={() => setIsBeginning(true)}
+          onReachEnd={() => setIsEnd(true)}
+          onFromEdge={updateNavigationState}
+          onToEdge={updateNavigationState}
+          onActiveIndexChange={updateNavigationState}
+          onResize={updateNavigationState}
+          onBreakpoint={updateNavigationState}
           navigation={{
             prevEl: prevRef.current,
             nextEl: nextRef.current,
