@@ -13,12 +13,26 @@ interface ProductResult {
     name: string;
     slug?: string;
     description?: string;
+    category?: {
+        id: number;
+        name: string;
+    };
     industrial_category?: {
         id: number;
         name: string;
     };
     main_image?: string;
-    images?: Array<{ url: string }>;
+    images?: {
+        main_image?: string;
+        other_images?: string[];
+    } | Array<{ url: string }>;
+    cheapestVariant?: {
+        id?: number;
+        price_after_discount?: number;
+        unit_price_usd?: number;
+        discount_percentage?: number;
+        main_image?: string;
+    };
     variants?: Array<{
         price: number;
         discount?: number;
@@ -387,7 +401,10 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                                         || null;
 
                                     const categoryName = product.category?.name || product.industrial_category?.name;
-                                    const price = product.cheapestVariant?.price_after_discount ?? product.cheapestVariant?.unit_price_usd ?? product.variants?.[0]?.price;
+                                    const originalPrice = product.cheapestVariant?.unit_price_usd;
+                                    const finalPrice = product.cheapestVariant?.price_after_discount ?? product.cheapestVariant?.unit_price_usd ?? product.variants?.[0]?.price;
+                                    const discountPercentage = product.cheapestVariant?.discount_percentage;
+                                    const hasDiscount = originalPrice !== undefined && finalPrice !== undefined && discountPercentage !== undefined && Number(discountPercentage) > 0 && Number(originalPrice) > Number(finalPrice);
 
                                     return (
                                         <div
@@ -421,16 +438,28 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                                                         </span>
                                                     </div>
 
-                                                    <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
+                                                    <div className="flex items-center gap-2 flex-wrap text-xs text-gray-500 dark:text-slate-400">
                                                         {categoryName && (
-                                                            <span className="px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 text-[10px]">
+                                                            <span className="px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 text-[10px] font-medium">
                                                                 {categoryName}
                                                             </span>
                                                         )}
-                                                        {price !== undefined && (
-                                                            <span className="font-bold text-[#B12C2E] dark:text-[#E03E41]">
-                                                                {price} {t('common:currency', 'ج.م')}
-                                                            </span>
+                                                        {finalPrice !== undefined && (
+                                                            <div className="flex items-center gap-1.5 flex-wrap">
+                                                                {hasDiscount && (
+                                                                    <del className="text-gray-400 dark:text-slate-500 text-[11px] font-normal">
+                                                                        {Number(originalPrice).toFixed(2)} {t('common:currency', 'ج.م')}
+                                                                    </del>
+                                                                )}
+                                                                <span className="font-bold text-[#B12C2E] dark:text-[#E03E41] text-xs">
+                                                                    {Number(finalPrice).toFixed(2)} {t('common:currency', 'ج.م')}
+                                                                </span>
+                                                                {hasDiscount && (
+                                                                    <span className="px-1.5 py-0.5 text-[10px] font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/50 rounded border border-green-200 dark:border-green-800/40">
+                                                                        -{discountPercentage}%
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                         )}
                                                     </div>
                                                 </div>
