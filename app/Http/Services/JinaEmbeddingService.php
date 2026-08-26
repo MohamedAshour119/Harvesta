@@ -97,8 +97,75 @@ class JinaEmbeddingService
      */
     public function generateImageEmbedding(string $imageSource): array
     {
+        $processedImage = $this->preprocessImageSource($imageSource);
         // For Jina CLIP, input should be an array of objects
-        $results = $this->generateEmbeddings([['image' => $imageSource]], $this->clipModel, null);
+        $results = $this->generateEmbeddings([['image' => $processedImage]], $this->clipModel, null);
         return $results[0] ?? [];
+    }
+
+    /**
+     * Preprocess and resize image source to max 512px to match embedding indexing pipeline.
+     */
+    private function preprocessImageSource(string $imageSource, int $maxDim = 512): string
+    {
+        if (str_starts_with($imageSource, 'http://') || str_starts_with($imageSource, 'https://')) {
+            return $imageSource;
+        }
+
+        if (!str_starts_with($imageSource, 'data:image')) {
+            return $imageSource;
+        }
+
+        if (!extension_loaded('gd')) {
+            return $imageSource;
+        }
+
+        try {
+            $commaPos = strpos($imageSource, ',');
+            if ($commaPos === false) {
+                return $imageSource;
+            }
+
+            $rawBase64 = substr($imageSource, $commaPos + 1);
+            $decoded = base64_decode($rawBase64);
+            if (!$decoded) {
+                return $imageSource;
+            }
+
+            $srcImg = @imagecreatefromstring($decoded);
+            if (!$srcImg) {
+                return $imageSource;
+            }
+
+            $width = imagesx($srcImg);
+            $height = imagesy($srcImg);
+
+            if ($width <= $maxDim && $height <= $maxDim) {
+                imagedestroy($srcImg);
+                return $imageSource;
+            }
+
+            $ratio = min($maxDim / $width, $maxDim / $height);
+            $newWidth = max(1, (int) ($width * $ratio));
+            $newHeight = max(1, (int) ($height * $ratio));
+
+            $dstImg = imagecreatetruecolor($newWidth, $newHeight);
+            imagealphablending($dstImg, false);
+            imagesavealpha($dstImg, true);
+
+            imagecopyresampled($dstImg, $srcImg, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+            ob_start();
+            imagepng($dstImg, null, 6);
+            $resizedData = ob_get_clean();
+
+            imagedestroy($srcImg);
+            imagedestroy($dstImg);
+
+            return 'data:image/png;base64,' . base64_encode($resizedData);
+        } catch (\Exception $e) {
+            Log::warning('Image preprocess failed, falling back to original: ' . $e->getMessage());
+            return $imageSource;
+        }
     }
 }

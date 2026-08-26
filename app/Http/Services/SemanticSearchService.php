@@ -63,7 +63,8 @@ class SemanticSearchService
     }
 
     /**
-     * Perform visual search: embed the input image, compute similarity with all product images.
+     * Perform visual search: embed the input image, compute similarity with all product images,
+     * applying dynamic relative thresholding and category coherence gating.
      * 
      * @param string $imageSource Image (base64 or URL)
      * @param int $limit
@@ -97,21 +98,68 @@ class SemanticSearchService
 
             $similarity = $this->cosineSimilarity($queryVector, $currentVector);
 
-            if ($similarity >= 0.45) { 
+            // Initial floor to discard completely unrelated items
+            if ($similarity >= 0.60) { 
                 $scored[] = [
                     'product' => $ie->product,
+                    'category_id' => $ie->product->industry_category_id,
                     'score' => $similarity,
                 ];
             }
         }
 
+        if (empty($scored)) {
+            return [];
+        }
+
         // Sort descending by similarity score
         usort($scored, fn($a, $b) => $b['score'] <=> $a['score']);
 
-        return array_map(
-            fn($item) => $item['product'],
-            array_slice($scored, 0, $limit)
-        );
+        $topScore = $scored[0]['score'];
+
+        // If top match is too low, no confident visual match
+        if ($topScore < 0.62) {
+            return [];
+        }
+
+        // Dynamic relative floor: results must be within relative distance of top match
+        $relativeMinScore = max(0.68, $topScore * 0.78, $topScore - 0.16);
+
+        // Identify dominant category IDs from top high-confidence results
+        $topCandidates = array_slice($scored, 0, min(3, count($scored)));
+        $dominantCategories = collect($topCandidates)
+            ->where('score', '>=', $topScore - 0.12)
+            ->pluck('category_id')
+            ->filter()
+            ->unique()
+            ->toArray();
+
+        $filtered = [];
+
+        foreach ($scored as $item) {
+            $score = $item['score'];
+            $isSameCategory = in_array($item['category_id'], $dominantCategories);
+
+            // Discard items falling below the dynamic relative floor
+            if ($score < $relativeMinScore) {
+                break;
+            }
+
+            // Category gating: products from completely different categories must have near-top similarity
+            if (!empty($dominantCategories) && !$isSameCategory) {
+                if ($score < ($topScore - 0.05)) {
+                    continue;
+                }
+            }
+
+            $filtered[] = $item['product'];
+
+            if (count($filtered) >= $limit) {
+                break;
+            }
+        }
+
+        return $filtered;
     }
 
     /**
