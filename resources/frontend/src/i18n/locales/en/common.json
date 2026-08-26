@@ -11,6 +11,13 @@
     "language": "Language",
     "signedInAs": "Signed in as"
   },
+  "theme": {
+    "title": "Appearance",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "switchToLight": "Switch to Light Mode",
+    "switchToDark": "Switch to Dark Mode"
+  },
   "footer": {
     "about": "About Us",
     "contact": "Contact Us",

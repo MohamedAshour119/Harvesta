@@ -11,6 +11,13 @@
     "language": "اللغة",
     "signedInAs": "مسجل دخول كـ"
   },
+  "theme": {
+    "title": "المظهر",
+    "lightMode": "الوضع الفاتح",
+    "darkMode": "الوضع الداكن",
+    "switchToLight": "التبديل إلى الوضع الفاتح",
+    "switchToDark": "التبديل إلى الوضع الداكن"
+  },
   "footer": {
     "about": "من نحن",
     "contact": "اتصل بنا",
