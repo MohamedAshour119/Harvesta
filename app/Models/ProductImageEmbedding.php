@@ -20,4 +20,12 @@ class ProductImageEmbedding extends Model
     {
         return json_decode($this->embedding, true) ?: [];
     }
+
+    /**
+     * Get the multimodal text vector as an array
+     */
+    public function getTextVectorAttribute(): array
+    {
+        return json_decode($this->text_embedding ?? '', true) ?: [];
+    }
 }

@@ -116,11 +116,21 @@ class GenerateProductImageEmbeddings extends Command
                 // Delete any old embeddings for this product, keep only one per product
                 ProductImageEmbedding::where('product_id', $product->id)->delete();
 
+                // Generate CLIP text embedding for multimodal alignment
+                $arName = $product->getTranslation('name', 'ar');
+                $enName = $product->getTranslation('name', 'en');
+                $catAr = $product->industrialCategory ? $product->industrialCategory->getTranslation('name', 'ar') : '';
+                $catEn = $product->industrialCategory ? $product->industrialCategory->getTranslation('name', 'en') : '';
+                $clipText = trim("{$arName} {$enName} {$catAr} {$catEn}");
+                $textRes = $jinaService->generateEmbeddings([['text' => $clipText]], 'jina-clip-v2', null);
+                $textEmbedding = $textRes[0] ?? null;
+
                 ProductImageEmbedding::create([
                     'product_id' => $product->id,
                     'image_hash' => $hash,
                     'image_url' => $media->getUrl(),
                     'embedding' => json_encode($embedding),
+                    'text_embedding' => !empty($textEmbedding) ? json_encode($textEmbedding) : null,
                 ]);
 
                 $this->info("[{$counter}] ✅ Done: {$productName}");

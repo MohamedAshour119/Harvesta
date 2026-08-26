@@ -95,6 +95,15 @@ class ProductObserver
             // Generate embedding using CLIP model
             $embedding = $jinaService->generateImageEmbedding($base64Image);
 
+            // Generate CLIP text embedding for multimodal fusion
+            $arName = $product->getTranslation('name', 'ar');
+            $enName = $product->getTranslation('name', 'en');
+            $catAr = $product->industrialCategory ? $product->industrialCategory->getTranslation('name', 'ar') : '';
+            $catEn = $product->industrialCategory ? $product->industrialCategory->getTranslation('name', 'en') : '';
+            $clipText = trim("{$arName} {$enName} {$catAr} {$catEn}");
+            $textRes = $jinaService->generateEmbeddings([['text' => $clipText]], 'jina-clip-v2', null);
+            $textEmbedding = $textRes[0] ?? null;
+
             if (!empty($embedding)) {
                 ProductImageEmbedding::updateOrCreate(
                     [
@@ -104,6 +113,7 @@ class ProductObserver
                     [
                         'image_url' => $imageUrl,
                         'embedding' => json_encode($embedding),
+                        'text_embedding' => !empty($textEmbedding) ? json_encode($textEmbedding) : null,
                     ]
                 );
             }
