@@ -220,22 +220,24 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                 onDrop={handleDrop}
             >
                 {/* Modal Header */}
-                <div className="relative px-4 py-3.5 sm:px-6 sm:py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between gap-2 bg-gradient-to-r from-gray-50/50 to-white dark:from-[#192335] dark:to-[#151D2C]">
-                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#B12C2E] to-[#E03E41] flex items-center justify-center text-white shadow-md shadow-red-500/20 shrink-0">
+                <div className="relative px-4 py-3.5 sm:px-6 sm:py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between gap-3 bg-gradient-to-r from-gray-50/50 to-white dark:from-[#192335] dark:to-[#151D2C]">
+                    <div className="flex items-start gap-2.5 sm:gap-3 min-w-0 flex-1 text-start">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#B12C2E] to-[#E03E41] flex items-center justify-center text-white shadow-md shadow-red-500/20 shrink-0 mt-0.5">
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                         </div>
-                        <div className="min-w-0 flex-1">
-                            <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                                <span>{t('home:visualSearchModal.title', 'البحث البصري الذكي')}</span>
+                        <div className="min-w-0 flex-1 text-start">
+                            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white leading-tight">
+                                    {t('home:visualSearchModal.title', 'البحث البصري الذكي')}
+                                </h3>
                                 <span className="text-[9px] sm:text-[10px] font-extrabold uppercase px-1.5 sm:px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/50 shrink-0">
                                     {t('home:visualSearchModal.aiVisionBadge', 'رؤية بالذكاء الاصطناعي')}
                                 </span>
-                            </h3>
-                            <p className="text-[10px] sm:text-xs text-gray-500 dark:text-slate-400 truncate">
+                            </div>
+                            <p className="text-[10px] sm:text-xs text-gray-500 dark:text-slate-400 mt-0.5 text-start truncate">
                                 {t('home:visualSearchModal.subtitle', 'ابحث عن أي منتج بدقة متناهية بمجرد رفع صورته')}
                             </p>
                         </div>
