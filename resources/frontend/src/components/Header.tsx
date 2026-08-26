@@ -6,7 +6,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store/store';
-import { FiUser, FiUserPlus, FiSettings, FiBox, FiLogOut, FiHome, FiShoppingBag, FiTag, FiInfo, FiHeart } from 'react-icons/fi';
+import { FiUser, FiUserPlus, FiSettings, FiBox, FiLogOut, FiHome, FiShoppingBag, FiTag, FiInfo } from 'react-icons/fi';
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md';
 import { setIsAuth, setUser } from '../store/slices/userSlice';
 import ApiClient, { clearAuthTokens } from '../ApiClient';
@@ -385,28 +385,6 @@ const Header: React.FC = () => {
                       <FiInfo className="size-4.5 shrink-0" />
                       <span>{t('navigation.about', 'About')}</span>
                     </Link>
-                  </li>
-
-                  {/* Dedicated Favorites item in navigation */}
-                  <li>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        dispatch(setIsHeaderSidebarOpen(false));
-                        dispatch(toggleFavoritesSidebar());
-                      }}
-                      className="flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl font-medium text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100/70 dark:hover:bg-slate-800 hover:text-[#B12C2E] dark:hover:text-[#E03E41] transition-all duration-200 cursor-pointer"
-                    >
-                      <div className="flex items-center gap-3">
-                        <FiHeart className="size-4.5 text-[#B12C2E] dark:text-[#E03E41] shrink-0" />
-                        <span>{t('header.favorites', 'المفضلة')}</span>
-                      </div>
-                      {favoritesCount > 0 && (
-                        <span className="bg-[#B12C2E] dark:bg-[#E03E41] text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
-                          {favoritesCount}
-                        </span>
-                      )}
-                    </button>
                   </li>
                 </ul>
               </div>
