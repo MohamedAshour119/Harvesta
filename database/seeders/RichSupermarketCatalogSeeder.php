@@ -456,7 +456,7 @@ class RichSupermarketCatalogSeeder extends Seeder
             ],
             [
                 'category' => 'frozen-vegetables',
-                'name' => ['en' => 'Shahd Extra Green Okra (Bamia Extra)', 'ar' => 'بامية إكسترا صغيرة نمرة 1'],
+                'name' => ['en' => 'Shahd Extra Green Okra (Bamia Extra)', 'ar' => 'بامية إكسترا صغيرة فاخرة'],
                 'description' => [
                     'en' => 'Hand-selected tender mini okra pods, perfect for authentic Egyptian Bamia stews and tagines.',
                     'ar' => 'أصابع بامية صغيرة إكسترا مقموعة باليد ومجمدة على الفور، لعمل أحلى طاجن بامية باللحمة في الفرن.',
