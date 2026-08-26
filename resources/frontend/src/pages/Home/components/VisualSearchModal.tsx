@@ -379,9 +379,15 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
 
                             <div className="space-y-2.5">
                                 {results.map((product) => {
-                                    const imgUrl = product.main_image || product.images?.[0]?.url;
-                                    const variant = product.variants?.[0];
-                                    const price = variant?.price;
+                                    const imgUrl = 
+                                        (typeof product.images === 'object' && !Array.isArray(product.images) && product.images?.main_image)
+                                        || product.cheapestVariant?.main_image
+                                        || product.main_image
+                                        || (Array.isArray(product.images) && product.images[0]?.url)
+                                        || null;
+
+                                    const categoryName = product.category?.name || product.industrial_category?.name;
+                                    const price = product.cheapestVariant?.price_after_discount ?? product.cheapestVariant?.unit_price_usd ?? product.variants?.[0]?.price;
 
                                     return (
                                         <div
@@ -416,9 +422,9 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                                                     </div>
 
                                                     <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
-                                                        {product.industrial_category?.name && (
+                                                        {categoryName && (
                                                             <span className="px-2 py-0.5 rounded-md bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 text-[10px]">
-                                                                {product.industrial_category.name}
+                                                                {categoryName}
                                                             </span>
                                                         )}
                                                         {price !== undefined && (
