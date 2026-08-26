@@ -5,7 +5,14 @@
     "searchPlaceholder": "Search for products, categories, or suppliers",
     "requestCustomButton": "Request Custom Product",
     "browseAllProducts": "Browse All Products",
-    "noProductsFound": "No products found matching: {{query}}"
+    "noProductsFound": "No products found matching: {{query}}",
+    "visualResultsTitle": "Visual Matches",
+    "visualResultsSubtitle": "Found similar products based on your image",
+    "visualSearchTip": "Search by image (Drag & drop or choose image)",
+    "dropImageHere": "Drop image here to search products instantly",
+    "invalidImageFormat": "Please upload a valid image file",
+    "noVisualMatches": "No visually similar products found",
+    "visualSearchError": "Error processing image search"
   },
   "categories": {
     "title": "Popular Categories",

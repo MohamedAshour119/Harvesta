@@ -25,6 +25,8 @@ const HeroSection = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [isVisualSearch, setIsVisualSearch] = useState(false);
     const [visualImagePreview, setVisualImagePreview] = useState<string | null>(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const dragCounter = useRef(0);
 
     const debouncedSearchQuery = useDebounceRange(searchQuery, 500);
 
@@ -33,47 +35,112 @@ const HeroSection = () => {
         setSearchQuery(e.target.value);
     };
 
-    // Handle image upload
+    // Shared processor for image files (file input, drag-and-drop, clipboard paste)
+    const processImageFile = (file: File) => {
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            setShowNotFound(true);
+            setNotFoundMessage(t('home:hero.invalidImageFormat', 'Please upload a valid image file'));
+            setIsDropdownOpen(true);
+            return;
+        }
+
+        setIsLoading(true);
+        setSearchResults([]);
+        setShowNotFound(false);
+        setIsVisualSearch(true);
+        setIsSemanticResult(false);
+        setSearchQuery(''); // Clear text search when uploading image
+        setIsDropdownOpen(true); // Open dropdown immediately to show loading state
+
+        // Create preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setVisualImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+
+        ApiClient.search.visualSearch(file)
+            .then(response => {
+                const data = response.data.data;
+                const visualResults = data?.visual_results || [];
+
+                if (visualResults.length > 0) {
+                    setSearchResults(visualResults);
+                } else {
+                    setShowNotFound(true);
+                    setNotFoundMessage(t('home:hero.noVisualMatches', 'No visually similar products found'));
+                }
+            })
+            .catch(() => {
+                setShowNotFound(true);
+                setNotFoundMessage(t('home:hero.visualSearchError', 'Error processing image search'));
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    // Handle image upload from file picker
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            setIsLoading(true);
-            setSearchResults([]);
-            setShowNotFound(false);
-            setIsVisualSearch(true);
-            setIsSemanticResult(false);
-            setSearchQuery(''); // Clear text search when uploading image
-            setIsDropdownOpen(true); // Open dropdown immediately to show loading state
-
-            // Create preview
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setVisualImagePreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-
+            processImageFile(file);
             // Reset the input value so the same file can be selected again
             if (e.target) e.target.value = '';
+        }
+    };
 
-            ApiClient.search.visualSearch(file)
-                .then(response => {
-                    const data = response.data.data;
-                    const visualResults = data?.visual_results || [];
+    // Drag and drop event handlers
+    const handleDragEnter = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dragCounter.current += 1;
+        if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+            setIsDragging(true);
+        }
+    };
 
-                    if (visualResults.length > 0) {
-                        setSearchResults(visualResults);
-                    } else {
-                        setShowNotFound(true);
-                        setNotFoundMessage(t('home:hero.noVisualMatches', 'No visually similar products found'));
-                    }
-                })
-                .catch(() => {
-                    setShowNotFound(true);
-                    setNotFoundMessage(t('home:hero.visualSearchError', 'Error processing image search'));
-                })
-                .finally(() => {
-                    setIsLoading(false);
-                });
+    const handleDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dragCounter.current -= 1;
+        if (dragCounter.current <= 0) {
+            dragCounter.current = 0;
+            setIsDragging(false);
+        }
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(false);
+        dragCounter.current = 0;
+
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
+            processImageFile(files[0]);
+        }
+    };
+
+    // Handle clipboard paste (e.g. Ctrl+V with an image/screenshot)
+    const handlePaste = (e: React.ClipboardEvent) => {
+        const items = e.clipboardData.items;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.startsWith('image/')) {
+                const file = items[i].getAsFile();
+                if (file) {
+                    e.preventDefault();
+                    processImageFile(file);
+                    return;
+                }
+            }
         }
     };
 
@@ -182,42 +249,78 @@ const HeroSection = () => {
                 {t('home:hero.subtitle')}
             </h2>
             <div className="max-w-xl mx-auto">
-                <form onSubmit={handleSubmit} className="relative">
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        placeholder={t('home:hero.searchPlaceholder')}
-                        className="w-full p-3 ps-10 pe-12 bg-white dark:bg-[#151D2C] border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 rounded-[16px] focus:outline-none focus:border-yellow dark:focus:border-primary shadow-sm"
-                    />
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 absolute start-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-slate-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                <form 
+                    onSubmit={handleSubmit} 
+                    className="relative"
+                    onDragEnter={handleDragEnter}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                >
+                    <div className={`relative rounded-[16px] transition-all duration-300 ${
+                        isDragging 
+                            ? 'ring-2 ring-[#B12C2E] dark:ring-[#E03E41] ring-offset-2 dark:ring-offset-[#0B0F17] shadow-xl shadow-red-500/10 scale-[1.01]' 
+                            : ''
+                    }`}>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            onPaste={handlePaste}
+                            placeholder={isDragging ? (t('home:hero.dropImageHere', 'Drop image here to search instantly')) : t('home:hero.searchPlaceholder')}
+                            className={`w-full p-3 ps-10 pe-12 bg-white dark:bg-[#151D2C] border text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 rounded-[16px] focus:outline-none focus:border-yellow dark:focus:border-primary shadow-sm transition-all duration-300 ${
+                                isDragging
+                                    ? 'border-dashed border-2 border-[#B12C2E] dark:border-[#E03E41] bg-red-50/50 dark:bg-[#1C2638] placeholder:text-[#B12C2E] dark:placeholder:text-[#E03E41] font-medium'
+                                    : 'border-gray-300 dark:border-slate-700'
+                            }`}
                         />
-                    </svg>
-
-                    {/* Camera Icon for Visual Search */}
-                    <button
-                        type="button"
-                        onClick={triggerImageUpload}
-                        className="absolute end-4 top-1/2 cursor-pointer transform -translate-y-1/2 text-gray-400 hover:text-yellow transition-colors"
-                        title={t('home:hero.visualSearchTip', 'Search by image')}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={`h-5 w-5 absolute start-3 top-1/2 transform -translate-y-1/2 transition-colors ${
+                                isDragging ? 'text-[#B12C2E] dark:text-[#E03E41]' : 'text-gray-400 dark:text-slate-400'
+                            }`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
                         </svg>
-                    </button>
+
+                        {/* Camera Icon for Visual Search */}
+                        <button
+                            type="button"
+                            onClick={triggerImageUpload}
+                            className={`absolute end-3 top-1/2 cursor-pointer transform -translate-y-1/2 transition-all duration-200 p-1.5 rounded-full ${
+                                isDragging
+                                    ? 'text-white bg-[#B12C2E] dark:bg-[#E03E41] scale-110 shadow-md animate-pulse'
+                                    : 'text-gray-400 dark:text-slate-400 hover:text-yellow dark:hover:text-[#E03E41] hover:bg-gray-100 dark:hover:bg-slate-800'
+                            }`}
+                            title={t('home:hero.visualSearchTip', 'Search by image (Drag & drop or choose image)')}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+
+                        {/* Drag and drop active floating helper badge */}
+                        {isDragging && (
+                            <div className="absolute inset-0 bg-[#B12C2E]/10 dark:bg-[#E03E41]/10 rounded-[16px] pointer-events-none flex items-center justify-center border-2 border-dashed border-[#B12C2E] dark:border-[#E03E41] backdrop-blur-[1px]">
+                                <div className="flex items-center gap-2 text-[#B12C2E] dark:text-white font-bold text-xs sm:text-sm bg-white/95 dark:bg-[#151D2C]/95 px-4 py-1.5 rounded-full shadow-lg border border-[#B12C2E]/20 dark:border-[#E03E41]/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 animate-bounce text-[#B12C2E] dark:text-[#E03E41]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                    </svg>
+                                    <span>{t('home:hero.dropImageHere', 'Drop image here to search instantly')}</span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
 
                     <input
                         type="file"

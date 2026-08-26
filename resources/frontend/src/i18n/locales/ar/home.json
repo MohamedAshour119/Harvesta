@@ -8,7 +8,9 @@
     "noProductsFound": "لا توجد منتجات مطابقة لـ: {{query}}",
     "visualResultsTitle": "نتائج مطابقة بصرياً",
     "visualResultsSubtitle": "تم العثور على منتجات مشابهة بناءً على صورتك",
-    "visualSearchTip": "بحث بالصورة",
+    "visualSearchTip": "بحث بالصورة (اسحب وأفلت أو اختر صورة)",
+    "dropImageHere": "أفلت الصورة هنا للبحث الفوري عن المنتجات",
+    "invalidImageFormat": "يرجى اختيار أو إفلات ملف صورة صالح",
     "noVisualMatches": "لم يتم العثور على منتجات مماثلة بصرياً",
     "visualSearchError": "خطأ في معالجة البحث بالصورة"
   },
