@@ -6,25 +6,24 @@ import { useTranslation } from "react-i18next";
 import { useDebounceRange } from "../../../hooks/UseDebounceRange";
 import { motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi2";
+import VisualSearchModal from "./VisualSearchModal";
 
 const HeroSection = () => {
     const { t, i18n } = useTranslation(['home', 'common', 'shop']);
     const navigate = useNavigate();
     const isRTL = i18n.language === 'ar';
-// ... (rest of the component state/logic stays same)
+
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<ISearchResult[]>([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [showNotFound, setShowNotFound] = useState(false)
+    const [showNotFound, setShowNotFound] = useState(false);
     const [notFoundMessage, setNotFoundMessage] = useState('');
     const [isSemanticResult, setIsSemanticResult] = useState(false);
+    const [isVisualModalOpen, setIsVisualModalOpen] = useState(false);
 
-    const fileInputRef = useRef<HTMLInputElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [isVisualSearch, setIsVisualSearch] = useState(false);
-    const [visualImagePreview, setVisualImagePreview] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const dragCounter = useRef(0);
 
@@ -33,63 +32,6 @@ const HeroSection = () => {
     // Handle input change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
-    };
-
-    // Shared processor for image files (file input, drag-and-drop, clipboard paste)
-    const processImageFile = (file: File) => {
-        if (!file) return;
-
-        if (!file.type.startsWith('image/')) {
-            setShowNotFound(true);
-            setNotFoundMessage(t('home:hero.invalidImageFormat', 'Please upload a valid image file'));
-            setIsDropdownOpen(true);
-            return;
-        }
-
-        setIsLoading(true);
-        setSearchResults([]);
-        setShowNotFound(false);
-        setIsVisualSearch(true);
-        setIsSemanticResult(false);
-        setSearchQuery(''); // Clear text search when uploading image
-        setIsDropdownOpen(true); // Open dropdown immediately to show loading state
-
-        // Create preview
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setVisualImagePreview(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-
-        ApiClient.search.visualSearch(file)
-            .then(response => {
-                const data = response.data.data;
-                const visualResults = data?.visual_results || [];
-
-                if (visualResults.length > 0) {
-                    setSearchResults(visualResults);
-                } else {
-                    setShowNotFound(true);
-                    setNotFoundMessage(t('home:hero.noVisualMatches', 'No visually similar products found'));
-                }
-            })
-            .catch(() => {
-                setShowNotFound(true);
-                setNotFoundMessage(t('home:hero.visualSearchError', 'Error processing image search'));
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    };
-
-    // Handle image upload from file picker
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            processImageFile(file);
-            // Reset the input value so the same file can be selected again
-            if (e.target) e.target.value = '';
-        }
     };
 
     // Drag and drop event handlers
@@ -123,48 +65,29 @@ const HeroSection = () => {
         setIsDragging(false);
         dragCounter.current = 0;
 
-        const files = e.dataTransfer.files;
-        if (files && files.length > 0) {
-            processImageFile(files[0]);
-        }
+        // Open the visual search modal on image drop
+        setIsVisualModalOpen(true);
     };
 
-    // Handle clipboard paste (e.g. Ctrl+V with an image/screenshot)
+    // Handle clipboard paste (e.g. Ctrl+V with an image)
     const handlePaste = (e: React.ClipboardEvent) => {
         const items = e.clipboardData.items;
         for (let i = 0; i < items.length; i++) {
             if (items[i].type.startsWith('image/')) {
-                const file = items[i].getAsFile();
-                if (file) {
-                    e.preventDefault();
-                    processImageFile(file);
-                    return;
-                }
+                e.preventDefault();
+                setIsVisualModalOpen(true);
+                return;
             }
         }
     };
 
-    const triggerImageUpload = () => {
-        fileInputRef.current?.click();
-    };
-
-    const clearVisualSearch = () => {
-        setIsVisualSearch(false);
-        setVisualImagePreview(null);
-        setIsDropdownOpen(false);
-        setSearchResults([]);
-        if (fileInputRef.current) fileInputRef.current.value = '';
-    };
-
-    // Effect for debounced search API call — now uses semantic search
+    // Effect for debounced search API call — uses semantic search
     useEffect(() => {
         if (debouncedSearchQuery.length > 0) {
             setIsLoading(true);
             setSearchResults([]);
             setShowNotFound(false);
             setIsSemanticResult(false);
-            setIsVisualSearch(false);
-            setVisualImagePreview(null);
             setIsDropdownOpen(true);
 
             ApiClient.search.semanticSearch(debouncedSearchQuery)
@@ -192,13 +115,13 @@ const HeroSection = () => {
                     setSearchResults([]);
                 })
                 .finally(() => setIsLoading(false));
-        } else if (!isVisualSearch) {
+        } else {
             setIsDropdownOpen(false);
             setSearchResults([]);
             setShowNotFound(false);
             setIsSemanticResult(false);
         }
-    }, [debouncedSearchQuery, t, isVisualSearch]);
+    }, [debouncedSearchQuery, t]);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -225,6 +148,8 @@ const HeroSection = () => {
         setIsDropdownOpen(false);
         if (result.slug) {
             navigate(`/products/${result.slug}`);
+        } else {
+            navigate(`/products/${result.id}`);
         }
     };
 
@@ -235,7 +160,9 @@ const HeroSection = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate(`/show-results?query=${encodeURIComponent(searchQuery)}`);
+        if (searchQuery.trim()) {
+            navigate(`/show-results?query=${encodeURIComponent(searchQuery)}`);
+        }
     };
 
     return (
@@ -292,16 +219,16 @@ const HeroSection = () => {
                             />
                         </svg>
 
-                        {/* Camera Icon for Visual Search */}
+                        {/* Camera Icon for Visual Search Modal Trigger */}
                         <button
                             type="button"
-                            onClick={triggerImageUpload}
+                            onClick={() => setIsVisualModalOpen(true)}
                             className={`absolute end-3 top-1/2 cursor-pointer transform -translate-y-1/2 transition-all duration-200 p-1.5 rounded-full ${
                                 isDragging
                                     ? 'text-white bg-[#B12C2E] dark:bg-[#E03E41] scale-110 shadow-md animate-pulse'
                                     : 'text-gray-400 dark:text-slate-400 hover:text-yellow dark:hover:text-[#E03E41] hover:bg-gray-100 dark:hover:bg-slate-800'
                             }`}
-                            title={t('home:hero.visualSearchTip', 'Search by image (Drag & drop or choose image)')}
+                            title={t('home:hero.visualSearchTip', 'Search by image (Upload, drag & drop, or paste)')}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -322,37 +249,12 @@ const HeroSection = () => {
                         )}
                     </div>
 
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleImageUpload}
-                        className="hidden"
-                        accept="image/*"
-                    />
+                    {/* Text / Semantic Search Results Dropdown */}
                     {(isDropdownOpen && (searchResults?.length > 0 || showNotFound || isLoading)) && (
                         <div
                             ref={dropdownRef}
                             className={`absolute z-50 mt-2 w-full bg-white dark:bg-[#151D2C] rounded-xl shadow-2xl border border-gray-100 dark:border-slate-700/60 overflow-hidden transition-all duration-300 transform origin-top ${isDropdownOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}`}
                         >
-                            {/* Visual Search Preview Header */}
-                            {isVisualSearch && visualImagePreview && (
-                                <div className="px-3 py-2 bg-gray-50 dark:bg-[#1C2638] border-b border-gray-100 dark:border-slate-700 flex items-center gap-3">
-                                    <img src={visualImagePreview} alt="Target" className="w-10 h-10 object-cover rounded-md border border-gray-200 dark:border-slate-700" />
-                                    <div className="flex flex-col text-left">
-                                        <span className="text-xs font-bold text-gray-700 dark:text-slate-200">{t('home:hero.visualResultsTitle', 'Visual Matches')}</span>
-                                        <span className="text-[10px] text-gray-400 dark:text-slate-400">{t('home:hero.visualResultsSubtitle', 'Found similar products based on your image')}</span>
-                                    </div>
-                                    <button
-                                        onClick={clearVisualSearch}
-                                        className="ms-auto text-gray-400 hover:text-red-500 p-1 rounded"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            )}
-
                             {/* AI Badge Header */}
                             {isSemanticResult && searchResults.length > 0 && (
                                 <div className="px-3 py-1.5 bg-purple-50 dark:bg-purple-950/40 border-b border-purple-100 dark:border-purple-900/40 flex items-center gap-1.5">
@@ -360,55 +262,27 @@ const HeroSection = () => {
                                     <span className="text-xs text-purple-600 dark:text-purple-300">{t('common:search.semanticTitle', 'You might also be looking for')}</span>
                                 </div>
                             )}
+
                             {isLoading ? (
-                                isVisualSearch ? (
-                                    <div className="p-8 flex flex-col items-center justify-center space-y-4">
-                                        <div className="relative w-48 h-32 bg-gray-100 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 overflow-hidden shadow-inner">
-                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 dark:via-white/10 to-transparent animate-shimmer -translate-x-full"></div>
-                                            <div className="absolute w-full h-1 bg-gradient-to-r from-transparent via-[#B12C2E] to-transparent shadow-[0_0_15px_rgba(177,44,46,0.42)] animate-scan"></div>
-                                            <div className="grid grid-cols-2 gap-2 p-3 mt-4">
-                                                {[1, 2, 3, 4].map(i => (
-                                                    <div key={i} className="h-10 bg-gray-200 dark:bg-slate-700 rounded-lg animate-pulse" style={{ animationDelay: `${i * 150}ms` }}></div>
-                                                ))}
+                                <div className="p-4 space-y-4">
+                                    {[1, 2, 3].map(i => (
+                                        <div key={i} className="flex items-center gap-3">
+                                            <div className="w-8 h-8 bg-gray-100 dark:bg-slate-800 rounded-md animate-pulse"></div>
+                                            <div className="flex-1 space-y-2">
+                                                <div className="h-3 bg-gray-100 dark:bg-slate-800 rounded animate-pulse w-3/4"></div>
+                                                <div className="h-2 bg-gray-50 dark:bg-slate-850 rounded animate-pulse w-1/2"></div>
                                             </div>
                                         </div>
-
-                                        <div className="text-center">
-                                            <p className="text-sm font-bold text-gray-700 dark:text-slate-200 animate-pulse">
-                                                {t('common:search.analyzingImage', 'Analyzing your image...')}
-                                            </p>
-                                            <p className="text-[10px] text-gray-400 dark:text-slate-500 mt-1">
-                                                {t('common:search.matchingPatterns', 'Comparing visual patterns with thousands of products')}
-                                            </p>
+                                    ))}
+                                    <div className="flex items-center justify-center pt-2 border-t border-gray-50 dark:border-slate-800 gap-2">
+                                        <div className="flex space-x-1">
+                                            <div className="w-1 h-1 rounded-full bg-yellow animate-bounce [animation-delay:-0.3s]"></div>
+                                            <div className="w-1 h-1 rounded-full bg-yellow animate-bounce [animation-delay:-0.15s]"></div>
+                                            <div className="w-1 h-1 rounded-full bg-yellow animate-bounce"></div>
                                         </div>
-
-                                        <div className="flex space-x-1.5">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-yellow animate-bounce [animation-delay:-0.3s]"></div>
-                                            <div className="w-1.5 h-1.5 rounded-full bg-yellow animate-bounce [animation-delay:-0.15s]"></div>
-                                            <div className="w-1.5 h-1.5 rounded-full bg-yellow animate-bounce"></div>
-                                        </div>
+                                        <span className="text-xs text-gray-400 dark:text-slate-400 font-medium">{t('common:search.searching', 'Searching...')}</span>
                                     </div>
-                                ) : (
-                                    <div className="p-4 space-y-4">
-                                        {[1, 2, 3].map(i => (
-                                            <div key={i} className="flex items-center gap-3">
-                                                <div className="w-8 h-8 bg-gray-100 dark:bg-slate-800 rounded-md animate-pulse"></div>
-                                                <div className="flex-1 space-y-2">
-                                                    <div className="h-3 bg-gray-100 dark:bg-slate-800 rounded animate-pulse w-3/4"></div>
-                                                    <div className="h-2 bg-gray-50 dark:bg-slate-850 rounded animate-pulse w-1/2"></div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                        <div className="flex items-center justify-center pt-2 border-t border-gray-50 dark:border-slate-800 gap-2">
-                                            <div className="flex space-x-1">
-                                                <div className="w-1 h-1 rounded-full bg-yellow animate-bounce [animation-delay:-0.3s]"></div>
-                                                <div className="w-1 h-1 rounded-full bg-yellow animate-bounce [animation-delay:-0.15s]"></div>
-                                                <div className="w-1 h-1 rounded-full bg-yellow animate-bounce"></div>
-                                            </div>
-                                            <span className="text-xs text-gray-400 dark:text-slate-400 font-medium">{t('common:search.searching', 'Searching...')}</span>
-                                        </div>
-                                    </div>
-                                )
+                                </div>
                             ) : !showNotFound ? (
                                 <div className="max-h-[300px] overflow-y-auto">
                                     {searchResults.map((result) => (
@@ -421,7 +295,7 @@ const HeroSection = () => {
                                                 <div className="text-start flex items-center gap-2">
                                                     <p className="font-semibold text-gray-900 dark:text-slate-100 text-sm inline-flex items-center gap-2">
                                                         <bdi>{result.name}</bdi>
-                                                        {(isSemanticResult || isVisualSearch) && (
+                                                        {isSemanticResult && (
                                                             <span dir="ltr" className="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 rounded-full select-none">
                                                                 AI
                                                             </span>
@@ -490,8 +364,14 @@ const HeroSection = () => {
                     </motion.button>
                 </div>
             </div>
-        </div>
-    )
-}
 
-export default HeroSection
+            {/* Dedicated Visual Search Modal */}
+            <VisualSearchModal
+                show={isVisualModalOpen}
+                onClose={() => setIsVisualModalOpen(false)}
+            />
+        </div>
+    );
+};
+
+export default HeroSection;
