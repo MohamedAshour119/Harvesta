@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 70" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292 70" fill="none">
   <defs>
     <!-- Vibrant Gold Gradient -->
     <linearGradient id="h-gold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -48,14 +48,14 @@
   </g>
 
   <!-- Typography -->
-  <g transform="translate(78, 41)">
+  <g transform="translate(78, 40)">
     <!-- HARVESTA Main Title -->
     <text x="0" y="0" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="39" font-weight="900" letter-spacing="1.2" fill="url(#h-crimson)">HARVESTA</text>
     
-    <!-- Slogan Subtitle: Background perfectly fitted to the text size -->
-    <g transform="translate(1, 8)">
-      <rect x="0" y="0" width="194" height="17" rx="4.5" fill="rgba(224,62,65,0.1)"/>
-      <text x="6" y="12.5" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="10" font-weight="800" letter-spacing="1.1" fill="#F59E0B">B2B FOOD &amp; SUPPLY NETWORK</text>
+    <!-- Slogan Subtitle: Larger text (11.2px) + Snug, matched pill background -->
+    <g transform="translate(1, 7)">
+      <rect x="0" y="0" width="206" height="19" rx="5" fill="rgba(224,62,65,0.1)"/>
+      <text x="6" y="14" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="11.2" font-weight="800" letter-spacing="0.8" fill="#F59E0B">B2B FOOD &amp; SUPPLY NETWORK</text>
     </g>
   </g>
 </svg>
