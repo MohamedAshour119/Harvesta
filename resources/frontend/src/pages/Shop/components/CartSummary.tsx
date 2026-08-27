@@ -8,6 +8,7 @@ import SidebarCartItem from './SidebarCartItem';
 import { Link } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
 import { setIsCartSummarySidebarOpen } from '../../../store/slices/isCartSummarySidebarOpenSlice';
+import { openEmptyCartModal } from '../../../store/slices/emptyCartModalSlice';
 import { useNavigate } from 'react-router-dom';
 // Add these imports
 import { useRef, useEffect, useState } from 'react';
@@ -134,8 +135,17 @@ const CartSummary: React.FC = () => {
         </button>
       </AgentCheckoutBlocker>
       
-      <button className="w-full border border-yellow text-yellow font-medium py-2 rounded-full cursor-pointer">
-        <Link to="/cart"> {t('goToCart')}</Link>
+      <button
+        onClick={() => {
+          if (items.length === 0) {
+            dispatch(openEmptyCartModal());
+          } else {
+            navigate('/cart');
+          }
+        }}
+        className="w-full border border-yellow text-yellow font-medium py-2 rounded-full cursor-pointer"
+      >
+        {t('goToCart')}
       </button>
       
       {/* Cart Items */}

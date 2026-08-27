@@ -36,6 +36,7 @@ import ForgotPassword from './pages/Login/ForgotPassword/ForgotPassword'
 import ResetPassword from './pages/Login/ResetPassword/ResetPassword'
 import Profile from './pages/Profile/Profile';
 import PreventAgentCheckoutRoute from './auth/PreventAgentCheckoutRoute';
+import EmptyCartModal from './components/modals/EmptyCartModal';
 
 function App() {
   const pathname = useLocation().pathname;
@@ -136,6 +137,7 @@ function App() {
       {!dashboardPathnames.includes(pathname) && <ChatWidget />}
       <LoginPrompt />
       <LanguageSwitchModal />
+      <EmptyCartModal />
     </div>
   )
 }

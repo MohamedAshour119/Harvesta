@@ -10,5 +10,12 @@
   "shippingFee": "Shipping Fee",
   "proceedToCheckout": "Proceed to Checkout",
   "all_categories": "All Categories",
-  "goToCart": "Go to Cart"
+  "goToCart": "Go to Cart",
+  "emptyCartModal": {
+    "title": "Your Cart is Empty",
+    "badge": "Cart Alert",
+    "description": "You haven't added any products to your cart yet. Please add products to view your cart and proceed to checkout.",
+    "browseProducts": "Browse Products Now",
+    "close": "Close"
+  }
 }

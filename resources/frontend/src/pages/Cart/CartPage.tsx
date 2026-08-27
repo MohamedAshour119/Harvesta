@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { increaseQuantity, decreaseQuantity, batchUpdateCartItemLanguages, setSmartBundleCTAs } from '../../store/slices/cartSlice';
+import { openEmptyCartModal } from '../../store/slices/emptyCartModalSlice';
 import type { RootState } from '../../store/store';
 import MaxWidthWrapper from '../../components/MaxWidthWrapper';
 import FooterSection from '../../components/FooterSection';
@@ -18,11 +19,20 @@ const CartPage: React.FC = () => {
   const { t } = useTranslation(['cart']);
   const i18n = useTranslation().i18n;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartState = useSelector((state: RootState) => state.cart);
   const items = cartState?.items || [];
   const subtotal = cartState?.subtotal || 0;
   const total = cartState?.total || 0;
   const smartBundleCTAs = cartState?.smartBundleCTAs || [];
+
+  // Prevent accessing empty cart page directly
+  useEffect(() => {
+    if (items.length === 0) {
+      dispatch(openEmptyCartModal());
+      navigate('/all-products', { replace: true });
+    }
+  }, [items.length, dispatch, navigate]);
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
 
@@ -103,7 +113,6 @@ const CartPage: React.FC = () => {
     };
   }, [i18n, i18n.language, items]);
 
-  const navigate = useNavigate();
   const { handleProtectedAction } = useProtectedAction();
 
   return (

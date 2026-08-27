@@ -17,6 +17,7 @@ import HeaderDropdown from './HeaderDropdown';
 import ThemeToggle from './ThemeToggle';
 import { setIsCartSummarySidebarOpen } from '../store/slices/isCartSummarySidebarOpenSlice';
 import { setIsHeaderSidebarOpen } from '../store/slices/isHeaderSidebarOpenSlice';
+import { openEmptyCartModal } from '../store/slices/emptyCartModalSlice';
 import { clearChatbotForLogout } from '../utils/chatbotSessionStorage';
 
 const Header: React.FC = () => {
@@ -88,6 +89,24 @@ const Header: React.FC = () => {
   // Toggle user dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Handle cart button click with empty cart prevention
+  const handleCartClick = (e: React.MouseEvent) => {
+    if (cartItemsCount === 0) {
+      e.preventDefault();
+      dispatch(openEmptyCartModal());
+    }
+  };
+
+  const handleMobileCartClick = (e: React.MouseEvent) => {
+    if (cartItemsCount === 0) {
+      e.preventDefault();
+      dispatch(setIsHeaderSidebarOpen(false));
+      dispatch(openEmptyCartModal());
+    } else {
+      dispatch(setIsHeaderSidebarOpen(false));
+    }
   };
 
   // Handle logout
@@ -164,7 +183,12 @@ const Header: React.FC = () => {
               {/* Theme Toggle Button */}
               <ThemeToggle />
 
-              <Link to="/cart" className="relative hover:text-[#B12C2E] dark:hover:text-[#E03E41] transition-colors cursor-pointer p-1">
+              <Link
+                to="/cart"
+                onClick={handleCartClick}
+                className="relative hover:text-[#B12C2E] dark:hover:text-[#E03E41] transition-colors cursor-pointer p-1"
+                aria-label={t('header.cart', 'Cart')}
+              >
                 <PiShoppingCartSimpleLight className='size-8' />
                 {cartItemsCount > 0 && (
                   <span className="absolute -top-1 -right-2 bg-pink text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shadow-md">
@@ -286,7 +310,7 @@ const Header: React.FC = () => {
                   {/* Cart Button in Mobile Header */}
                   <Link
                     to="/cart"
-                    onClick={() => dispatch(setIsHeaderSidebarOpen(false))}
+                    onClick={handleMobileCartClick}
                     className="p-2 text-gray-600 dark:text-slate-300 hover:text-[#B12C2E] dark:hover:text-[#E03E41] hover:bg-red-50 dark:hover:bg-slate-800 rounded-full transition-all cursor-pointer"
                     aria-label={t('header.cart')}
                     title={t('header.cart')}

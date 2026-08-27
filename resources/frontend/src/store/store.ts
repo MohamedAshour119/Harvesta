@@ -13,6 +13,7 @@ import couponReducer from './slices/couponSlice';
 import agentBlockerReducer from './slices/agentBlockerSlice';
 import isMinimumOrderValuePopupOpenReducer from './slices/isMinimumOrderValuePopupOpen.ts';
 import chatbotReducer from './slices/chatbotSlice';
+import emptyCartModalReducer from './slices/emptyCartModalSlice';
 import { cartTransform } from './transforms';
 
 // Configuring the persist for Redux
@@ -29,7 +30,8 @@ const persistConfig = {
     'isHeaderSidebarOpen',
     'agentBlocker',
     'isMinimumOrderValuePopupOpen',
-    'chatbot'
+    'chatbot',
+    'emptyCartModal',
   ],
 };
 
@@ -47,6 +49,7 @@ const reducers = combineReducers({
   agentBlocker: agentBlockerReducer,
   isMinimumOrderValuePopupOpen: isMinimumOrderValuePopupOpenReducer,
   chatbot: chatbotReducer,
+  emptyCartModal: emptyCartModalReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
