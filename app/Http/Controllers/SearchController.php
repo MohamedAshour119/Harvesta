@@ -59,34 +59,39 @@ class SearchController extends Controller
                 return $this->response_error('Query is required', [], 422);
             }
 
-            $searchResults = $this->catalogSearchService->search($query, 7, 8);
-            $literalModels = $searchResults['literal'];
-            $semanticModels = $searchResults['semantic'];
-            $literalResults = ProductResource::collection($literalModels);
-            $formattedSemantic = ProductResource::collection($semanticModels);
+            $cacheKey = 'semantic_search_api:v2:' . md5(trim(mb_strtolower($query)));
+            $data = \Illuminate\Support\Facades\Cache::remember($cacheKey, now()->addMinutes(15), function () use ($query) {
+                $searchResults = $this->catalogSearchService->search($query, 7, 8);
+                $literalModels = $searchResults['literal'];
+                $semanticModels = $searchResults['semantic'];
+                $literalResults = ProductResource::collection($literalModels);
+                $formattedSemantic = ProductResource::collection($semanticModels);
 
-            $allResultModels = $literalModels->concat($semanticModels);
+                $allResultModels = $literalModels->concat($semanticModels);
 
-            $categoryCounts = $allResultModels->whereNotNull('industry_category_id')
-                ->groupBy('industry_category_id')
-                ->map(fn ($group) => $group->count());
+                $categoryCounts = $allResultModels->whereNotNull('industry_category_id')
+                    ->groupBy('industry_category_id')
+                    ->map(fn ($group) => $group->count());
 
-            $categoryIds = $categoryCounts->keys()->toArray();
+                $categoryIds = $categoryCounts->keys()->toArray();
 
-            $relevantCategories = IndustryCategory::whereIn('id', $categoryIds)
-                ->get()
-                ->map(function ($category) use ($categoryCounts) {
-                    $category->setAttribute('products_count', $categoryCounts->get($category->id, 0));
+                $relevantCategories = IndustryCategory::whereIn('id', $categoryIds)
+                    ->get()
+                    ->map(function ($category) use ($categoryCounts) {
+                        $category->setAttribute('products_count', $categoryCounts->get($category->id, 0));
 
-                    return $category;
-                });
+                        return $category;
+                    });
 
-            return $this->response_success([
-                'literal_results' => $literalResults,
-                'semantic_results' => $formattedSemantic,
-                'has_semantic' => $formattedSemantic->count() > 0,
-                'industrial_categories' => $relevantCategories,
-            ], 'Search results');
+                return [
+                    'literal_results' => $literalResults,
+                    'semantic_results' => $formattedSemantic,
+                    'has_semantic' => $formattedSemantic->count() > 0,
+                    'industrial_categories' => $relevantCategories,
+                ];
+            });
+
+            return $this->response_success($data, 'Search results');
         } catch (\Exception $e) {
             return $this->response_error($e->getMessage(), [], 500);
         }

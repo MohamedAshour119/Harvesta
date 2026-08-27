@@ -80,8 +80,17 @@ class JinaEmbeddingService
      */
     public function generateSingleEmbedding(string $text, ?string $task = 'retrieval.query'): array
     {
-        $results = $this->generateEmbeddings([$text], null, $task);
-        return $results[0] ?? [];
+        $normalized = trim($text);
+        if ($normalized === '') {
+            return [];
+        }
+
+        $cacheKey = 'jina_query_emb:v1:' . md5($normalized . ':' . ($task ?? 'query'));
+
+        return \Illuminate\Support\Facades\Cache::remember($cacheKey, now()->addDays(7), function () use ($normalized, $task) {
+            $results = $this->generateEmbeddings([$normalized], null, $task);
+            return $results[0] ?? [];
+        });
     }
 
     /**

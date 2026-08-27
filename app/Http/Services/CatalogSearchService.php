@@ -176,7 +176,10 @@ class CatalogSearchService
         $seenIds = $literal->pluck('id')->all();
         $semanticFetchLimit = max($limit * 2, 8);
 
-        foreach ($context['semantic_queries'] as $candidate) {
+        // Optimize candidate queries to prevent serial roundtrips
+        $candidateQueries = array_slice($context['semantic_queries'], 0, $literal->count() >= 4 ? 1 : 2);
+
+        foreach ($candidateQueries as $candidate) {
             try {
                 $products = collect($this->semanticSearchService->search($candidate, $semanticFetchLimit));
             } catch (\Throwable) {
@@ -192,7 +195,7 @@ class CatalogSearchService
                 $seenIds[] = $product->id;
             }
 
-            if ($semantic->count() >= $semanticFetchLimit) {
+            if ($semantic->count() >= $limit) {
                 break;
             }
         }

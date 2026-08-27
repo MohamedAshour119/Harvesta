@@ -25,7 +25,7 @@ const HeroSection = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const debouncedSearchQuery = useDebounceRange(searchQuery, 500);
+    const debouncedSearchQuery = useDebounceRange(searchQuery, 250);
 
     // Handle input change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
