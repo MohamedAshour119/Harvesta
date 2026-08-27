@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 90" fill="none">
+  <defs>
+    <linearGradient id="harvesta-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="harvesta-crimson" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E03E41"/>
+      <stop offset="100%" stop-color="#B12C2E"/>
+    </linearGradient>
+    <linearGradient id="harvesta-emerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="50%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#065F46"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Emblem Icon -->
+  <g transform="translate(10, 8)">
+    <path d="M36 4 C54 4, 68 18, 68 38 C68 58, 46 70, 36 74 C26 70, 4 58, 4 38 C4 18, 18 4, 36 4 Z" fill="none" stroke="url(#harvesta-crimson)" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M36 14 Q48 26 36 40 Q24 26 36 14 Z" fill="url(#harvesta-gold)"/>
+    <path d="M36 34 Q50 44 40 58 Q30 46 36 34 Z" fill="url(#harvesta-crimson)"/>
+    <path d="M23 28 Q34 34 30 45 Q19 39 23 28 Z" fill="url(#harvesta-emerald)"/>
+    <path d="M49 28 Q38 34 42 45 Q53 39 49 28 Z" fill="url(#harvesta-emerald)"/>
+    <circle cx="36" cy="18" r="3.5" fill="#FFF" opacity="0.95"/>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(95, 52)">
+    <text x="0" y="0" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="38" font-weight="900" letter-spacing="1.5" fill="url(#harvesta-crimson)">HARVESTA</text>
+    <text x="2" y="18" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="9" font-weight="700" letter-spacing="2.8" fill="#64748B">B2B FOOD &amp; SUPPLY NETWORK</text>
+  </g>
+</svg>
