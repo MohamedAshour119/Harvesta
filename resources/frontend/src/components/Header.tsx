@@ -117,7 +117,7 @@ const Header: React.FC = () => {
           <div className="flex flex-row items-center justify-between gap-x-2">
             {/* Logo */}
             <a href="/" className='cursor-pointer flex items-center py-1'>
-              <img src="/logo.svg" alt="Harvesta Logo" className="h-12 md:h-14 w-auto max-w-[220px] md:max-w-[250px] object-contain drop-shadow-md dark:brightness-110 transition-transform duration-200 hover:scale-[1.02]" />
+              <img src={isRTL ? '/logo-ar.svg' : '/logo.svg'} alt={t('common:title')} className="h-12 md:h-14 w-auto max-w-[220px] md:max-w-[250px] object-contain drop-shadow-md dark:brightness-110 transition-transform duration-200 hover:scale-[1.02]" />
             </a>
 
             {/* Desktop Navigation */}
@@ -258,7 +258,7 @@ const Header: React.FC = () => {
                 <Link to="/" onClick={() => dispatch(setIsHeaderSidebarOpen(false))} className="flex items-center gap-2">
                   <img src="/favicon.svg" alt="Harvesta" className="w-7 h-7 object-contain rounded-lg" />
                   <h1 className="text-xl font-black text-[#B12C2E] dark:text-[#E03E41] tracking-tight">
-                    HARVESTA
+                    {t('common:title')}
                   </h1>
                 </Link>
                 <div className="flex items-center gap-1.5">
