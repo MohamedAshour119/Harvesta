@@ -49,7 +49,7 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
         {/* Logo */}
         <div className="col-span-1">
           <a href="/" className="cursor-pointer inline-block">
-            <img src="/logo.svg" alt="Harvesta" className="h-11 w-auto max-w-[180px] object-contain dark:brightness-110" />
+            <img src="/logo.svg" alt="Harvesta" className="h-16 md:h-20 w-auto max-w-[260px] md:max-w-[300px] object-contain drop-shadow-md dark:brightness-110 transition-transform duration-200 hover:scale-[1.02]" />
           </a>
         </div>
         {/* Main content grid for top section */}

@@ -1,34 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 90" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 76" fill="none">
   <defs>
-    <linearGradient id="harvesta-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FDE68A"/>
+    <!-- Vibrant Gold Gradient -->
+    <linearGradient id="h-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
       <stop offset="50%" stop-color="#F59E0B"/>
       <stop offset="100%" stop-color="#D97706"/>
     </linearGradient>
-    <linearGradient id="harvesta-crimson" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E03E41"/>
+
+    <!-- Vivid Crimson Gradient -->
+    <linearGradient id="h-crimson" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5255"/>
+      <stop offset="50%" stop-color="#E03E41"/>
       <stop offset="100%" stop-color="#B12C2E"/>
     </linearGradient>
-    <linearGradient id="harvesta-emerald" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#34D399"/>
-      <stop offset="50%" stop-color="#059669"/>
-      <stop offset="100%" stop-color="#065F46"/>
+
+    <!-- Lush Emerald Gradient -->
+    <linearGradient id="h-emerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="50%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#047857"/>
     </linearGradient>
+
+    <!-- Soft Glow Filter -->
+    <filter id="h-glow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#E03E41" flood-opacity="0.3"/>
+    </filter>
   </defs>
 
-  <!-- Emblem Icon -->
-  <g transform="translate(10, 8)">
-    <path d="M36 4 C54 4, 68 18, 68 38 C68 58, 46 70, 36 74 C26 70, 4 58, 4 38 C4 18, 18 4, 36 4 Z" fill="none" stroke="url(#harvesta-crimson)" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M36 14 Q48 26 36 40 Q24 26 36 14 Z" fill="url(#harvesta-gold)"/>
-    <path d="M36 34 Q50 44 40 58 Q30 46 36 34 Z" fill="url(#harvesta-crimson)"/>
-    <path d="M23 28 Q34 34 30 45 Q19 39 23 28 Z" fill="url(#harvesta-emerald)"/>
-    <path d="M49 28 Q38 34 42 45 Q53 39 49 28 Z" fill="url(#harvesta-emerald)"/>
-    <circle cx="36" cy="18" r="3.5" fill="#FFF" opacity="0.95"/>
+  <!-- Emblem Icon (Larger, High Contrast, Bold Shapes) -->
+  <g transform="translate(6, 4)" filter="url(#h-glow)">
+    <!-- Outer Shield Crest -->
+    <path d="M34 2 C52 2, 66 16, 66 35 C66 54, 44 65, 34 68 C24 65, 2 54, 2 35 C2 16, 16 2, 34 2 Z" 
+          fill="none" stroke="url(#h-crimson)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Central Harvest Crown / Golden Grain -->
+    <path d="M34 11 Q46 22 34 36 Q22 22 34 11 Z" fill="url(#h-gold)"/>
+    
+    <!-- Lower Crimson Flourish -->
+    <path d="M34 31 Q48 41 38 54 Q28 43 34 31 Z" fill="url(#h-crimson)"/>
+    
+    <!-- Left & Right Emerald Growth Leaves -->
+    <path d="M21 25 Q32 30 28 41 Q17 35 21 25 Z" fill="url(#h-emerald)"/>
+    <path d="M47 25 Q36 30 40 41 Q51 35 47 25 Z" fill="url(#h-emerald)"/>
+    
+    <!-- Radiant Sun Pearl -->
+    <circle cx="34" cy="15" r="3.5" fill="#FFFFFF" opacity="0.95"/>
   </g>
 
-  <!-- Typography -->
-  <g transform="translate(95, 52)">
-    <text x="0" y="0" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="38" font-weight="900" letter-spacing="1.5" fill="url(#harvesta-crimson)">HARVESTA</text>
-    <text x="2" y="18" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-size="9" font-weight="700" letter-spacing="2.8" fill="#64748B">B2B FOOD &amp; SUPPLY NETWORK</text>
+  <!-- Typography: Bold, Large & Crystal Clear -->
+  <g transform="translate(86, 44)">
+    <!-- HARVESTA Main Title -->
+    <text x="0" y="0" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="40" font-weight="900" letter-spacing="1.2" fill="url(#h-crimson)">
+      HARVESTA
+    </text>
+    
+    <!-- Slogan Pill Badge / Subtitle -->
+    <g transform="translate(2, 8)">
+      <rect x="0" y="0" width="246" height="18" rx="5" fill="rgba(224,62,65,0.1)"/>
+      <text x="7" y="13" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="1.6" fill="#F59E0B">
+        B2B FOOD &amp; SUPPLY NETWORK
+      </text>
+    </g>
   </g>
 </svg>
