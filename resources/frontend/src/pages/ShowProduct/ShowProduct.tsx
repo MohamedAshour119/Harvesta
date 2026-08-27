@@ -19,6 +19,7 @@ import { FaCheckCircle, FaTimes, FaExclamationCircle } from 'react-icons/fa';
 import { useProtectedAction } from '../../hooks/useProtectedAction';
 import FooterSection from '../../components/FooterSection';
 import { isVariantAvailable } from '../../utils/productAvailability';
+import PageLoader from '../../components/PageLoader';
 
 interface AddToCartState {
   isLoading: boolean;
@@ -476,9 +477,7 @@ export function ShowProduct() {
   if (loading) {
     return (
       <MaxWidthWrapper>
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500"></div>
-        </div>
+        <PageLoader message={t('products:loadingProduct', 'جاري تجهيز تفاصيل المنتج...')} />
       </MaxWidthWrapper>
     );
   }
