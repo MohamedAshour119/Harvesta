@@ -184,23 +184,25 @@ const HeroSection = () => {
                             )}
 
                             {isLoading ? (
-                                <div className="p-4 space-y-4">
-                                    {[1, 2, 3].map(i => (
-                                        <div key={i} className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-gray-100 dark:bg-slate-800 rounded-md animate-pulse"></div>
-                                            <div className="flex-1 space-y-2">
-                                                <div className="h-3 bg-gray-100 dark:bg-slate-800 rounded animate-pulse w-3/4"></div>
-                                                <div className="h-2 bg-gray-50 dark:bg-slate-850 rounded animate-pulse w-1/2"></div>
+                                <div className="p-2 space-y-0.5">
+                                    {[1, 2, 3, 4].map(i => (
+                                        <div key={i} className="p-3 flex items-center gap-3 border-b border-gray-100 dark:border-slate-800/50 last:border-b-0">
+                                            <div className="w-4 h-4 rounded-full bg-gray-200 dark:bg-slate-700/60 shrink-0 animate-pulse" />
+                                            <div className="flex-1">
+                                                <div 
+                                                    className="h-3.5 bg-gray-200 dark:bg-slate-700/60 rounded-full animate-pulse"
+                                                    style={{ width: i === 1 ? '68%' : i === 2 ? '82%' : i === 3 ? '54%' : '72%' }}
+                                                />
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="flex items-center justify-center pt-2 border-t border-gray-50 dark:border-slate-800 gap-2">
-                                        <div className="flex space-x-1">
-                                            <div className="w-1 h-1 rounded-full bg-yellow animate-bounce [animation-delay:-0.3s]"></div>
-                                            <div className="w-1 h-1 rounded-full bg-yellow animate-bounce [animation-delay:-0.15s]"></div>
-                                            <div className="w-1 h-1 rounded-full bg-yellow animate-bounce"></div>
+                                    <div className="flex items-center justify-center py-2.5 pt-3 border-t border-gray-100 dark:border-slate-800/80 gap-2">
+                                        <div className="flex space-x-1.5 rtl:space-x-reverse">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-[#B12C2E] dark:bg-[#E03E41] animate-bounce [animation-delay:-0.3s]"></div>
+                                            <div className="w-1.5 h-1.5 rounded-full bg-[#B12C2E] dark:bg-[#E03E41] animate-bounce [animation-delay:-0.15s]"></div>
+                                            <div className="w-1.5 h-1.5 rounded-full bg-[#B12C2E] dark:bg-[#E03E41] animate-bounce"></div>
                                         </div>
-                                        <span className="text-xs text-gray-400 dark:text-slate-400 font-medium">{t('common:search.searching', 'Searching...')}</span>
+                                        <span className="text-xs text-gray-500 dark:text-slate-400 font-medium">{t('common:search.searching', 'Searching...')}</span>
                                     </div>
                                 </div>
                             ) : !showNotFound ? (
