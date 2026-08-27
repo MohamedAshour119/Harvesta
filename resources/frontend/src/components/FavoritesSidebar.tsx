@@ -79,12 +79,12 @@ const FavoritesSidebar: React.FC = () => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity duration-300"></div>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[95] transition-opacity duration-300"></div>
       )}
 
       <div 
         ref={sidebarRef}
-        className={`fixed top-0 ${isRTL ? 'left-0' : 'right-0'} h-full w-[23rem] bg-white dark:bg-[#151D2C] shadow-2xl border-x border-gray-100 dark:border-slate-800 z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : isRTL ? '-translate-x-full' : 'translate-x-full'}`}
+        className={`fixed top-0 ${isRTL ? 'left-0' : 'right-0'} h-full w-[23rem] bg-white dark:bg-[#151D2C] shadow-2xl border-x border-gray-100 dark:border-slate-800 z-[100] transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : isRTL ? '-translate-x-full' : 'translate-x-full'}`}
       >
         <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-slate-700/60 bg-white dark:bg-[#151D2C]">
           <h2 className="text-lg font-bold text-gray-900 dark:text-slate-100 flex items-center">

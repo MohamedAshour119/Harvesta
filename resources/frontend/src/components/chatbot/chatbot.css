@@ -11,7 +11,7 @@
     position: fixed;
     bottom: 1.5rem;
     right: 5.5rem;
-    z-index: 50;
+    z-index: 30;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -49,7 +49,7 @@
     right: 1.5rem;
     width: 400px;
     height: 520px;
-    z-index: 51;
+    z-index: 31;
     background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);

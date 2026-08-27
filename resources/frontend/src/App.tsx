@@ -118,7 +118,7 @@ function App() {
       {/* Add overlay for mobile when cart sidebar is open */}
       {((isSmallScreen && isCartSummarySidebarOpen) || isHeaderSidebarOpen) && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+          className="fixed inset-0 bg-black/50 z-[95] transition-opacity duration-300"
           onClick={() => dispatch(setIsCartSummarySidebarOpen(false))}
         />
       )}
