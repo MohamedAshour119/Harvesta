@@ -17,11 +17,11 @@ const ContactUsSection: React.FC = () => {
         <h2 className="text-2xl md:text-3xl font-bold mb-3 text-center">{t('contactUs.title', { defaultValue: 'اتصل بنا' })}</h2>
         <p className="text-gray-300 text-center mb-10 max-w-lg mx-auto text-sm md:text-base">{t('contactUs.subtitle', { defaultValue: 'نحن هنا للمساعدة. تواصل معنا من خلال أي من هذه القنوات.' })}</p>
         
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-8 max-w-3xl mx-auto">
+        <div className="flex flex-col sm:flex-row justify-center items-stretch gap-4 md:gap-6 max-w-4xl mx-auto flex-wrap">
           {/* Phone Contact */}
           <a
             href={PHONE_HREF}
-            className="w-full max-w-[220px] flex flex-col items-center bg-[#282828] dark:bg-[#1C2638] border border-transparent dark:border-slate-700/60 rounded-2xl p-6 shadow-md transition-all hover:scale-105 group"
+            className="flex-1 min-w-[220px] max-w-sm flex flex-col items-center justify-center bg-[#282828] dark:bg-[#1C2638] border border-transparent dark:border-slate-700/60 rounded-2xl p-6 shadow-md transition-all hover:scale-105 group"
           >
             <div className="w-12 h-12 bg-[#DBEAFE] dark:bg-blue-950/60 rounded-xl flex items-center justify-center mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#2B61D6] dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,7 +30,7 @@ const ContactUsSection: React.FC = () => {
             </div>
             <h3 className="font-bold text-lg mb-2">{t('contactUs.phone.title', { defaultValue: 'الهاتف' })}</h3>
             <p className="text-gray-300 dark:text-slate-300 text-center underline cursor-pointer hover:text-white transition-colors group-hover:text-white">
-              <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block font-medium">
+              <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block font-medium whitespace-nowrap">
                 {PHONE_DISPLAY}
               </span>
             </p>
@@ -41,7 +41,7 @@ const ContactUsSection: React.FC = () => {
             href={WHATSAPP_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full max-w-[220px] flex flex-col items-center bg-[#282828] dark:bg-[#1C2638] border border-transparent dark:border-slate-700/60 rounded-2xl p-6 shadow-md transition-all hover:scale-105 group"
+            className="flex-1 min-w-[220px] max-w-sm flex flex-col items-center justify-center bg-[#282828] dark:bg-[#1C2638] border border-transparent dark:border-slate-700/60 rounded-2xl p-6 shadow-md transition-all hover:scale-105 group"
           >
             <div className="w-12 h-12 bg-[#DCFCE7] dark:bg-green-950/60 rounded-xl flex items-center justify-center mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#159A46] dark:text-green-400" viewBox="0 0 24 24" fill="currentColor">
@@ -50,7 +50,7 @@ const ContactUsSection: React.FC = () => {
             </div>
             <h3 className="font-bold text-lg mb-2">{t('contactUs.whatsapp.title', { defaultValue: 'واتساب' })}</h3>
             <p className="text-gray-300 dark:text-slate-300 text-center underline cursor-pointer hover:text-white transition-colors group-hover:text-white">
-              <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block font-medium">
+              <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block font-medium whitespace-nowrap">
                 {PHONE_DISPLAY}
               </span>
             </p>
@@ -59,7 +59,7 @@ const ContactUsSection: React.FC = () => {
           {/* Email Contact */}
           <a
             href={EMAIL_HREF}
-            className="w-full max-w-[220px] flex flex-col items-center bg-[#282828] dark:bg-[#1C2638] border border-transparent dark:border-slate-700/60 rounded-2xl p-6 shadow-md transition-all hover:scale-105 group"
+            className="flex-1 min-w-[260px] sm:min-w-[300px] max-w-md flex flex-col items-center justify-center bg-[#282828] dark:bg-[#1C2638] border border-transparent dark:border-slate-700/60 rounded-2xl p-6 sm:px-8 shadow-md transition-all hover:scale-105 group"
           >
             <div className="w-12 h-12 bg-[#F3E8FF] dark:bg-purple-950/60 rounded-xl flex items-center justify-center mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#9333EA] dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,7 +67,7 @@ const ContactUsSection: React.FC = () => {
               </svg>
             </div>
             <h3 className="font-bold text-lg mb-2">{t('contactUs.email.title', { defaultValue: 'البريد الإلكتروني' })}</h3>
-            <p className="text-gray-300 dark:text-slate-300 text-center underline cursor-pointer hover:text-white transition-colors group-hover:text-white text-xs md:text-sm break-all font-medium">
+            <p className="text-gray-300 dark:text-slate-300 text-center underline cursor-pointer hover:text-white transition-colors group-hover:text-white text-xs sm:text-sm font-medium whitespace-nowrap">
               <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block">
                 {EMAIL_DISPLAY}
               </span>
