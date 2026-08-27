@@ -37,6 +37,8 @@ class SemanticSearchService
 
         $scored = [];
 
+        $threshold = mb_strlen(trim($query)) <= 6 ? 0.22 : 0.30;
+
         foreach ($productEmbeddings as $pe) {
             if (!$pe->product) {
                 continue;
@@ -44,7 +46,7 @@ class SemanticSearchService
 
             $similarity = $this->cosineSimilarity($queryVector, $pe->vector);
 
-            if ($similarity >= 0.45) {
+            if ($similarity >= $threshold) {
                 $scored[] = [
                     'product' => $pe->product,
                     'score' => $similarity,

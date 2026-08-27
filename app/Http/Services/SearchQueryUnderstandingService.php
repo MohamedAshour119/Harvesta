@@ -39,13 +39,7 @@ class SearchQueryUnderstandingService
     {
         $normalized = $this->normalizeText($query);
 
-        if ($normalized === '' || mb_strlen($normalized) < 4) {
-            return false;
-        }
-
-        $words = preg_split('/\s+/u', $normalized, -1, PREG_SPLIT_NO_EMPTY) ?: [];
-
-        return count($words) >= 2;
+        return $normalized !== '' && mb_strlen($normalized) >= 3;
     }
 
     /**

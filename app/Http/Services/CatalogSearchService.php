@@ -25,6 +25,110 @@ class CatalogSearchService
         'شي', 'شيء', 'احتاج', 'محتاج',
     ];
 
+    private const DIALECT_SYNONYM_MAP = [
+        // Poultry / Chicken (فراخ، دجاج، طيور، بانيه، استربس، شيش، ناجتس)
+        'فراخ' => ['دجاج', 'chicken', 'دواجن', 'شهد', 'طيور'],
+        'فرخه' => ['دجاج', 'chicken', 'شهد'],
+        'فرخة' => ['دجاج', 'chicken', 'شهد'],
+        'فروج' => ['دجاج', 'chicken'],
+        'دجاج' => ['فراخ', 'chicken', 'دواجن', 'شهد'],
+        'دواجن' => ['دجاج', 'فراخ', 'poultry', 'chicken'],
+        'بانيه' => ['دجاج', 'فيليه', 'pane', 'chicken'],
+        'استربس' => ['دجاج', 'strips', 'chicken'],
+        'شيش' => ['طاووق', 'دجاج', 'chicken'],
+        'طاووق' => ['شيش', 'دجاج', 'chicken'],
+        'ناجتس' => ['دجاج', 'nuggets', 'chicken'],
+        'بوبكورن' => ['دجاج', 'popcorn', 'chicken'],
+        'كوردون' => ['دجاج', 'cordon', 'chicken'],
+        'دبابيس' => ['دجاج', 'drumsticks', 'chicken'],
+        'اجنحة' => ['دجاج', 'wings', 'chicken'],
+        'أجنحة' => ['دجاج', 'wings', 'chicken'],
+        'وراك' => ['دجاج', 'thighs', 'chicken'],
+
+        // Meat & Beef (لحمة، لحوم، بقري، ستيك، برجر، سجق، كفتة)
+        'لحمة' => ['لحم', 'beef', 'meat', 'بقري'],
+        'لحمه' => ['لحم', 'beef', 'meat', 'بقري'],
+        'لحوم' => ['لحم', 'beef', 'meat', 'بقري'],
+        'مفروم' => ['لحم', 'minced beef', 'beef'],
+        'ستيك' => ['لحم', 'بقري', 'steak', 'beef'],
+        'كفتة' => ['لحم', 'دجاج', 'kofta'],
+        'كفته' => ['لحم', 'دجاج', 'kofta'],
+        'سجق' => ['سجق بلدي', 'sausage', 'لحم'],
+        'برجر' => ['لحم', 'دجاج', 'burger'],
+
+        // Vegetables / Potatoes / Frozen (قوطة، بطاطس، شيبس، ملوخية، بسلة، بامية، سبانخ)
+        'قوطة' => ['طماطم', 'tomato', 'صلصة'],
+        'قوطه' => ['طماطم', 'tomato', 'صلصة'],
+        'طماطم' => ['قوطة', 'tomato', 'صلصة', 'كاتشب'],
+        'بطاطس' => ['فارم فريتس', 'french fries', 'fries', 'بطاطا'],
+        'شيبسي' => ['بطاطس', 'فارم فريتس', 'chips', 'french fries'],
+        'شيبس' => ['بطاطس', 'فارم فريتس', 'chips', 'french fries'],
+        'فرايز' => ['بطاطس', 'فارم فريتس', 'french fries'],
+        'ملوخية' => ['ملوخية خضراء', 'molokhia'],
+        'ملوخيه' => ['ملوخية خضراء', 'molokhia'],
+        'بسلة' => ['بسلة بالجزر', 'peas'],
+        'بامية' => ['بامية إكسترا', 'okra', 'bamia'],
+        'باميه' => ['بامية إكسترا', 'okra', 'bamia'],
+        'سبانخ' => ['سبانخ خضراء', 'spinach'],
+
+        // Dairy & Cheese (لبن، حليب، جبنة، زبدة، سمنة)
+        'لبن' => ['حليب', 'milk', 'لاكتيل'],
+        'حليب' => ['لبن', 'milk', 'لاكتيل'],
+        'جبنة' => ['جبن', 'cheese', 'موزاريلا', 'شيدر', 'رومي', 'دومتي', 'بريزيدون'],
+        'جبنه' => ['جبن', 'cheese', 'موزاريلا', 'شيدر', 'رومي', 'دومتي', 'بريزيدون'],
+        'موزاريلا' => ['جبنة', 'mozzarella', 'دومتي'],
+        'شيدر' => ['جبنة', 'cheddar', 'بريزيدون'],
+        'رومي' => ['جبن رومي', 'roumi'],
+        'سمنة' => ['سمن', 'ghee', 'الهانم', 'سمن بلدي'],
+        'سمنه' => ['سمن', 'ghee', 'الهانم', 'سمن بلدي'],
+        'سمن' => ['سمن بلدي', 'ghee', 'الهانم'],
+        'زبدة' => ['زبدة طبيعية', 'butter', 'لورباك'],
+        'زبده' => ['زبدة طبيعية', 'butter', 'لورباك'],
+
+        // Oils & Fats (زيت، عباد، ذرة، زيتون، سمسم)
+        'زيت' => ['روابي', 'كريستال', 'وادي فود', 'oil', 'عباد الشمس', 'زيت ذرة', 'زيت زيتون'],
+        'زيوت' => ['زيت', 'oil'],
+        'درة' => ['ذرة', 'زيت ذرة', 'corn oil', 'كريستال'],
+        'ذرة' => ['زيت ذرة', 'corn oil', 'كريستال'],
+        'عباد' => ['عباد الشمس', 'sunflower oil', 'روابي'],
+        'زيتون' => ['زيت زيتون', 'olive oil', 'وادي فود'],
+
+        // Carbs, Rice & Pasta (رز، مكرونة، مكرونه، عدس، بقوليات)
+        'رز' => ['أرز', 'rice', 'الساعة', 'أبو كاس', 'بسمتي'],
+        'ارز' => ['أرز', 'rice', 'الساعة', 'أبو كاس', 'بسمتي'],
+        'أرز' => ['رز', 'rice', 'الساعة', 'أبو كاس', 'بسمتي'],
+        'مكرونة' => ['مكرونة قلم', 'اسباجيتي', 'pasta', 'إيطاليانو', 'بيني'],
+        'مكرونه' => ['مكرونة قلم', 'اسباجيتي', 'pasta', 'إيطاليانو', 'بيني'],
+        'باستا' => ['مكرونة', 'pasta', 'spaghetti', 'إيطاليانو'],
+        'اسباجيتي' => ['مكرونة اسباجيتي', 'spaghetti'],
+        'عدس' => ['عدس أصفر', 'lentils', 'الضحى'],
+
+        // Bread & Bakery (عيش، توست، خبز، تورتيلا، فطير، كرواسون، بيتزا)
+        'عيش' => ['خبز', 'توست', 'bread', 'ريتش بيك', 'تورتيلا'],
+        'خبز' => ['عيش', 'توست', 'bread', 'ريتش بيك', 'تورتيلا'],
+        'توست' => ['توست حبوب', 'toast', 'ريتش بيك'],
+        'تورتيلا' => ['خبز تورتيلا', 'tortilla', 'ميشن'],
+        'فطير' => ['فطير مشلتت', 'feteer'],
+        'كرواسون' => ['كرواسون فرنسي', 'croissant'],
+        'بيتزا' => ['ميني بيتزا', 'pizza'],
+
+        // Sauces & Condiments (صلصة، كاتشب، مايونيز، باربيكيو، بهارات، رانش)
+        'كاتشب' => ['كاتشب طماطم', 'ketchup', 'هاينز'],
+        'مايونيز' => ['مايونيز فاخر', 'mayonnaise', 'هاينز'],
+        'باربيكيو' => ['صوص باربيكيو', 'bbq', 'سويت بيبي'],
+        'تتبيلة' => ['بهارات', 'seasoning'],
+        'بهارات' => ['تتبيلة', 'spices', 'seasoning'],
+        'رانش' => ['دريسنج رانش', 'ranch'],
+
+        // Hot Drinks & Tea (شاي، كركديه، بابونج، نعناع)
+        'شاي' => ['أحمد تي', 'تويننجز', 'tea'],
+        'كركديه' => ['كركديه أسواني', 'hibiscus', 'إيزيس'],
+        'كركدية' => ['كركديه أسواني', 'hibiscus', 'إيزيس'],
+        'بابونج' => ['بابونج كاموميل', 'chamomile', 'إيزيس'],
+        'كاموميل' => ['بابونج كاموميل', 'chamomile', 'إيزيس'],
+        'نعناع' => ['شاي أخضر بالنعناع', 'mint', 'تويننجز'],
+    ];
+
     public function __construct(
         protected SemanticSearchService $semanticSearchService,
         protected ProductSearchDocumentBuilder $productSearchDocumentBuilder,
@@ -278,16 +382,26 @@ class CatalogSearchService
      *   negative_keywords: array<int, string>
      * }
      */
+    /**
+     * @return array{
+     *   candidate_queries: array<int, string>,
+     *   semantic_queries: array<int, string>,
+     *   keywords: array<int, string>,
+     *   negative_keywords: array<int, string>
+     * }
+     */
     private function buildBaseSearchContext(string $query): array
     {
         $normalized = $this->normalizeText($query);
         $simplified = $this->simplifyQuery($normalized);
+        $synonyms = $this->extractSynonyms($normalized);
 
         $candidateQueries = collect([$normalized, $simplified])
             ->merge($this->extractQueryFragments($simplified))
+            ->merge($synonyms)
             ->filter(fn (string $candidate) => $candidate !== '' && mb_strlen($candidate) >= 1)
             ->unique()
-            ->take(10)
+            ->take(15)
             ->values()
             ->all();
 
@@ -295,21 +409,55 @@ class CatalogSearchService
             ->flatMap(function (string $candidate) {
                 return preg_split('/\s+/u', $candidate, -1, PREG_SPLIT_NO_EMPTY) ?: [];
             })
+            ->merge($synonyms)
             ->filter(fn (string $keyword) => mb_strlen($keyword) >= 1)
             ->unique()
             ->values()
             ->all();
 
+        $semanticQueries = collect([$normalized, $simplified])
+            ->merge($synonyms)
+            ->filter(fn (string $candidate) => $candidate !== '' && mb_strlen($candidate) >= 1)
+            ->unique()
+            ->take(8)
+            ->values()
+            ->all();
+
         return [
             'candidate_queries' => $candidateQueries,
-            'semantic_queries' => collect([$normalized, $simplified])
-                ->filter(fn (string $candidate) => $candidate !== '' && mb_strlen($candidate) >= 1)
-                ->unique()
-                ->values()
-                ->all(),
+            'semantic_queries' => $semanticQueries,
             'keywords' => $keywords,
             'negative_keywords' => [],
         ];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function extractSynonyms(string $normalizedQuery): array
+    {
+        $words = preg_split('/\s+/u', $normalizedQuery, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $synonyms = [];
+
+        // 1. Direct whole-query match
+        if (isset(self::DIALECT_SYNONYM_MAP[$normalizedQuery])) {
+            $synonyms = array_merge($synonyms, self::DIALECT_SYNONYM_MAP[$normalizedQuery]);
+        }
+
+        // 2. Individual word matches & substring matches
+        foreach (self::DIALECT_SYNONYM_MAP as $key => $values) {
+            $normalizedKey = $this->normalizeText($key);
+            if (in_array($normalizedKey, $words, true) || str_contains($normalizedQuery, $normalizedKey)) {
+                $synonyms = array_merge($synonyms, $values);
+            }
+        }
+
+        return collect($synonyms)
+            ->map(fn (string $s) => $this->normalizeText($s))
+            ->filter(fn (string $s) => $s !== '' && mb_strlen($s) >= 2)
+            ->unique()
+            ->values()
+            ->all();
     }
 
     /**

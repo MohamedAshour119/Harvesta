@@ -73,10 +73,10 @@ return [
 
     'groq' => [
         'api_key' => env('GROQ_API_KEY'),
-        'model' => env('GROQ_MODEL', 'llama-3.1-8b-instant'),
+        'model' => env('GROQ_MODEL', 'allam-2-7b'),
         'temperature' => (float) env('GROQ_TEMPERATURE', 0.4),
         'max_tokens' => (int) env('GROQ_MAX_TOKENS', 1024),
-        'admin_model' => env('GROQ_ADMIN_MODEL', 'llama-3.3-70b-versatile'),
+        'admin_model' => env('GROQ_ADMIN_MODEL', 'allam-2-7b'),
         'admin_temperature' => (float) env('GROQ_ADMIN_TEMPERATURE', 0.3),
     ],
 
