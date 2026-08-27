@@ -115,11 +115,11 @@ const HomePage: React.FC = () => {
           </h2>
           <div className="grid mobile-large:grid-cols-2 desktop-small:grid-cols-3 desktop-medium:grid-cols-4 gap-4 mobile-large:gap-5 desktop-small:gap-6">
             {isLoadingContent
-              ? Array.from({ length: 12 }).map((_, index) => (
+              ? Array.from({ length: 8 }).map((_, index) => (
                 <CategoryCardPlaceholder key={`placeholder-${index}`} />
               ))
               : categories?.length > 0
-                ? categories.map((category) => (
+                ? categories.slice(0, 8).map((category) => (
                   <CategoryCard
                     key={category.id}
                     name={category.name}

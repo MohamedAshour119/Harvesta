@@ -11,7 +11,13 @@ class HomePageRepository
 {
     public function index()
     {
-        $industrialCategories = IndustryCategory::all();
+        $industrialCategories = IndustryCategory::withCount(['products' => function ($query) {
+                $query->where('status', 'approved')->has('variants');
+            }])
+            ->orderByDesc('products_count')
+            ->orderBy('id', 'asc')
+            ->take(8)
+            ->get();
 
         // Get top 3 categories by product count (only products having variants)
         $topCategories = IndustryCategory::withCount(['products' => function ($query) {
