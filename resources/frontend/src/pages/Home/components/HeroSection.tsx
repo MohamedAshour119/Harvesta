@@ -295,11 +295,6 @@ const HeroSection = () => {
                                                 <div className="text-start flex items-center gap-2">
                                                     <p className="font-semibold text-gray-900 dark:text-slate-100 text-sm inline-flex items-center gap-2">
                                                         <bdi>{result.name}</bdi>
-                                                        {isSemanticResult && (
-                                                            <span dir="ltr" className="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 rounded-full select-none">
-                                                                AI
-                                                            </span>
-                                                        )}
                                                     </p>
                                                 </div>
                                             </div>

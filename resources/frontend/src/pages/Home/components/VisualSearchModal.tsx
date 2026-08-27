@@ -435,9 +435,6 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                                                         <h5 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white line-clamp-1 leading-snug">
                                                             <bdi>{product.name}</bdi>
                                                         </h5>
-                                                        <span dir="ltr" className="inline-flex items-center px-1.5 py-0.2 text-[9px] sm:text-[10px] font-extrabold bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 rounded-full shrink-0">
-                                                            AI
-                                                        </span>
                                                     </div>
 
                                                     <div className="flex items-center gap-1.5 flex-wrap text-[10px] sm:text-xs text-gray-500 dark:text-slate-400">
