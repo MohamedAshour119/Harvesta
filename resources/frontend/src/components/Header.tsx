@@ -116,8 +116,8 @@ const Header: React.FC = () => {
         <div className="max-w-container mx-auto">
           <div className="flex flex-row items-center justify-between gap-x-2">
             {/* Logo */}
-            <a href="/" className='cursor-pointer'>
-              <img src="/logo.png" alt="Logo" className="w-[90px] drop-shadow-sm dark:brightness-110" />
+            <a href="/" className='cursor-pointer flex items-center'>
+              <img src="/logo.svg" alt="Harvesta Logo" className="h-11 w-auto max-w-[170px] object-contain drop-shadow-sm dark:brightness-110" />
             </a>
 
             {/* Desktop Navigation */}
@@ -256,8 +256,9 @@ const Header: React.FC = () => {
               {/* Sidebar Header */}
               <div className="flex items-center justify-between pt-5 pb-3.5 border-b border-gray-100 dark:border-slate-800/80 mb-4 sticky top-0 bg-white/95 dark:bg-[#131B2A]/95 backdrop-blur-sm z-10">
                 <Link to="/" onClick={() => dispatch(setIsHeaderSidebarOpen(false))} className="flex items-center gap-2">
+                  <img src="/favicon.svg" alt="Harvesta" className="w-7 h-7 object-contain rounded-lg" />
                   <h1 className="text-xl font-black text-[#B12C2E] dark:text-[#E03E41] tracking-tight">
-                    CAIRO 3A
+                    HARVESTA
                   </h1>
                 </Link>
                 <div className="flex items-center gap-1.5">

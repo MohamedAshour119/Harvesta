@@ -49,7 +49,7 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
         {/* Logo */}
         <div className="col-span-1">
           <a href="/" className="cursor-pointer inline-block">
-            <img src="/logo.png" alt="Logo" className="w-[120px] dark:brightness-110" />
+            <img src="/logo.svg" alt="Harvesta" className="h-11 w-auto max-w-[180px] object-contain dark:brightness-110" />
           </a>
         </div>
         {/* Main content grid for top section */}
@@ -83,8 +83,8 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
                     </a>
                   </li>
                   <li>
-                    <a href="mailto:support@cairo3a.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
-                      support@cairo3a.com
+                    <a href="mailto:support@harvesta.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
+                      support@harvesta.com
                     </a>
                   </li>
                 </ul>
@@ -116,8 +116,8 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:support@cairo3a.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
-                    support@cairo3a.com
+                  <a href="mailto:support@harvesta.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
+                    support@harvesta.com
                   </a>
                 </li>
               </ul>

@@ -87,7 +87,7 @@ const SignUp: React.FC = () => {
             {/* Mobile view welcome text */}
             <div className="md:hidden mb-6 text-center">
               <h2 className="text-xl font-semibold text-gray-700 dark:text-slate-300">{t('auth:signup.welcomeTo')}</h2>
-              <h1 className="text-3xl font-extrabold text-[#B12C2E] dark:text-[#E03E41]">Cairo3A</h1>
+              <h1 className="text-3xl font-extrabold text-[#B12C2E] dark:text-[#E03E41]">{t('common:title')}</h1>
             </div>
 
             {/* Title */}

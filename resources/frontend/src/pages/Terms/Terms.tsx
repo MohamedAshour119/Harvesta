@@ -10,7 +10,7 @@ export function Terms() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introduction</h2>
               <p className="text-gray-700 leading-relaxed">
-                Welcome to Cairo 3A! These Terms of Service ("Terms") govern your use of our website and the purchase of products from us. By accessing our site and placing an order, you agree to be bound by these Terms. Please read them carefully.
+                Welcome to Harvesta! These Terms of Service ("Terms") govern your use of our website and the purchase of products from us. By accessing our site and placing an order, you agree to be bound by these Terms. Please read them carefully.
               </p>
             </section>
 
@@ -66,7 +66,7 @@ export function Terms() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Contact Information</h2>
               <p className="text-gray-700 leading-relaxed">
-                For any questions regarding these Terms of Service, please contact us at <a href="mailto:support@cairo3a.com" className="text-blue-600 hover:underline">support@cairo3a.com</a>.
+                For any questions regarding these Terms of Service, please contact us at <a href="mailto:support@harvesta.com" className="text-blue-600 hover:underline">support@harvesta.com</a>.
               </p>
             </section>
           </div>

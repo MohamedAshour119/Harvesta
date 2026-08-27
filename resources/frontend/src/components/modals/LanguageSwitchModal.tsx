@@ -48,9 +48,9 @@ export const LanguageSwitchModal: React.FC = () => {
       return () => clearTimeout(timer);
     };
 
-    window.addEventListener('cairo3a:switch-language', handleSwitchEvent);
+    window.addEventListener('harvesta:switch-language', handleSwitchEvent);
     return () => {
-      window.removeEventListener('cairo3a:switch-language', handleSwitchEvent);
+      window.removeEventListener('harvesta:switch-language', handleSwitchEvent);
     };
   }, []);
 

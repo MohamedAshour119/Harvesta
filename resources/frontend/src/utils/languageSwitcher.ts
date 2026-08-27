@@ -1,6 +1,6 @@
 export const triggerLanguageSwitch = (targetLanguage: string) => {
   window.dispatchEvent(
-    new CustomEvent('cairo3a:switch-language', {
+    new CustomEvent('harvesta:switch-language', {
       detail: { language: targetLanguage },
     })
   );

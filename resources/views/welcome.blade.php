@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cairo 3A</title>
+    <title>Harvesta - منصة التوريدات الغذائية وسلاسل الإمداد للشركات</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
         rel="stylesheet">
     @viteReactRefresh
     @vite('resources/frontend/src/main.tsx')
-    <link rel="icon" href="{{ asset('logo.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
 
 </head>
 

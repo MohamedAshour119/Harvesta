@@ -20,6 +20,8 @@ class ResponseSanitizer
         '/\[EXACT NAME:/i',
         '/Cairo3A Assistant.*CRITICAL/is',
         '/You are "Cairo3A Assistant"/i',
+        '/Harvesta Assistant.*CRITICAL/is',
+        '/You are "Harvesta Assistant"/i',
         '/system\s*prompt/i',
         '/RULE \d+ - (PRODUCT ACCURACY|WHEN NO PRODUCTS|RESPONSE FORMAT)/i',
 

@@ -1,7 +1,7 @@
 {
-  "title": "CAIRO 3A",
-  "title_part_1": "CAIRO ",
-  "title_part_2": "3A",
+  "title": "HARVESTA",
+  "title_part_1": "HAR",
+  "title_part_2": "VESTA",
   "header": {
     "login": "Login",
     "signup": "Sign Up",
@@ -121,7 +121,7 @@
   },
   "faq": {
     "title": "Got Questions? We've Got Answers",
-    "subtitle": "Find clear and helpful answers to frequently asked questions about Cairo 3A",
+    "subtitle": "Find clear and helpful answers to frequently asked questions about Harvesta",
     "button": "FAQs"
   },
   "contact": {

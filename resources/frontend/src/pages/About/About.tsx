@@ -3,20 +3,20 @@ import { FaHandshake, FaIndustry, FaLeaf } from "react-icons/fa";
 
 const aboutContent = {
   en: {
-    title: "About Cairo 3A",
+    title: "About Harvesta",
     subtitle:
-      "Cairo 3A is a trusted Egyptian group operating across integrated agri-commodity trading, manufacturing, and supply chain services for local and regional markets.",
+      "Harvesta is a trusted leader operating across integrated agri-commodity trading, premium food production, and supply chain services for local and regional markets.",
     storyTitle: "Who We Are",
     storyParagraphs: [
-      "Since 1981, Cairo 3A has grown into a vertically integrated group built to serve the agri-commodity sector with strong operational capabilities, disciplined execution, and long-term market knowledge.",
-      "The group brings together complementary companies across trading, manufacturing, logistics, and distribution to create a connected value chain that helps move essential products efficiently and reliably.",
+      "Harvesta has grown into a vertically integrated group built to serve the agri-food and commodity sector with strong operational capabilities, disciplined execution, and long-term market knowledge.",
+      "The group brings together complementary capabilities across sourcing, manufacturing, logistics, and distribution to create a connected value chain that delivers essential food products efficiently and reliably.",
     ],
     stats: [
-      { value: "Since 1981", label: "Long-term market presence" },
-      { value: "6", label: "Integrated operating companies" },
+      { value: "Premium Quality", label: "Certified standards & purity" },
+      { value: "Integrated", label: "End-to-end supply chain" },
       { value: "Local & Regional", label: "Markets served through the value chain" },
     ],
-    valuesTitle: "What Drives Cairo 3A",
+    valuesTitle: "What Drives Harvesta",
     values: [
       {
         title: "Trusted Partnerships",
@@ -34,26 +34,26 @@ const aboutContent = {
           "We aim to create long-term value by investing in operational excellence, modern capabilities, and products that answer real market demand.",
       },
     ],
-    ctaTitle: "Explore Cairo 3A Products",
+    ctaTitle: "Explore Harvesta Products",
     ctaText:
-      "Browse our catalog to discover the product range supported by Cairo 3A's integrated supply and distribution network.",
+      "Browse our catalog to discover the product range supported by Harvesta's integrated supply and distribution network.",
     ctaButton: "View Products",
   },
   ar: {
-    title: "عن كايرو 3A",
+    title: "عن هارفيستا",
     subtitle:
-      "كايرو 3A مجموعة مصرية موثوقة تعمل في تجارة وتصنيع السلع الزراعية المتكاملة وخدمات سلاسل الإمداد لخدمة الأسواق المحلية والإقليمية.",
+      "هارفيستا هي منظومة موثوقة رائدة تعمل في تجارة وتصنيع السلع الزراعية والمنتجات الغذائية وخدمات سلاسل الإمداد للأسواق المحلية والإقليمية.",
     storyTitle: "من نحن",
     storyParagraphs: [
-      "منذ عام 1981، نمت كايرو 3A لتصبح مجموعة متكاملة رأسيًا تخدم قطاع السلع الزراعية من خلال خبرة تشغيلية قوية وتنفيذ منضبط وفهم عميق لاحتياجات السوق.",
-      "تضم المجموعة شركات متكاملة في مجالات التجارة والتصنيع واللوجستيات والتوزيع، بما يكوّن سلسلة قيمة مترابطة تساعد على توفير المنتجات الأساسية بكفاءة وموثوقية.",
+      "نمت هارفيستا لتصبح منظومة متكاملة تخدم قطاع الأغذية والسلع الزراعية من خلال خبرة تشغيلية قوية وتنفيذ منضبط وفهم عميق لاحتياجات السوق والمستهلك.",
+      "نجمع بين أحدث تقنيات التوريد والتصنيع واللوجستيات والتوزيع لتكوين سلسلة إمداد مترابطة توفر المنتجات الغذائية الأساسية بأعلى معايير الجودة والموثوقية.",
     ],
     stats: [
-      { value: "منذ 1981", label: "خبرة ممتدة في السوق" },
-      { value: "6", label: "شركات تشغيلية متكاملة" },
+      { value: "جودة معتمدة", label: "معايير قياسية في كل المنتجات" },
+      { value: "منظومة متكاملة", label: "من المزرعة وحتى باب العميل" },
       { value: "محليًا وإقليميًا", label: "أسواق نخدمها عبر سلسلة القيمة" },
     ],
-    valuesTitle: "ما الذي يقود كايرو 3A",
+    valuesTitle: "ما الذي يقود هارفيستا",
     values: [
       {
         title: "شراكات قائمة على الثقة",
@@ -71,9 +71,9 @@ const aboutContent = {
           "نركز على خلق قيمة طويلة المدى عبر التميز التشغيلي وتطوير القدرات الحديثة وتقديم منتجات تلبي الطلب الفعلي في السوق.",
       },
     ],
-    ctaTitle: "استكشف منتجات كايرو 3A",
+    ctaTitle: "استكشف منتجات هارفيستا",
     ctaText:
-      "تصفح الكتالوج لاكتشاف مجموعة المنتجات المدعومة بمنظومة كايرو 3A المتكاملة للتوريد والتوزيع.",
+      "تصفح الكتالوج لاكتشاف مجموعة المنتجات المدعومة بمنظومة هارفيستا المتكاملة للتوريد والتوزيع.",
     ctaButton: "عرض المنتجات",
   },
 } as const;

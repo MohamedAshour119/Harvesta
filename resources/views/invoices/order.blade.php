@@ -35,8 +35,8 @@
     <table style="border: none; margin-bottom: 30px;">
         <tr>
             <td style="border: none; padding: 0; vertical-align: top; width: 50%;">
-                <div class="brand">CAIRO 3A</div>
-                <div style="color: #666; margin-top: 5px;">B2B Industrial Commerce</div>
+                <div class="brand">HARVESTA</div>
+                <div style="color: #666; margin-top: 5px;">B2B Food &amp; Supply Network</div>
             </td>
             <td style="border: none; padding: 0; vertical-align: top; width: 50%; text-align: right;">
                 <div class="invoice-title">INVOICE</div>

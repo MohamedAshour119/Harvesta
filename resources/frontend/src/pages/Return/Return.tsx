@@ -153,7 +153,7 @@ export function Return() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">Contact Information:</h4>
-                    <p className="text-gray-700">Email: returns@company.com</p>
+                    <p className="text-gray-700">Email: returns@harvesta.com</p>
                     <p className="text-gray-700">Phone: 1-800-RETURNS</p>
                     <p className="text-gray-700">Hours: Mon-Fri 9AM-6PM EST</p>
                   </div>

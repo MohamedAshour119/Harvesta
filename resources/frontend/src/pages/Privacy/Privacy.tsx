@@ -93,7 +93,7 @@ export function Privacy() {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Contact Us</h2>
               <p className="text-gray-700 leading-relaxed">
                 If you have any questions about this Privacy Policy or our privacy practices, 
-                please contact us at privacy@company.com or through our contact form.
+                please contact us at <a href="mailto:privacy@harvesta.com" className="text-blue-600 hover:underline">privacy@harvesta.com</a> or through our contact form.
               </p>
             </section>
           </div>

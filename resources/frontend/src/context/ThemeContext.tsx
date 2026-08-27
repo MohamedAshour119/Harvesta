@@ -11,12 +11,12 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = 'cairo3a_theme';
+const THEME_STORAGE_KEY = 'harvesta_theme';
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
     try {
-      const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
+      const savedTheme = (localStorage.getItem(THEME_STORAGE_KEY) || localStorage.getItem('cairo3a_theme')) as Theme | null;
       if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
         return savedTheme;
       }
@@ -28,7 +28,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
-    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
+    const savedTheme = (localStorage.getItem(THEME_STORAGE_KEY) || localStorage.getItem('cairo3a_theme')) as Theme | null;
     if (savedTheme === 'dark') return true;
     if (savedTheme === 'light') return false;
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
