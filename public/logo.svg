@@ -49,13 +49,13 @@
 
   <!-- Typography -->
   <g transform="translate(78, 41)">
-    <!-- HARVESTA Main Title: Fully visible letter A with perfect clearance -->
+    <!-- HARVESTA Main Title -->
     <text x="0" y="0" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="39" font-weight="900" letter-spacing="1.2" fill="url(#h-crimson)">HARVESTA</text>
     
-    <!-- Slogan Subtitle -->
+    <!-- Slogan Subtitle: Background perfectly fitted to the text size -->
     <g transform="translate(1, 8)">
-      <rect x="0" y="0" width="220" height="17" rx="4.5" fill="rgba(224,62,65,0.1)"/>
-      <text x="6" y="12.5" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="10.2" font-weight="800" letter-spacing="1.1" fill="#F59E0B">B2B FOOD &amp; SUPPLY NETWORK</text>
+      <rect x="0" y="0" width="194" height="17" rx="4.5" fill="rgba(224,62,65,0.1)"/>
+      <text x="6" y="12.5" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="10" font-weight="800" letter-spacing="1.1" fill="#F59E0B">B2B FOOD &amp; SUPPLY NETWORK</text>
     </g>
   </g>
 </svg>
