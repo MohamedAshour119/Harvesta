@@ -78,13 +78,17 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
                 <h3 className="text-gray-900 dark:text-slate-100 font-bold mb-4 text-[18px]">{t('common:footer.contact')}</h3>
                 <ul className="space-y-2">
                   <li>
-                    <a href="tel:+966500000000" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
-                      +966 50 000 0000
+                    <a href="tel:+201019935417" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
+                      <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block">
+                        +20 101 993 5417
+                      </span>
                     </a>
                   </li>
                   <li>
-                    <a href="mailto:support@harvesta.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
-                      support@harvesta.com
+                    <a href="mailto:ashourmohamed123456@gmail.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
+                      <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block">
+                        ashourmohamed123456@gmail.com
+                      </span>
                     </a>
                   </li>
                 </ul>
@@ -111,13 +115,17 @@ const FooterSection: React.FC<FooterProps> = ({ maxWidthWrapperClassName }) => {
               <h3 className="text-gray-900 dark:text-slate-100 font-bold mb-4 text-[18px]">{t('common:footer.contact')}</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="tel:+966500000000" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
-                    +966 50 000 0000
+                  <a href="tel:+201019935417" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
+                    <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block">
+                      +20 101 993 5417
+                    </span>
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:support@harvesta.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
-                    support@harvesta.com
+                  <a href="mailto:ashourmohamed123456@gmail.com" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white underline text-sm transition-colors">
+                    <span dir="ltr" style={{ direction: 'ltr', unicodeBidi: 'isolate' }} className="inline-block">
+                      ashourmohamed123456@gmail.com
+                    </span>
                   </a>
                 </li>
               </ul>
