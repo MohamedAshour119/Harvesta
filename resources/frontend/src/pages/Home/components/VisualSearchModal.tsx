@@ -212,7 +212,7 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
             {/* Modal Box */}
             <div
                 ref={modalRef}
-                className={`relative w-full max-w-2xl bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[88vh] transform transition-all duration-300 ${show ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-4 opacity-0'
+                className={`relative w-full max-w-2xl bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[88vh] text-start transform transition-all duration-300 ${show ? 'scale-100 translate-y-0 opacity-100' : 'scale-95 translate-y-4 opacity-0'
                     }`}
                 onDragEnter={handleDragEnter}
                 onDragOver={handleDragOver}
@@ -229,8 +229,8 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                             </svg>
                         </div>
                         <div className="min-w-0 flex-1 text-start">
-                            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                                <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white leading-tight">
+                            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap text-start justify-start">
+                                <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white leading-tight text-start">
                                     {t('home:visualSearchModal.title', 'البحث البصري الذكي')}
                                 </h3>
                                 <span className="text-[9px] sm:text-[10px] font-extrabold uppercase px-1.5 sm:px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/50 shrink-0">
@@ -306,8 +306,8 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                         </div>
                     ) : (
                         /* Selected Image Active Bar */
-                        <div className="bg-gray-50 dark:bg-[#1C2638] rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 dark:border-slate-700/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
-                            <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <div className="bg-gray-50 dark:bg-[#1C2638] rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 dark:border-slate-700/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 text-start">
+                            <div className="flex items-center gap-3 min-w-0 flex-1 text-start">
                                 <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden border-2 border-white dark:border-slate-700 shadow-sm bg-white dark:bg-slate-900 shrink-0">
                                     <img
                                         src={selectedImagePreview}
@@ -320,14 +320,14 @@ const VisualSearchModal: React.FC<VisualSearchModalProps> = ({ show, onClose }) 
                                         </div>
                                     )}
                                 </div>
-                                <div className="space-y-0.5 min-w-0 flex-1">
-                                    <div className="flex items-center gap-1.5">
+                                <div className="space-y-0.5 min-w-0 flex-1 text-start">
+                                    <div className="flex items-center gap-1.5 justify-start text-start">
                                         <span className="inline-block w-2 h-2 rounded-full bg-green-500 shrink-0" />
-                                        <span className="text-xs font-bold text-gray-800 dark:text-slate-200 truncate">
+                                        <span className="text-xs font-bold text-gray-800 dark:text-slate-200 truncate text-start">
                                             {t('home:visualSearchModal.activeQuery', 'صورة البحث الحالية')}
                                         </span>
                                     </div>
-                                    <p className="text-[10px] sm:text-[11px] text-gray-500 dark:text-slate-400 truncate">
+                                    <p className="text-[10px] sm:text-[11px] text-gray-500 dark:text-slate-400 truncate text-start">
                                         {isLoading
                                             ? t('home:visualSearchModal.analyzingFeatures', 'جاري تحليل الأنماط البصرية ومطابقة المنتجات...')
                                             : t('home:visualSearchModal.searchCompleted', 'تمت المطابقة بواسطة الذكاء الاصطناعي')}
