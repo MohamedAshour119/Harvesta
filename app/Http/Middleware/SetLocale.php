@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App; // Import the App facade
-use Illuminate\Support\Facades\Log; // Optional: for logging
+use Illuminate\Support\Facades\App;
 
 class SetLocale
 {
@@ -13,12 +13,14 @@ class SetLocale
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next)
     {
-        $locale = $request->header('Accept-Language');
+        $locale = $request->header('Accept-Language') 
+            ?: $request->query('lang') 
+            ?: $request->cookie('user_locale');
 
         if ($locale) {
             $primaryLocale = strtolower(trim(explode(',', $locale)[0]));
@@ -30,6 +32,15 @@ class SetLocale
             }
         }
 
-        return $next($request);
+        $response = $next($request);
+
+        // Ensure all API JSON responses output clean UTF-8 characters without \uXXXX escaping
+        if ($response instanceof JsonResponse) {
+            $response->setEncodingOptions(
+                $response->getEncodingOptions() | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+            );
+        }
+
+        return $response;
     }
 }

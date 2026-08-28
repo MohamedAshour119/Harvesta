@@ -27,7 +27,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, \Illuminate\Http\Request $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'errors' => $e->errors(),
+                ], $e->status, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            }
+        });
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('agents:check-monthly-targets')->lastDayOfMonth('23:59');
