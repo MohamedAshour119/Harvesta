@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { FaLock, FaEnvelope, FaTimes, FaUser } from 'react-icons/fa';
 import ApiClient, { setAccessToken } from '../ApiClient';
 import { setUser, setIsAuth } from '../store/slices/userSlice';
@@ -13,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 const LoginPrompt = () => {
   const { t } = useTranslation(['auth', 'common']);
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -198,17 +200,24 @@ const LoginPrompt = () => {
                 </button>
                 <div className="flex justify-center mb-2">
                   <div className="bg-white/15 backdrop-blur-sm p-3 rounded-full inline-flex items-center justify-center border border-white/20">
-                    <FaLock className="text-white text-xl" />
+                    {popupType === 'login' ? (
+                      <FaLock className="text-white text-xl" />
+                    ) : (
+                      <FaUser className="text-white text-xl" />
+                    )}
                   </div>
                 </div>
                 <div className="text-center">
                   <h2 className="text-xl font-bold">
-                    {popupType === 'login' ? t('auth:loginPrompt.title') : t('auth:signup.createAccount')}
+                    {popupType === 'login'
+                      ? t('auth:loginPrompt.title', 'تسجيل الدخول')
+                      : t('auth:loginPrompt.registerTitle', 'إنشاء حساب جديد')
+                    }
                   </h2>
                   <p className="text-sm opacity-90 mt-1">
                     {popupType === 'login'
-                      ? t('auth:loginPrompt.message')
-                      : t('auth:loginPrompt.message')
+                      ? t('auth:loginPrompt.message', 'يرجى تسجيل الدخول للمتابعة')
+                      : t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
                     }
                   </p>
                 </div>
@@ -233,7 +242,10 @@ const LoginPrompt = () => {
                     >
                       <div className="w-10 h-10 rounded-full border-3 border-[#B12C2E] border-t-transparent animate-spin mb-3"></div>
                       <p className="text-gray-500 dark:text-slate-400 text-sm animate-pulse">
-                        {t('auth:loginPrompt.message')}
+                        {popupType === 'login'
+                          ? t('auth:loginPrompt.message', 'يرجى تسجيل الدخول للمتابعة')
+                          : t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
+                        }
                       </p>
                     </motion.div>
                   ) : (
@@ -302,9 +314,16 @@ const LoginPrompt = () => {
                       {popupType === 'login' && (
                         <div className="flex items-center justify-between mb-4">
                           <div className="text-sm">
-                            <a href="/forgot-password" className="text-[#B12C2E] dark:text-[#E03E41] hover:underline font-semibold">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                dispatch(setIsAuthPopupOpen(false));
+                                navigate('/forgot-password');
+                              }}
+                              className="text-[#B12C2E] dark:text-[#E03E41] hover:underline font-semibold cursor-pointer"
+                            >
                               {t('auth:login.forgotPassword')}
-                            </a>
+                            </button>
                           </div>
                         </div>
                       )}
@@ -330,7 +349,7 @@ const LoginPrompt = () => {
                             onClick={toggleMode}
                             className="text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold cursor-pointer ml-1"
                           >
-                            {popupType === 'login' ? t('auth:login.signupLink') : t('auth:login.loginButton')}
+                            {popupType === 'login' ? t('auth:login.signupLink') : t('auth:signup.loginLink')}
                           </button>
                         </div>
                       </div>
