@@ -58,41 +58,53 @@ export const RelatedProducts: React.FC<RelatedProductsProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-x-2">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
-            {title || t('similarProducts')}
-          </h2>
-          <div className="flex items-center space-x-2">
-            <button
-              ref={prevRef}
-              disabled={isBeginning}
-              className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors ${isBeginning
-                  ? 'opacity-40 cursor-not-allowed'
-                  : 'hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer'
-                }`}
-              aria-label="Previous Slide"
-              aria-disabled={isBeginning}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 ${isBeginning ? 'text-gray-300 dark:text-slate-600' : 'text-gray-600 dark:text-slate-300'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
-              </svg>
-            </button>
-            <button
-              ref={nextRef}
-              disabled={isEnd}
-              className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors ${isEnd
-                  ? 'opacity-40 cursor-not-allowed'
-                  : 'hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer'
-                }`}
-              aria-label="Next Slide"
-              aria-disabled={isEnd}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 ${isEnd ? 'text-gray-300 dark:text-slate-600' : 'text-gray-600 dark:text-slate-300'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
-              </svg>
-            </button>
+        {isLoading ? (
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="h-8 w-36 sm:w-52 bg-gray-200 dark:bg-slate-700/60 rounded-xl animate-pulse" />
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-slate-700/60 animate-pulse shrink-0" />
+                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-slate-700/60 animate-pulse shrink-0" />
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex items-center gap-3 sm:gap-4">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
+              {title || t('similarProducts')}
+            </h2>
+            <div className="flex items-center gap-2">
+              <button
+                ref={prevRef}
+                disabled={isBeginning}
+                className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors shrink-0 ${isBeginning
+                    ? 'opacity-40 cursor-not-allowed'
+                    : 'hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer'
+                  }`}
+                aria-label="Previous Slide"
+                aria-disabled={isBeginning}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 ${isBeginning ? 'text-gray-300 dark:text-slate-600' : 'text-gray-600 dark:text-slate-300'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+                </svg>
+              </button>
+              <button
+                ref={nextRef}
+                disabled={isEnd}
+                className={`bg-white dark:bg-[#151D2C] border border-gray-200 dark:border-slate-700 rounded-full shadow-sm w-8 h-8 flex items-center justify-center transition-colors shrink-0 ${isEnd
+                    ? 'opacity-40 cursor-not-allowed'
+                    : 'hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer'
+                  }`}
+                aria-label="Next Slide"
+                aria-disabled={isEnd}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 ${isEnd ? 'text-gray-300 dark:text-slate-600' : 'text-gray-600 dark:text-slate-300'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="relative w-full max-w-full">

@@ -144,9 +144,9 @@ const HomePage: React.FC = () => {
         {/* Dynamic Sliders based on Top Categories */}
         {isLoadingContent ? (
           <>
-            <GenericProductSlider title="..." viewAllLink="#" products={[]} isLoading={true} />
-            <GenericProductSlider title="..." viewAllLink="#" products={[]} isLoading={true} />
-            <GenericProductSlider title="..." viewAllLink="#" products={[]} isLoading={true} />
+            <GenericProductSlider title="" viewAllLink="#" products={[]} isLoading={true} />
+            <GenericProductSlider title="" viewAllLink="#" products={[]} isLoading={true} />
+            <GenericProductSlider title="" viewAllLink="#" products={[]} isLoading={true} />
           </>
         ) : (
           topCategoriesProducts.map((item, index) => (
