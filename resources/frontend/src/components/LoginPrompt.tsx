@@ -12,7 +12,7 @@ import PasswordInput from './inputs/PasswordInput';
 import { useTranslation } from 'react-i18next';
 
 const LoginPrompt = () => {
-  const { t } = useTranslation(['auth']);
+  const { t } = useTranslation(['auth', 'common']);
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -26,11 +26,16 @@ const LoginPrompt = () => {
   const [popupType, setPopupType] = useState<'login' | 'register'>('login');
   const [isFormTransitioning, setIsFormTransitioning] = useState(false);
 
-  const isAuthPopup = useSelector((state: RootState) => state.isAuthPopupOpen);
+  const authPopupState = useSelector((state: RootState) => (state as any).isAuthPopupOpen);
+  const isAuthPopup = typeof authPopupState === 'boolean' ? authPopupState : !!authPopupState?.isOpen;
+  const targetMode = typeof authPopupState === 'object' ? authPopupState?.mode : 'login';
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isAuthPopup) {
+    if (isAuthPopup) {
+      setPopupType(targetMode || 'login');
+      setError(null);
+    } else {
       setForm({
         email: '',
         password: '',
@@ -40,7 +45,7 @@ const LoginPrompt = () => {
       setError(null);
       setPopupType('login');
     }
-  }, [isAuthPopup]);
+  }, [isAuthPopup, targetMode]);
 
   useEffect(() => {
     if (isAuthPopup || showSuccessPopup) {

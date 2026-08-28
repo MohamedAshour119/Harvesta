@@ -18,6 +18,7 @@ import ThemeToggle from './ThemeToggle';
 import { setIsCartSummarySidebarOpen } from '../store/slices/isCartSummarySidebarOpenSlice';
 import { setIsHeaderSidebarOpen } from '../store/slices/isHeaderSidebarOpenSlice';
 import { openEmptyCartModal } from '../store/slices/emptyCartModalSlice';
+import { openLoginModal, openRegisterModal } from '../store/slices/isAuthPopupOpenSlice';
 import { clearChatbotForLogout } from '../utils/chatbotSessionStorage';
 
 const Header: React.FC = () => {
@@ -236,12 +237,24 @@ const Header: React.FC = () => {
                   />
                 </div>
               )}
-              {!isAuth &&
-                <Link to="/login" className="text-gray-800 dark:text-slate-200 font-semibold hover:text-[#B12C2E] dark:hover:text-[#E03E41] transition-colors text-sm">{t('header.login')}</Link>
-              }
-              {!isAuth &&
-                <Link to="/signup" className="bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#C83437] text-white px-4 min-w-[95px] h-[38px] flex justify-center items-center rounded-full font-medium transition-all shadow-md shadow-red-900/10 text-sm">{t('header.signup')}</Link>
-              }
+              {!isAuth && (
+                <button
+                  type="button"
+                  onClick={() => dispatch(openLoginModal())}
+                  className="text-gray-800 dark:text-slate-200 font-semibold hover:text-[#B12C2E] dark:hover:text-[#E03E41] transition-colors text-sm cursor-pointer"
+                >
+                  {t('header.login')}
+                </button>
+              )}
+              {!isAuth && (
+                <button
+                  type="button"
+                  onClick={() => dispatch(openRegisterModal())}
+                  className="bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#C83437] text-white px-4 min-w-[95px] h-[38px] flex justify-center items-center rounded-full font-medium transition-all shadow-md shadow-red-900/10 text-sm cursor-pointer"
+                >
+                  {t('header.signup')}
+                </button>
+              )}
             </div>
 
             {/* Mobile Actions (Menu Button) */}
@@ -416,22 +429,28 @@ const Header: React.FC = () => {
 
               {!isAuth && (
                 <div className="mt-4 pt-4 border-t border-gray-100 dark:border-slate-800 space-y-2.5">
-                  <Link
-                    to="/login"
-                    className="flex items-center justify-center gap-2.5 w-full py-3 px-4 bg-[#B12C2E] hover:bg-[#972426] text-white rounded-2xl text-sm font-bold transition-all shadow-md hover:shadow-lg shadow-red-500/10"
-                    onClick={() => dispatch(setIsHeaderSidebarOpen(false))}
+                  <button
+                    type="button"
+                    className="flex items-center justify-center gap-2.5 w-full py-3 px-4 bg-[#B12C2E] hover:bg-[#972426] text-white rounded-2xl text-sm font-bold transition-all shadow-md hover:shadow-lg shadow-red-500/10 cursor-pointer"
+                    onClick={() => {
+                      dispatch(setIsHeaderSidebarOpen(false));
+                      dispatch(openLoginModal());
+                    }}
                   >
                     <FiUser size={18} />
                     <span>{t('header.login')}</span>
-                  </Link>
-                  <Link
-                    to="/signup"
-                    className="flex items-center justify-center gap-2.5 w-full py-2.5 px-4 border border-gray-200 dark:border-slate-700 bg-gray-50/80 hover:bg-gray-100 dark:bg-slate-800/60 dark:hover:bg-slate-800 rounded-2xl text-sm font-bold text-gray-700 dark:text-slate-200 transition-all shadow-sm"
-                    onClick={() => dispatch(setIsHeaderSidebarOpen(false))}
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-center justify-center gap-2.5 w-full py-2.5 px-4 border border-gray-200 dark:border-slate-700 bg-gray-50/80 hover:bg-gray-100 dark:bg-slate-800/60 dark:hover:bg-slate-800 rounded-2xl text-sm font-bold text-gray-700 dark:text-slate-200 transition-all shadow-sm cursor-pointer"
+                    onClick={() => {
+                      dispatch(setIsHeaderSidebarOpen(false));
+                      dispatch(openRegisterModal());
+                    }}
                   >
                     <FiUserPlus size={18} className="text-[#B12C2E] dark:text-[#E03E41]" />
                     <span>{t('header.signup')}</span>
-                  </Link>
+                  </button>
                 </div>
               )}
 
