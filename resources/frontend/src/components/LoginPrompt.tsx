@@ -23,6 +23,7 @@ const LoginPrompt = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [popupType, setPopupType] = useState<'login' | 'register'>('login');
@@ -37,6 +38,7 @@ const LoginPrompt = () => {
     if (isAuthPopup) {
       setPopupType(targetMode || 'login');
       setError(null);
+      setFieldErrors({});
     } else {
       setForm({
         email: '',
@@ -45,6 +47,7 @@ const LoginPrompt = () => {
         confirmPassword: '',
       });
       setError(null);
+      setFieldErrors({});
       setPopupType('login');
     }
   }, [isAuthPopup, targetMode]);
@@ -61,6 +64,20 @@ const LoginPrompt = () => {
     };
   }, [isAuthPopup, showSuccessPopup]);
 
+  const handleInputChange = (field: string, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    if (fieldErrors[field] || (field === 'confirmPassword' && fieldErrors.password_confirmation)) {
+      setFieldErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[field];
+        if (field === 'confirmPassword') {
+          delete updated.password_confirmation;
+        }
+        return updated;
+      });
+    }
+  };
+
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       dispatch(setIsAuthPopupOpen(false));
@@ -71,6 +88,7 @@ const LoginPrompt = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setFieldErrors({});
 
     try {
       const response = await ApiClient.auth.login(form.email, form.password);
@@ -88,7 +106,19 @@ const LoginPrompt = () => {
 
     } catch (error: any) {
       console.error('Login failed:', error);
-      setError(error.response?.data?.message || 'Invalid email or password. Please try again.');
+      const apiErrors = error.response?.data?.errors;
+      if (apiErrors && typeof apiErrors === 'object') {
+        const formattedFieldErrors: { [key: string]: string } = {};
+        Object.keys(apiErrors).forEach((field) => {
+          const errorMsg = Array.isArray(apiErrors[field]) ? apiErrors[field][0] : apiErrors[field];
+          formattedFieldErrors[field] = errorMsg;
+        });
+        setFieldErrors(formattedFieldErrors);
+        setError(null);
+      } else {
+        setFieldErrors({});
+        setError(error.response?.data?.message || t('auth:login.invalidCredentials', { defaultValue: 'البريد الإلكتروني أو كلمة المرور غير صحيحة' }));
+      }
       setLoading(false);
     }
   };
@@ -98,6 +128,7 @@ const LoginPrompt = () => {
 
     setLoading(true);
     setError(null);
+    setFieldErrors({});
 
     try {
       const data = {
@@ -128,7 +159,19 @@ const LoginPrompt = () => {
 
     } catch (error: any) {
       console.error('Signup failed:', error);
-      setError(error.response?.data?.message || 'Registration failed. Please try again.');
+      const apiErrors = error.response?.data?.errors;
+      if (apiErrors && typeof apiErrors === 'object') {
+        const formattedFieldErrors: { [key: string]: string } = {};
+        Object.keys(apiErrors).forEach((field) => {
+          const errorMsg = Array.isArray(apiErrors[field]) ? apiErrors[field][0] : apiErrors[field];
+          formattedFieldErrors[field] = errorMsg;
+        });
+        setFieldErrors(formattedFieldErrors);
+        setError(null);
+      } else {
+        setFieldErrors({});
+        setError(error.response?.data?.message || t('auth:signup.errorMessages.failed', { defaultValue: 'حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.' }));
+      }
       setLoading(false);
     }
   };
@@ -136,6 +179,7 @@ const LoginPrompt = () => {
   const toggleMode = () => {
     setIsFormTransitioning(true);
     setError(null);
+    setFieldErrors({});
 
     setTimeout(() => {
       setPopupType(popupType === 'login' ? 'register' : 'login');
@@ -224,7 +268,7 @@ const LoginPrompt = () => {
               </div>
 
               <div className="p-6 relative min-h-[300px]">
-                {error && (
+                {error && Object.keys(fieldErrors).length === 0 && (
                   <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900/50 text-red-700 dark:text-red-400 rounded-xl text-sm font-medium">
                     {error}
                   </div>
@@ -256,6 +300,7 @@ const LoginPrompt = () => {
                       initial="initial"
                       animate="visible"
                       exit="exit"
+                      noValidate
                     >
                       {popupType === 'register' && (
                         <div className="mb-4">
@@ -264,9 +309,9 @@ const LoginPrompt = () => {
                             type="text"
                             label={t('auth:signup.fullNameLabel')}
                             value={form.full_name}
-                            onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+                            onChange={(e) => handleInputChange('full_name', e.target.value)}
                             placeholder={t('auth:signup.fullNamePlaceholder')}
-                            required
+                            error={fieldErrors.full_name}
                             icon={<FaUser className="text-gray-400 dark:text-slate-500" />}
                           />
                         </div>
@@ -278,21 +323,21 @@ const LoginPrompt = () => {
                           type="email"
                           label={t('auth:signup.emailLabel')}
                           value={form.email}
-                          onChange={(e) => setForm({ ...form, email: e.target.value })}
+                          onChange={(e) => handleInputChange('email', e.target.value)}
                           placeholder={t('auth:signup.emailPlaceholder')}
-                          required
+                          error={fieldErrors.email}
                           icon={<FaEnvelope className="text-gray-400 dark:text-slate-500" />}
                         />
                       </div>
 
-                      <div className="mb-6">
+                      <div className="mb-4">
                         <PasswordInput
                           id="password"
                           label={t('auth:signup.passwordLabel')}
                           placeholder={t('auth:signup.passwordPlaceholder')}
                           value={form.password}
-                          onChange={(e) => setForm({ ...form, password: e.target.value })}
-                          required
+                          onChange={(e) => handleInputChange('password', e.target.value)}
+                          error={fieldErrors.password}
                           icon={<FaLock className="text-gray-400 dark:text-slate-500" />}
                         />
                       </div>
@@ -304,8 +349,8 @@ const LoginPrompt = () => {
                             label={t('auth:signup.confirmPasswordLabel')}
                             placeholder={t('auth:signup.confirmPasswordPlaceholder')}
                             value={form.confirmPassword}
-                            onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
-                            required
+                            onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                            error={fieldErrors.confirmPassword || fieldErrors.password_confirmation}
                             icon={<FaLock className="text-gray-400 dark:text-slate-500" />}
                           />
                         </div>
@@ -368,6 +413,7 @@ const LoginPrompt = () => {
         title={popupType === 'login' ? t('auth:login.successTitle') : t('auth:signup.successTitle')}
         message={successMessage}
         type="success"
+        primaryButtonText={t('common:buttons.continue', { defaultValue: 'متابعة' })}
         autoCloseTime={3000}
       />
     </>
