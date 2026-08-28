@@ -43,11 +43,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           type={showPassword ? "text" : "password"}
           value={value}
           onChange={onChange}
-          className={`w-full ${icon && !isRTL ? 'pl-9 pr-10' : icon && isRTL ? 'pr-9 pl-10' : 'px-4'} py-2.5 rounded-xl border ${
-            error 
-              ? 'border-red-400 dark:border-red-500 focus:border-red-500 focus:ring-red-500/20' 
-              : 'border-gray-300 dark:border-slate-700 focus:border-[#B12C2E] focus:ring-[#B12C2E]/20'
-          } bg-white dark:bg-[#1C2638] text-gray-900 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 text-sm transition-all shadow-sm ${className}`}
+          className={`w-full ${icon && !isRTL ? 'pl-9 pr-10' : icon && isRTL ? 'pr-9 pl-10' : 'px-4'} py-2.5 rounded-xl border border-gray-300 dark:border-slate-700 bg-white dark:bg-[#1C2638] text-gray-900 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#B12C2E] focus:ring-2 focus:ring-[#B12C2E]/20 text-sm transition-all shadow-sm ${className}`}
           placeholder={placeholder}
           required={required}
         />
