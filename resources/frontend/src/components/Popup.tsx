@@ -19,9 +19,10 @@ const Popup: React.FC<PopupProps> = ({
   message,
   type = 'success',
   autoCloseTime,
-  primaryButtonText = 'Continue',
+  primaryButtonText,
 }) => {
   const { t } = useTranslation(['common']);
+  const displayButtonText = primaryButtonText || t('common:buttons.continue', { defaultValue: 'متابعة' });
 
   useEffect(() => {
     if (isOpen && autoCloseTime) {
@@ -130,7 +131,7 @@ const Popup: React.FC<PopupProps> = ({
                   onClick={() => onClose()}
                   className="bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] cursor-pointer text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-sm"
                 >
-                  {primaryButtonText}
+                  {displayButtonText}
                 </button>
                 <button
                   onClick={() => onClose()}
