@@ -125,7 +125,7 @@ const Popup: React.FC<PopupProps> = ({
               <div className="mb-4">{icon}</div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-2">{title}</h3>
               <p className="text-gray-600 dark:text-slate-400 mb-6 text-sm leading-relaxed">{message}</p>
-              <div className="flex space-x-3 rtl:space-x-reverse">
+              <div className="flex items-center justify-center gap-3 sm:gap-4 w-full">
                 <button
                   onClick={() => onClose()}
                   className="bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] cursor-pointer text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-sm"
