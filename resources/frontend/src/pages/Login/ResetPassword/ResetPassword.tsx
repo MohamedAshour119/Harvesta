@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import MaxWidthWrapper from '../../../components/MaxWidthWrapper';
 import PasswordInput from '../../../components/inputs/PasswordInput';
 import ApiClient from '../../../ApiClient';
 import Popup from '../../../components/Popup';
 import { FaLock } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { openLoginModal } from '../../../store/slices/isAuthPopupOpenSlice';
 
 const ResetPassword: React.FC = () => {
     const { t } = useTranslation(['auth', 'common']);
@@ -17,6 +19,7 @@ const ResetPassword: React.FC = () => {
 
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const token = searchParams.get('token');
     const email = searchParams.get('email');
@@ -57,7 +60,8 @@ const ResetPassword: React.FC = () => {
 
     const handlePopupClose = () => {
         setShowSuccessPopup(false);
-        navigate('/login');
+        navigate('/');
+        dispatch(openLoginModal());
     };
 
     return (

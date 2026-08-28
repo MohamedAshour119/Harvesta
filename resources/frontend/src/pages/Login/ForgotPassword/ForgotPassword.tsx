@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import MaxWidthWrapper from '../../../components/MaxWidthWrapper';
 import TextInput from '../../../components/inputs/TextInput';
 import ApiClient from '../../../ApiClient';
 import { FaEnvelope, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { openLoginModal } from '../../../store/slices/isAuthPopupOpenSlice';
 import i18n from '../../../i18n';
 
 const ForgotPassword: React.FC = () => {
@@ -29,6 +31,14 @@ const ForgotPassword: React.FC = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleBackToLogin = () => {
+        navigate('/');
+        dispatch(openLoginModal());
     };
 
     const isRTL = i18n.language === 'ar';
@@ -76,13 +86,14 @@ const ForgotPassword: React.FC = () => {
                     </form>
 
                     <div className="mt-8 pt-6 border-t border-gray-100 dark:border-slate-800 text-center">
-                        <Link
-                            to="/login"
-                            className="inline-flex items-center text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold text-sm transition-colors"
+                        <button
+                            type="button"
+                            onClick={handleBackToLogin}
+                            className="inline-flex items-center text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold text-sm transition-colors cursor-pointer"
                         >
                             {isRTL ? <FaArrowRight className="ml-2" /> : <FaArrowLeft className="mr-2" />}
                             {t('auth:forgotPassword.backToLogin')}
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -72,7 +72,7 @@ export default function Header({ setSidebarOpen, title }: HeaderProps) {
             dispatch(clearFavorites());
             dispatch(setIsAuth(false));
             dispatch(setUser(null));
-            navigate("/login");
+            navigate("/");
             setIsDropdownOpen(false);
         }
     };

@@ -75,7 +75,7 @@ function DashboardAuthRoute() {
 
     return (
         isAuth && user?.is_agent ? <Outlet/> 
-        : !isAuth ? <Navigate to={`/login`} state={{ from: location }} replace/>
+        : !isAuth ? <Navigate to={`/`} state={{ from: location }} replace/>
         : <Navigate to={`/`} state={{ from: location }} replace/>
     );
 }

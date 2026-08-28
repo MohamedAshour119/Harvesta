@@ -1,12 +1,10 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import ChatWidget from './components/chatbot/ChatWidget'
 import './App.css'
 import HomePage from './pages/Home/HomePage'
 import CartPage from './pages/Cart/CartPage'
 import { useState, useEffect } from 'react'
-import Login from './pages/Login/Login'
 import MaxWidthWrapper from './components/MaxWidthWrapper'
-import SignUp from './pages/SignUp/SignUp'
 import { TokenRefresher } from './components/TokenRefresher'
 import CustomProductRequest from './pages/CustomProductRequest/CustomProductRequest'
 import FavoritesSidebar from './components/FavoritesSidebar'
@@ -97,8 +95,8 @@ function App() {
               <Route path="/returns" element={<MaxWidthWrapper><Return /></MaxWidthWrapper>} />
               <Route path="/products/:slug" element={<ShowProduct />} />
               <Route element={<RequireNotAuthRoute />}>
-                <Route path="/login" element={<MaxWidthWrapper><Login /></MaxWidthWrapper>} />
-                <Route path="/signup" element={<MaxWidthWrapper><SignUp /></MaxWidthWrapper>} />
+                <Route path="/login" element={<Navigate to="/" replace />} />
+                <Route path="/signup" element={<Navigate to="/" replace />} />
                 <Route path="/forgot-password" element={<MaxWidthWrapper><ForgotPassword /></MaxWidthWrapper>} />
                 <Route path="/reset-password" element={<ResetPassword />} />
               </Route>
@@ -110,6 +108,7 @@ function App() {
               <Route element={<RequireAuthRoute />}>
                 <Route path="/profile" element={<MaxWidthWrapper><Profile /></MaxWidthWrapper>} />
               </Route>
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
         </div>

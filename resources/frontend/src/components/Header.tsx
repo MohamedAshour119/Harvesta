@@ -122,7 +122,7 @@ const Header: React.FC = () => {
       dispatch(clearFavorites());
       dispatch(setIsAuth(false));
       dispatch(setUser(null));
-      navigate('/login');
+      navigate('/');
       setIsDropdownOpen(false);
     }
   };
