@@ -207,7 +207,7 @@ const LoginPrompt = () => {
 
     try {
       const response = await ApiClient.auth.forgotPassword(form.email);
-      setForgotPasswordSuccess(response.data?.message || t('auth:forgotPassword.successMessage', { defaultValue: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.' }));
+      setForgotPasswordSuccess(t('auth:forgotPassword.successMessage', { defaultValue: response.data?.message || 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.' }));
     } catch (error: any) {
       console.error('Forgot password failed:', error);
       const apiErrors = error.response?.data?.errors;
