@@ -477,7 +477,7 @@ export function ShowProduct() {
   if (loading) {
     return (
       <MaxWidthWrapper>
-        <PageLoader message={t('products:loadingProduct', 'جاري تجهيز تفاصيل المنتج...')} />
+        <PageLoader message={t('products:loadingProduct')} />
       </MaxWidthWrapper>
     );
   }

@@ -1,14 +1,15 @@
-# Password Reset Throttling, Dual Rate Limiting & Countdown UI - Task Tracker
+# Localization of Loading States & Spinners - Task Tracker
 
 | # | Task | Phase | Status |
 |---|------|-------|--------|
-| 1 | Configure dynamic password reset throttle via `AUTH_PASSWORD_RESET_THROTTLE` in `config/auth.php` and `.env` | Backend | ✅ done |
-| 2 | Implement Layer 2 per-IP rate limiter `forgot-password` (5 req/min) in `AppServiceProvider` & attach to `api.php` | Backend | ✅ done |
-| 3 | Brand reset password email template with official SVG vector logo and ngrok public tunnel | Backend/Blade | ✅ done |
-| 4 | Add localization keys (`resendCooldown`, `resendIn`, `resendButton`, `didNotReceive`) to `ar/auth.json` and `en/auth.json` | Frontend/i18n | ✅ done |
-| 5 | Implement visual countdown timer (`FaClock`, 60s) and resend action with Dual Theme support in `LoginPrompt.tsx` | Frontend/UI | ✅ done |
-| 6 | Verify TypeScript compilation (`tsc --noEmit`) and zero-hang execution | Verification | ✅ done |
-| 7 | Generate Mandatory Theoretical & In-Depth Technical Report (`.md`) | Documentation | ✅ done |
-| 8 | Refine email layout: move logo inside card, center gradient & heading, and remove redundant lock icon | Backend/Blade | ✅ done |
-| 9 | Migrate frontend Header and FooterSection logos from SVG to PNG | Frontend | ✅ done |
+| 1 | Add root `loading` key to `ar/common.json` and `en/common.json` | i18n | ✅ done |
+| 2 | Add `sending` to `forgotPassword` & identity verification keys in `ar/auth.json` and `en/auth.json` | i18n | ✅ done |
+| 3 | Add `loadingProduct` to `ar/products.json` and `en/products.json` & refine `showProduct.json` | i18n | ✅ done |
+| 4 | Update `LoginPrompt.tsx` with dynamic loading states (`sending`, `loggingIn`, `signingUp`) & remove hardcoded Arabic fallbacks | Frontend/UI | ✅ done |
+| 5 | Update `PageLoader.tsx` to use dynamic `common:loading` without hardcoded Arabic fallback | Frontend/UI | ✅ done |
+| 6 | Localize `DashboardAuthRoute.tsx` and `ShowProduct.tsx` loader messages | Frontend/UI | ✅ done |
+| 7 | Fix `Login.tsx` i18n namespace keys from `auth:login:` to `auth:login.` | Frontend/UI | ✅ done |
+| 8 | Verify TypeScript compilation (`tsc --noEmit`) | Verification | ✅ done |
+| 9 | Generate Mandatory Theoretical & In-Depth Technical Report (`.md`) | Documentation | ✅ done |
 | 10 | User Verification Checkpoint (`ask_question`) & Atomic Git Commit/Push | Git & Release | ✅ done |
+

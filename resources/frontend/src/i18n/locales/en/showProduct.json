@@ -36,7 +36,7 @@
         "buyNow": "Buy Now",
         "favorite": "Add to Favorites",
         "removeFavorite": "Remove from Favorites",
-        "loadingAddToCart": "Loading Add to Cart",
+        "loadingAddToCart": "Adding to cart...",
         "successAddToCart": "Successfully added!",
         "copyReferralLink": "Copy Referral Link",
         "referralLinkCopied": "Link copied successfully!",

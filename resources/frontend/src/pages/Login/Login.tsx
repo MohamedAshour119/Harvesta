@@ -92,7 +92,7 @@ const Login: React.FC = () => {
           <div className="absolute inset-0 bg-cover bg-center h-[47rem]" style={{ backgroundImage: "url('/assets/images/login/login-img.png')" }}>
             <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
             <div className="absolute bottom-10 left-10 right-10 text-white">
-              <h2 className="text-2xl font-bold mb-2">{t('auth:login:welcomeTo')}</h2>
+              <h2 className="text-2xl font-bold mb-2">{t('auth:login.welcomeTo')}</h2>
               <h1 className="text-4xl font-extrabold text-[#E03E41]">
                 {t('common:title_part_1')}
                 <span className="text-white">{t('common:title_part_2')}</span>
@@ -106,14 +106,14 @@ const Login: React.FC = () => {
           <div className="w-full max-w-md bg-white dark:bg-[#151D2C] p-8 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
             {/* Mobile view welcome text */}
             <div className="md:hidden mb-6 text-center">
-              <h2 className="text-xl font-semibold text-gray-700 dark:text-slate-300">{t('auth:login:welcomeTo')}</h2>
+              <h2 className="text-xl font-semibold text-gray-700 dark:text-slate-300">{t('auth:login.welcomeTo')}</h2>
               <h1 className="text-3xl font-extrabold text-[#B12C2E] dark:text-[#E03E41]">{t('common:title')}</h1>
             </div>
 
             {/* Title */}
             <div className="mb-8 text-center">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">{t('auth:login:title')}</h2>
-              <p className="text-gray-500 dark:text-slate-400 mt-1 text-sm">{t('auth:login:subtitle')}</p>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">{t('auth:login.title')}</h2>
+              <p className="text-gray-500 dark:text-slate-400 mt-1 text-sm">{t('auth:login.subtitle')}</p>
             </div>
 
             {/* Error message */}
@@ -131,20 +131,20 @@ const Login: React.FC = () => {
             >
               <TextInput
                 id="email"
-                label={t('auth:login:emailLabel')}
+                label={t('auth:login.emailLabel')}
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={t('auth:login:emailPlaceholder')}
+                placeholder={t('auth:login.emailPlaceholder')}
                 icon={<FaEnvelope className="text-gray-400" />}
               />
 
               <PasswordInput
                 id="password"
-                label={t('auth:login:passwordLabel')}
+                label={t('auth:login.passwordLabel')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder={t('auth:login:passwordPlaceholder')}
+                placeholder={t('auth:login.passwordPlaceholder')}
                 icon={<FaLock className="text-gray-400" />}
               />
 
@@ -153,7 +153,7 @@ const Login: React.FC = () => {
                   to="/forgot-password"
                   className="text-xs font-semibold text-[#B12C2E] dark:text-[#E03E41] hover:underline"
                 >
-                  {t('auth:login:forgotPassword')}
+                  {t('auth:login.forgotPassword')}
                 </Link>
               </div>
 
@@ -162,14 +162,14 @@ const Login: React.FC = () => {
                 className="w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#C83437] cursor-pointer text-white py-3 px-4 rounded-xl font-bold transition-all shadow-md active:scale-[0.98] mt-2"
                 disabled={loading}
               >
-                {loading ? t('auth:login:loggingIn') : t('auth:login:loginButton')}
+                {loading ? t('auth:login.loggingIn') : t('auth:login.loginButton')}
               </button>
             </form>
 
             <p className="mt-6 text-center text-sm text-gray-600 dark:text-slate-400">
-              {t('auth:login:noAccountText')}{' '}
+              {t('auth:login.noAccountText')}{' '}
               <Link to="/signup" className="text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold">
-                {t('auth:login:signupLink')}
+                {t('auth:login.signupLink')}
               </Link>
             </p>
           </div>
@@ -180,8 +180,8 @@ const Login: React.FC = () => {
       <Popup
         isOpen={showSuccessPopup}
         onClose={handlePopupClose}
-        title={t('auth:login:successTitle')}
-        message={t('auth:login:successMessage', { name: user?.full_name || '' })}
+        title={t('auth:login.successTitle')}
+        message={t('auth:login.successMessage', { name: user?.full_name || '' })}
         type="success"
         primaryButtonText={isAgentLogin ? t('dashboard:sidebar.overview') : t('common:buttons.goToHome')}
         autoCloseTime={4000}

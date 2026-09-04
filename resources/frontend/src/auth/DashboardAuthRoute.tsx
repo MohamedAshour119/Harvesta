@@ -5,9 +5,11 @@ import type {RootState} from "../store/store";
 import { consumeImpersonationPayload, setAccessToken } from "../ApiClient";
 import { setIsAuth, setUser } from "../store/slices/userSlice";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import PageLoader from "../components/PageLoader";
 
 function DashboardAuthRoute() {
+    const { t } = useTranslation(['auth', 'common']);
     const isAuth = useSelector((state: RootState) => state.auth?.isAuth);
     const authChecked = useSelector((state: RootState) => state.auth?.authChecked);
     const user = useSelector((state: RootState) => state.auth?.user);
@@ -64,7 +66,7 @@ function DashboardAuthRoute() {
     if (hasInitialPayload || isVerifying) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-white dark:bg-[#0B0F17] w-screen">
-                <PageLoader message="جاري التحقق من الهوية..." subMessage="Impersonation in progress" />
+                <PageLoader message={t('auth:verifyingIdentity')} subMessage={t('auth:impersonationInProgress')} />
             </div>
         );
     }

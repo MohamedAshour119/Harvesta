@@ -18,7 +18,7 @@ export const PageLoader: React.FC<PageLoaderProps> = ({
 }) => {
   const { t } = useTranslation(['common']);
 
-  const displayMessage = message || t('common:loading', 'جاري التحميل...');
+  const displayMessage = message || t('common:loading');
 
   const sizeStyles = {
     sm: {

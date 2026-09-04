@@ -150,7 +150,7 @@ const LoginPrompt = () => {
         setError(null);
       } else {
         setFieldErrors({});
-        setError(error.response?.data?.message || t('auth:login.invalidCredentials', { defaultValue: 'البريد الإلكتروني أو كلمة المرور غير صحيحة' }));
+        setError(error.response?.data?.message || t('auth:login.invalidCredentials'));
       }
       setLoading(false);
     }
@@ -203,7 +203,7 @@ const LoginPrompt = () => {
         setError(null);
       } else {
         setFieldErrors({});
-        setError(error.response?.data?.message || t('auth:signup.errorMessages.failed', { defaultValue: 'حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.' }));
+        setError(error.response?.data?.message || t('auth:signup.errorMessages.failed'));
       }
       setLoading(false);
     }
@@ -212,7 +212,7 @@ const LoginPrompt = () => {
   const handleForgotPassword = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!form.email || !form.email.trim()) {
-      setFieldErrors({ email: t('auth:forgotPassword.errorMessages.requiredEmail', { defaultValue: 'البريد الإلكتروني مطلوب' }) });
+      setFieldErrors({ email: t('auth:forgotPassword.errorMessages.requiredEmail') });
       return;
     }
 
@@ -222,7 +222,7 @@ const LoginPrompt = () => {
 
     try {
       const response = await ApiClient.auth.forgotPassword(form.email);
-      setForgotPasswordSuccess(t('auth:forgotPassword.successMessage', { defaultValue: response.data?.message || 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.' }));
+      setForgotPasswordSuccess(response.data?.message || t('auth:forgotPassword.successMessage'));
       setCountdown(60);
     } catch (error: any) {
       console.error('Forgot password failed:', error);
@@ -242,7 +242,7 @@ const LoginPrompt = () => {
         });
         setFieldErrors(formattedFieldErrors);
       } else {
-        setError(error.response?.data?.message || t('auth:forgotPassword.errorMessages.emailNotFound', { defaultValue: 'تعذر العثور على مستخدم بهذا البريد الإلكتروني.' }));
+        setError(error.response?.data?.message || t('auth:forgotPassword.errorMessages.emailNotFound'));
       }
     } finally {
       setLoading(false);
@@ -317,18 +317,18 @@ const LoginPrompt = () => {
                 <div className="text-center">
                   <h2 className="text-xl font-bold">
                     {popupType === 'login'
-                      ? t('auth:loginPrompt.title', 'تسجيل الدخول')
+                      ? t('auth:loginPrompt.title')
                       : popupType === 'register'
-                      ? t('auth:loginPrompt.registerTitle', 'إنشاء حساب جديد')
-                      : t('auth:forgotPassword.title', 'إعادة تعيين كلمة المرور')
+                      ? t('auth:loginPrompt.registerTitle')
+                      : t('auth:forgotPassword.title')
                     }
                   </h2>
                   <p className="text-sm opacity-90 mt-1 max-w-xs mx-auto leading-relaxed">
                     {popupType === 'login'
-                      ? t('auth:loginPrompt.message', 'يرجى تسجيل الدخول للمتابعة')
+                      ? t('auth:loginPrompt.message')
                       : popupType === 'register'
-                      ? t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
-                      : t('auth:forgotPassword.description', 'أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.')
+                      ? t('auth:loginPrompt.registerMessage')
+                      : t('auth:forgotPassword.description')
                     }
                   </p>
                 </div>
@@ -355,7 +355,7 @@ const LoginPrompt = () => {
                         fullScreen={false}
                         size="md"
                         className="py-6 sm:py-8"
-                        message={t('common:loading', 'جاري التحميل...')}
+                        message={t('common:loading')}
                       />
                     </motion.div>
                   ) : popupType === 'forgot-password' ? (
@@ -375,12 +375,12 @@ const LoginPrompt = () => {
                           {countdown > 0 ? (
                             <div className="mb-4 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 rounded-xl flex items-center justify-center gap-2.5 text-amber-800 dark:text-amber-300 text-sm font-medium">
                               <FaClock className="text-amber-600 dark:text-amber-400 text-sm shrink-0 animate-pulse" />
-                              <span>{t('auth:forgotPassword.resendCooldown', { seconds: countdown, defaultValue: `يمكنك طلب رابط جديد بعد: ${countdown} ثانية` })}</span>
+                              <span>{t('auth:forgotPassword.resendCooldown', { seconds: countdown })}</span>
                             </div>
                           ) : (
                             <div className="mb-4 p-3 bg-gray-50 dark:bg-slate-800/60 rounded-xl border border-gray-100 dark:border-slate-700/60 text-center">
                               <p className="text-xs text-gray-600 dark:text-slate-400 mb-1.5">
-                                {t('auth:forgotPassword.didNotReceive', { defaultValue: 'لم يصلك البريد؟' })}
+                                {t('auth:forgotPassword.didNotReceive')}
                               </p>
                               <button
                                 type="button"
@@ -388,7 +388,7 @@ const LoginPrompt = () => {
                                 disabled={loading}
                                 className="text-sm text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold inline-flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
                               >
-                                <span>{t('auth:forgotPassword.resendButton', { defaultValue: 'إعادة إرسال الرابط مرة أخرى' })}</span>
+                                <span>{t('auth:forgotPassword.resendButton')}</span>
                               </button>
                             </div>
                           )}
@@ -401,7 +401,7 @@ const LoginPrompt = () => {
                             }}
                             className="w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
                           >
-                            {t('auth:forgotPassword.backToLogin', 'العودة إلى تسجيل الدخول')}
+                            {t('auth:forgotPassword.backToLogin')}
                           </button>
                         </div>
                       ) : (
@@ -410,10 +410,10 @@ const LoginPrompt = () => {
                             <TextInput
                               id="forgot-email"
                               type="email"
-                              label={t('auth:forgotPassword.emailLabel', 'البريد الإلكتروني')}
+                              label={t('auth:forgotPassword.emailLabel')}
                               value={form.email}
                               onChange={(e) => handleInputChange('email', e.target.value)}
-                              placeholder={t('auth:forgotPassword.emailPlaceholder', 'أدخل بريدك الإلكتروني')}
+                              placeholder={t('auth:forgotPassword.emailPlaceholder')}
                               error={fieldErrors.email}
                               icon={<FaEnvelope className="text-gray-400 dark:text-slate-500" />}
                             />
@@ -422,7 +422,7 @@ const LoginPrompt = () => {
                           {countdown > 0 && (
                             <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 rounded-xl flex items-center justify-center gap-2.5 text-amber-800 dark:text-amber-300 text-xs font-medium">
                               <FaClock className="text-amber-600 dark:text-amber-400 text-sm shrink-0 animate-pulse" />
-                              <span>{t('auth:forgotPassword.resendCooldown', { seconds: countdown, defaultValue: `يمكنك طلب رابط جديد بعد: ${countdown} ثانية` })}</span>
+                              <span>{t('auth:forgotPassword.resendCooldown', { seconds: countdown })}</span>
                             </div>
                           )}
 
@@ -432,10 +432,10 @@ const LoginPrompt = () => {
                             className={`cursor-pointer w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm ${loading || countdown > 0 ? 'opacity-70 cursor-not-allowed' : ''}`}
                           >
                             {loading
-                              ? t('common:loading', 'جاري التحميل...')
+                              ? t('auth:forgotPassword.sending', { defaultValue: t('common:loading') })
                               : countdown > 0
-                              ? t('auth:forgotPassword.resendIn', { seconds: countdown, defaultValue: `إعادة الإرسال بعد (${countdown}ث)` })
-                              : t('auth:forgotPassword.resetButton', 'إرسال رابط إعادة التعيين')
+                              ? t('auth:forgotPassword.resendIn', { seconds: countdown })
+                              : t('auth:forgotPassword.resetButton')
                             }
                           </button>
 
@@ -446,7 +446,7 @@ const LoginPrompt = () => {
                               className="inline-flex items-center text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold cursor-pointer transition-colors"
                             >
                               {isRTL ? <FaArrowRight className="ml-1.5 text-xs" /> : <FaArrowLeft className="mr-1.5 text-xs" />}
-                              {t('auth:forgotPassword.backToLogin', 'العودة إلى تسجيل الدخول')}
+                              {t('auth:forgotPassword.backToLogin')}
                             </button>
                           </div>
                         </form>
@@ -537,7 +537,7 @@ const LoginPrompt = () => {
                           className={`cursor-pointer w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                         >
                           {loading
-                            ? (popupType === 'login' ? t('auth:login.loginButton') : t('auth:signup.signupButton'))
+                            ? (popupType === 'login' ? t('auth:login.loggingIn') : t('auth:signup.signingUp'))
                             : (popupType === 'login' ? t('auth:login.loginButton') : t('auth:signup.signupButton'))
                           }
                         </button>

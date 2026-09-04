@@ -2,6 +2,7 @@
   "title": "HARVESTA",
   "title_part_1": "HAR",
   "title_part_2": "VESTA",
+  "loading": "Loading...",
   "header": {
     "login": "Login",
     "signup": "Sign Up",
