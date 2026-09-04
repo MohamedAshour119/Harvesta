@@ -137,7 +137,7 @@ const Header: React.FC = () => {
           <div className="flex flex-row items-center justify-between gap-x-2">
             {/* Logo */}
             <a href="/" className='cursor-pointer flex items-center py-1'>
-              <img src={isRTL ? '/logo-ar.svg' : '/logo.svg'} alt={t('common:title')} className="h-12 md:h-14 w-auto max-w-[220px] md:max-w-[250px] object-contain drop-shadow-md dark:brightness-110 transition-transform duration-200 hover:scale-[1.02]" />
+              <img src={isRTL ? '/logo-ar.png' : '/logo.png'} alt={t('common:title')} className="h-12 md:h-14 w-auto max-w-[220px] md:max-w-[250px] object-contain drop-shadow-md dark:brightness-110 transition-transform duration-200 hover:scale-[1.02]" />
             </a>
 
             {/* Desktop Navigation */}

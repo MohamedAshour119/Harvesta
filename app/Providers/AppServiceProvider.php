@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,6 +77,45 @@ class AppServiceProvider extends ServiceProvider
                 Limit::perMinute(6)->by($request->ip()),         // 6 sessions/min
                 Limit::perDay(40)->by($request->ip()),           // 40 sessions/day max
             ];
+        });
+
+        // Forgot password IP rate limiter (5 requests/min per IP, bypassed when throttle is 0 in testing)
+        RateLimiter::for('forgot-password', function (Request $request) {
+            if ((int) config('auth.passwords.users.throttle') === 0) {
+                return Limit::none();
+            }
+
+            return Limit::perMinute(5)->by($request->ip())->response(function () {
+                return response()->json([
+                    'status' => 429,
+                    'message' => app()->getLocale() === 'ar'
+                        ? 'تم تجاوز عدد المحاولات المسموح بها. يرجى الانتظار قليلاً قبل إعادة المحاولة.'
+                        : 'Too many requests. Please wait a moment before trying again.',
+                    'errors' => []
+                ], 429);
+            });
+        });
+
+        // Customize the password reset notification email
+        ResetPassword::toMailUsing(function ($notifiable, string $token) {
+            $resetUrl = url(route('password.reset', [
+                'token' => $token,
+                'email' => $notifiable->getEmailForPasswordReset(),
+            ], false));
+
+            $locale = app()->getLocale();
+            $subject = $locale === 'ar'
+                ? 'إعادة تعيين كلمة المرور - هارفستا'
+                : 'Reset Your Password - Harvesta';
+
+            return (new MailMessage)
+                ->subject($subject)
+                ->view('emails.reset-password', [
+                    'url' => $resetUrl,
+                    'user' => $notifiable,
+                    'count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire', 60),
+                    'locale' => $locale,
+                ]);
         });
     }
 }

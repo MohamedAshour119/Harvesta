@@ -28,7 +28,7 @@ Route::post('auth/logout', [AuthController::class,'logout']);
 Route::post('auth/refresh-token', [AuthController::class,'refreshToken']);
 Route::post('auth/consume-payload', [AuthController::class, 'consumePayload']);
 Route::post('auth/consume-impersonation-payload', [AuthController::class, 'consumeImpersonationPayload']);
-Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('throttle:forgot-password');
 Route::post('auth/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('search/{keyword}', [SearchController::class, 'search']);
 Route::get('search-keyword/{keyword}', [SearchController::class, 'searchKeyword']);

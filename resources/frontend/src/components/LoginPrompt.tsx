@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaLock, FaEnvelope, FaTimes, FaUser, FaKey, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaLock, FaEnvelope, FaTimes, FaUser, FaKey, FaArrowLeft, FaArrowRight, FaClock } from 'react-icons/fa';
 import ApiClient, { setAccessToken } from '../ApiClient';
 import { setUser, setIsAuth } from '../store/slices/userSlice';
 import type { RootState } from '../store/store';
@@ -30,6 +30,21 @@ const LoginPrompt = () => {
   const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<string | null>(null);
   const [popupType, setPopupType] = useState<'login' | 'register' | 'forgot-password'>('login');
   const [isFormTransitioning, setIsFormTransitioning] = useState(false);
+  const [countdown, setCountdown] = useState<number>(0);
+
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [countdown]);
 
   const authPopupState = useSelector((state: RootState) => (state as any).isAuthPopupOpen);
   const isAuthPopup = typeof authPopupState === 'boolean' ? authPopupState : !!authPopupState?.isOpen;
@@ -194,8 +209,8 @@ const LoginPrompt = () => {
     }
   };
 
-  const handleForgotPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleForgotPassword = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!form.email || !form.email.trim()) {
       setFieldErrors({ email: t('auth:forgotPassword.errorMessages.requiredEmail', { defaultValue: 'البريد الإلكتروني مطلوب' }) });
       return;
@@ -208,9 +223,17 @@ const LoginPrompt = () => {
     try {
       const response = await ApiClient.auth.forgotPassword(form.email);
       setForgotPasswordSuccess(t('auth:forgotPassword.successMessage', { defaultValue: response.data?.message || 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.' }));
+      setCountdown(60);
     } catch (error: any) {
       console.error('Forgot password failed:', error);
       const apiErrors = error.response?.data?.errors;
+      const status = error.response?.status;
+      const message = error.response?.data?.message || '';
+
+      if (status === 429 || message.includes('wait') || message.includes('انتظار') || message.includes('throttle')) {
+        setCountdown(60);
+      }
+
       if (apiErrors && typeof apiErrors === 'object') {
         const formattedFieldErrors: { [key: string]: string } = {};
         Object.keys(apiErrors).forEach((field) => {
@@ -345,9 +368,31 @@ const LoginPrompt = () => {
                     >
                       {forgotPasswordSuccess ? (
                         <div className="py-2 text-center">
-                          <div className="mb-6 p-4 bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-900/50 text-green-700 dark:text-green-400 rounded-2xl text-sm font-medium leading-relaxed">
+                          <div className="mb-4 p-4 bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-900/50 text-green-700 dark:text-green-400 rounded-2xl text-sm font-medium leading-relaxed">
                             {forgotPasswordSuccess}
                           </div>
+
+                          {countdown > 0 ? (
+                            <div className="mb-4 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 rounded-xl flex items-center justify-center gap-2.5 text-amber-800 dark:text-amber-300 text-sm font-medium">
+                              <FaClock className="text-amber-600 dark:text-amber-400 text-sm shrink-0 animate-pulse" />
+                              <span>{t('auth:forgotPassword.resendCooldown', { seconds: countdown, defaultValue: `يمكنك طلب رابط جديد بعد: ${countdown} ثانية` })}</span>
+                            </div>
+                          ) : (
+                            <div className="mb-4 p-3 bg-gray-50 dark:bg-slate-800/60 rounded-xl border border-gray-100 dark:border-slate-700/60 text-center">
+                              <p className="text-xs text-gray-600 dark:text-slate-400 mb-1.5">
+                                {t('auth:forgotPassword.didNotReceive', { defaultValue: 'لم يصلك البريد؟' })}
+                              </p>
+                              <button
+                                type="button"
+                                onClick={() => handleForgotPassword()}
+                                disabled={loading}
+                                className="text-sm text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold inline-flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                              >
+                                <span>{t('auth:forgotPassword.resendButton', { defaultValue: 'إعادة إرسال الرابط مرة أخرى' })}</span>
+                              </button>
+                            </div>
+                          )}
+
                           <button
                             type="button"
                             onClick={() => {
@@ -374,12 +419,24 @@ const LoginPrompt = () => {
                             />
                           </div>
 
+                          {countdown > 0 && (
+                            <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 rounded-xl flex items-center justify-center gap-2.5 text-amber-800 dark:text-amber-300 text-xs font-medium">
+                              <FaClock className="text-amber-600 dark:text-amber-400 text-sm shrink-0 animate-pulse" />
+                              <span>{t('auth:forgotPassword.resendCooldown', { seconds: countdown, defaultValue: `يمكنك طلب رابط جديد بعد: ${countdown} ثانية` })}</span>
+                            </div>
+                          )}
+
                           <button
                             type="submit"
-                            disabled={loading}
-                            className={`cursor-pointer w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                            disabled={loading || countdown > 0}
+                            className={`cursor-pointer w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm ${loading || countdown > 0 ? 'opacity-70 cursor-not-allowed' : ''}`}
                           >
-                            {loading ? t('common:loading', 'جاري التحميل...') : t('auth:forgotPassword.resetButton', 'إرسال رابط إعادة التعيين')}
+                            {loading
+                              ? t('common:loading', 'جاري التحميل...')
+                              : countdown > 0
+                              ? t('auth:forgotPassword.resendIn', { seconds: countdown, defaultValue: `إعادة الإرسال بعد (${countdown}ث)` })
+                              : t('auth:forgotPassword.resetButton', 'إرسال رابط إعادة التعيين')
+                            }
                           </button>
 
                           <div className="text-center text-sm pt-2">
