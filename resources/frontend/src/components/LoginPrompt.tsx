@@ -10,6 +10,7 @@ import Popup from './Popup';
 import TextInput from './inputs/TextInput';
 import PasswordInput from './inputs/PasswordInput';
 import { useTranslation } from 'react-i18next';
+import PageLoader from './PageLoader';
 
 const LoginPrompt = () => {
   const { t, i18n } = useTranslation(['auth', 'common']);
@@ -41,6 +42,7 @@ const LoginPrompt = () => {
       setError(null);
       setFieldErrors({});
       setForgotPasswordSuccess(null);
+      setIsFormTransitioning(false);
     } else {
       setForm({
         email: '',
@@ -52,6 +54,7 @@ const LoginPrompt = () => {
       setFieldErrors({});
       setForgotPasswordSuccess(null);
       setPopupType('login');
+      setIsFormTransitioning(false);
     }
   }, [isAuthPopup, targetMode]);
 
@@ -92,13 +95,11 @@ const LoginPrompt = () => {
     setError(null);
     setFieldErrors({});
     setForgotPasswordSuccess(null);
+    setPopupType(target);
 
     setTimeout(() => {
-      setPopupType(target);
-      setTimeout(() => {
-        setIsFormTransitioning(false);
-      }, 300);
-    }, 150);
+      setIsFormTransitioning(false);
+    }, 1000);
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -228,24 +229,21 @@ const LoginPrompt = () => {
   const formVariants = {
     initial: {
       opacity: 0,
-      scale: 0.95,
-      y: 10,
+      y: 8,
     },
     visible: {
       opacity: 1,
-      scale: 1,
       y: 0,
       transition: {
-        duration: 0.3,
+        duration: 0.2,
         ease: "easeOut"
       }
     },
     exit: {
       opacity: 0,
-      scale: 0.95,
-      y: -10,
+      y: -8,
       transition: {
-        duration: 0.2,
+        duration: 0.15,
         ease: "easeIn"
       }
     }
@@ -261,17 +259,21 @@ const LoginPrompt = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           >
             <motion.div
+              layout
               className="bg-white dark:bg-[#151D2C] rounded-2xl shadow-2xl p-0 max-w-md w-full overflow-hidden border border-gray-100 dark:border-slate-800 transition-colors"
               onClick={(e) => e.stopPropagation()}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              initial={{ y: 20, opacity: 0, scale: 0.96 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 20, opacity: 0, scale: 0.96 }}
+              transition={{ 
+                duration: 0.25,
+                layout: { duration: 0.25, ease: "easeOut" }
+              }}
             >
-              <div className="bg-gradient-to-r from-[#B12C2E] to-[#8F2325] p-6 relative text-white">
+              <div className="bg-gradient-to-r from-[#B12C2E] to-[#8F2325] p-5 sm:p-6 relative text-white">
                 <button
                   onClick={() => dispatch(setIsAuthPopupOpen(false))}
                   className="absolute top-4 right-4 rtl:right-auto rtl:left-4 cursor-pointer text-white/80 hover:text-white hover:bg-white/10 rounded-full p-1.5 transition-colors"
@@ -309,32 +311,29 @@ const LoginPrompt = () => {
                 </div>
               </div>
 
-              <div className="p-6 relative min-h-[300px]">
+              <div className="p-6 relative">
                 {error && Object.keys(fieldErrors).length === 0 && (
                   <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900/50 text-red-700 dark:text-red-400 rounded-xl text-sm font-medium">
                     {error}
                   </div>
                 )}
 
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" initial={false}>
                   {isFormTransitioning ? (
                     <motion.div
-                      key="form-transition"
-                      className="absolute inset-0 flex flex-col items-center justify-center p-6"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      key="form-transition-spinner"
+                      className="w-full flex items-center justify-center"
+                      initial={{ opacity: 0, scale: 0.94 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.94 }}
+                      transition={{ duration: 0.15 }}
                     >
-                      <div className="w-10 h-10 rounded-full border-3 border-[#B12C2E] border-t-transparent animate-spin mb-3"></div>
-                      <p className="text-gray-500 dark:text-slate-400 text-sm animate-pulse">
-                        {popupType === 'login'
-                          ? t('auth:loginPrompt.message', 'يرجى تسجيل الدخول للمتابعة')
-                          : popupType === 'register'
-                          ? t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
-                          : t('auth:forgotPassword.description', 'جاري التحميل...')
-                        }
-                      </p>
+                      <PageLoader
+                        fullScreen={false}
+                        size="md"
+                        className="py-6 sm:py-8"
+                        message={t('common:loading', 'جاري التحميل...')}
+                      />
                     </motion.div>
                   ) : popupType === 'forgot-password' ? (
                     <motion.div

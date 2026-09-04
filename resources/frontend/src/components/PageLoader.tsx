@@ -5,30 +5,65 @@ interface PageLoaderProps {
   message?: string;
   subMessage?: string;
   fullScreen?: boolean;
+  className?: string;
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export const PageLoader: React.FC<PageLoaderProps> = ({
   message,
   subMessage,
   fullScreen = true,
+  className,
+  size = 'md',
 }) => {
   const { t } = useTranslation(['common']);
 
   const displayMessage = message || t('common:loading', 'جاري التحميل...');
 
+  const sizeStyles = {
+    sm: {
+      ring: 'w-16 h-16',
+      emblem: 'w-8 h-8',
+      wrapper: 'mb-4',
+      text: 'text-sm font-semibold',
+    },
+    md: {
+      ring: 'w-20 h-20 sm:w-24 sm:h-24',
+      emblem: 'w-10 h-10 sm:w-12 sm:h-12',
+      wrapper: 'mb-6',
+      text: 'text-sm sm:text-base font-bold',
+    },
+    lg: {
+      ring: 'w-24 h-24 sm:w-28 sm:h-28',
+      emblem: 'w-12 h-12 sm:w-14 sm:h-14',
+      wrapper: 'mb-8',
+      text: 'text-base sm:text-lg font-bold',
+    },
+  };
+
+  const currentSize = sizeStyles[size] || sizeStyles.md;
+
+  const containerClass = className !== undefined
+    ? className
+    : fullScreen
+    ? 'min-h-[70vh]'
+    : 'py-16';
+
   return (
     <div
-      className={`flex flex-col items-center justify-center w-full transition-colors duration-300 ${
-        fullScreen ? 'min-h-[70vh]' : 'py-16'
-      }`}
+      className={`flex flex-col items-center justify-center w-full transition-colors duration-300 ${containerClass}`}
     >
       {/* Pure Floating Logo & Sleek Spinner */}
-      <div className="relative flex items-center justify-center mb-6">
+      <div className={`relative flex items-center justify-center ${currentSize.wrapper}`}>
         {/* Outer Orbit Spinning Ring */}
-        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-transparent border-t-[#B12C2E] border-r-[#B12C2E]/60 dark:border-t-[#E03E41] dark:border-r-[#E03E41]/60 animate-spin" />
+        <div
+          className={`${currentSize.ring} rounded-full border-2 border-transparent border-t-[#B12C2E] border-r-[#B12C2E]/60 dark:border-t-[#E03E41] dark:border-r-[#E03E41]/60 animate-spin`}
+        />
 
         {/* Center Pure Flower & Crimson Shield Emblem (No Box / No Square Background / No Borders) */}
-        <div className="absolute inset-0 m-auto w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center pointer-events-none">
+        <div
+          className={`absolute inset-0 m-auto ${currentSize.emblem} flex items-center justify-center pointer-events-none`}
+        >
           <svg
             viewBox="0 0 100 100"
             fill="none"
@@ -74,7 +109,7 @@ export const PageLoader: React.FC<PageLoaderProps> = ({
       {/* Elegant Loading Typography */}
       <div className="text-center space-y-1.5 z-10">
         <div className="flex items-center justify-center gap-2">
-          <p className="text-sm sm:text-base font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-slate-100 dark:via-slate-300 dark:to-slate-100 bg-clip-text text-transparent tracking-wide">
+          <p className={`${currentSize.text} bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-slate-100 dark:via-slate-300 dark:to-slate-100 bg-clip-text text-transparent tracking-wide`}>
             {displayMessage}
           </p>
           <div className="flex space-x-1 rtl:space-x-reverse items-center pt-0.5">
