@@ -72,7 +72,7 @@ const FAQsSection: React.FC = () => {
     'customProducts'
   ];
 
-  const [openFAQId, setOpenFAQId] = useState<string>(faqKeys[0]);
+  const [openFAQId, setOpenFAQId] = useState<string | null>(null);
 
   return (
     <div className="py-12 md:py-16">
@@ -94,7 +94,7 @@ const FAQsSection: React.FC = () => {
               question={t(`faqs.questions.${key}.question`)}
               answer={t(`faqs.questions.${key}.answer`)}
               isOpen={openFAQId === key}
-              toggleOpen={() => setOpenFAQId(openFAQId === key ? '' : key)}
+              toggleOpen={() => setOpenFAQId(openFAQId === key ? null : key)}
             />
           ))}
         </div>
