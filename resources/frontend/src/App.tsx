@@ -30,11 +30,19 @@ import { ShowProduct } from './pages/ShowProduct/ShowProduct'
 import CheckoutPage from './pages/Checkout/CheckoutPage'
 import RequireNotAuthRoute from './auth/RequireNotAuthRoute'
 import RequireAuthRoute from './auth/RequireAuthRoute'
-import ForgotPassword from './pages/Login/ForgotPassword/ForgotPassword'
 import ResetPassword from './pages/Login/ResetPassword/ResetPassword'
 import Profile from './pages/Profile/Profile';
 import PreventAgentCheckoutRoute from './auth/PreventAgentCheckoutRoute';
 import EmptyCartModal from './components/modals/EmptyCartModal';
+import { openForgotPasswordModal } from './store/slices/isAuthPopupOpenSlice';
+
+const ForgotPasswordRedirect: React.FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(openForgotPasswordModal());
+  }, [dispatch]);
+  return <Navigate to="/" replace />;
+};
 
 function App() {
   const pathname = useLocation().pathname;
@@ -97,7 +105,7 @@ function App() {
               <Route element={<RequireNotAuthRoute />}>
                 <Route path="/login" element={<Navigate to="/" replace />} />
                 <Route path="/signup" element={<Navigate to="/" replace />} />
-                <Route path="/forgot-password" element={<MaxWidthWrapper><ForgotPassword /></MaxWidthWrapper>} />
+                <Route path="/forgot-password" element={<ForgotPasswordRedirect />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
               </Route>
               <Route element={<PreventAgentCheckoutRoute />}>

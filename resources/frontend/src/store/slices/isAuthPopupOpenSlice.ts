@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 export interface AuthPopupState {
   isOpen: boolean;
-  mode: 'login' | 'register';
+  mode: 'login' | 'register' | 'forgot-password';
 }
 
 const initialState: AuthPopupState = {
@@ -14,7 +14,7 @@ export const isAuthPopupOpenSlice = createSlice({
   name: 'authPopup',
   initialState,
   reducers: {
-    setIsAuthPopupOpen: (state, action: PayloadAction<boolean | { isOpen: boolean; mode?: 'login' | 'register' }>) => {
+    setIsAuthPopupOpen: (state, action: PayloadAction<boolean | { isOpen: boolean; mode?: 'login' | 'register' | 'forgot-password' }>) => {
       if (typeof action.payload === 'boolean') {
         state.isOpen = action.payload;
         if (!action.payload) {
@@ -35,6 +35,10 @@ export const isAuthPopupOpenSlice = createSlice({
       state.isOpen = true;
       state.mode = 'register';
     },
+    openForgotPasswordModal: (state) => {
+      state.isOpen = true;
+      state.mode = 'forgot-password';
+    },
     closeAuthModal: (state) => {
       state.isOpen = false;
       state.mode = 'login';
@@ -47,6 +51,7 @@ export const {
   setIsAuthPopupOpen, 
   openLoginModal,
   openRegisterModal,
+  openForgotPasswordModal,
   closeAuthModal
 } = isAuthPopupOpenSlice.actions;
 

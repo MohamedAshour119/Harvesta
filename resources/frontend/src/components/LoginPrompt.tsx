@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { FaLock, FaEnvelope, FaTimes, FaUser } from 'react-icons/fa';
+import { FaLock, FaEnvelope, FaTimes, FaUser, FaKey, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import ApiClient, { setAccessToken } from '../ApiClient';
 import { setUser, setIsAuth } from '../store/slices/userSlice';
 import type { RootState } from '../store/store';
@@ -13,8 +12,9 @@ import PasswordInput from './inputs/PasswordInput';
 import { useTranslation } from 'react-i18next';
 
 const LoginPrompt = () => {
-  const { t } = useTranslation(['auth', 'common']);
-  const navigate = useNavigate();
+  const { t, i18n } = useTranslation(['auth', 'common']);
+  const isRTL = i18n.language === 'ar';
+
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -26,7 +26,8 @@ const LoginPrompt = () => {
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [popupType, setPopupType] = useState<'login' | 'register'>('login');
+  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<string | null>(null);
+  const [popupType, setPopupType] = useState<'login' | 'register' | 'forgot-password'>('login');
   const [isFormTransitioning, setIsFormTransitioning] = useState(false);
 
   const authPopupState = useSelector((state: RootState) => (state as any).isAuthPopupOpen);
@@ -39,6 +40,7 @@ const LoginPrompt = () => {
       setPopupType(targetMode || 'login');
       setError(null);
       setFieldErrors({});
+      setForgotPasswordSuccess(null);
     } else {
       setForm({
         email: '',
@@ -48,6 +50,7 @@ const LoginPrompt = () => {
       });
       setError(null);
       setFieldErrors({});
+      setForgotPasswordSuccess(null);
       setPopupType('login');
     }
   }, [isAuthPopup, targetMode]);
@@ -82,6 +85,20 @@ const LoginPrompt = () => {
     if (e.target === e.currentTarget) {
       dispatch(setIsAuthPopupOpen(false));
     }
+  };
+
+  const switchMode = (target: 'login' | 'register' | 'forgot-password') => {
+    setIsFormTransitioning(true);
+    setError(null);
+    setFieldErrors({});
+    setForgotPasswordSuccess(null);
+
+    setTimeout(() => {
+      setPopupType(target);
+      setTimeout(() => {
+        setIsFormTransitioning(false);
+      }, 300);
+    }, 150);
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -176,17 +193,36 @@ const LoginPrompt = () => {
     }
   };
 
-  const toggleMode = () => {
-    setIsFormTransitioning(true);
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.email || !form.email.trim()) {
+      setFieldErrors({ email: t('auth:forgotPassword.errorMessages.requiredEmail', { defaultValue: 'البريد الإلكتروني مطلوب' }) });
+      return;
+    }
+
+    setLoading(true);
     setError(null);
     setFieldErrors({});
 
-    setTimeout(() => {
-      setPopupType(popupType === 'login' ? 'register' : 'login');
-      setTimeout(() => {
-        setIsFormTransitioning(false);
-      }, 500);
-    }, 200);
+    try {
+      const response = await ApiClient.auth.forgotPassword(form.email);
+      setForgotPasswordSuccess(response.data?.message || t('auth:forgotPassword.successMessage', { defaultValue: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.' }));
+    } catch (error: any) {
+      console.error('Forgot password failed:', error);
+      const apiErrors = error.response?.data?.errors;
+      if (apiErrors && typeof apiErrors === 'object') {
+        const formattedFieldErrors: { [key: string]: string } = {};
+        Object.keys(apiErrors).forEach((field) => {
+          const errorMsg = Array.isArray(apiErrors[field]) ? apiErrors[field][0] : apiErrors[field];
+          formattedFieldErrors[field] = errorMsg;
+        });
+        setFieldErrors(formattedFieldErrors);
+      } else {
+        setError(error.response?.data?.message || t('auth:forgotPassword.errorMessages.emailNotFound', { defaultValue: 'تعذر العثور على مستخدم بهذا البريد الإلكتروني.' }));
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formVariants = {
@@ -246,8 +282,10 @@ const LoginPrompt = () => {
                   <div className="bg-white/15 backdrop-blur-sm p-3 rounded-full inline-flex items-center justify-center border border-white/20">
                     {popupType === 'login' ? (
                       <FaLock className="text-white text-xl" />
-                    ) : (
+                    ) : popupType === 'register' ? (
                       <FaUser className="text-white text-xl" />
+                    ) : (
+                      <FaKey className="text-white text-xl" />
                     )}
                   </div>
                 </div>
@@ -255,13 +293,17 @@ const LoginPrompt = () => {
                   <h2 className="text-xl font-bold">
                     {popupType === 'login'
                       ? t('auth:loginPrompt.title', 'تسجيل الدخول')
-                      : t('auth:loginPrompt.registerTitle', 'إنشاء حساب جديد')
+                      : popupType === 'register'
+                      ? t('auth:loginPrompt.registerTitle', 'إنشاء حساب جديد')
+                      : t('auth:forgotPassword.title', 'إعادة تعيين كلمة المرور')
                     }
                   </h2>
-                  <p className="text-sm opacity-90 mt-1">
+                  <p className="text-sm opacity-90 mt-1 max-w-xs mx-auto leading-relaxed">
                     {popupType === 'login'
                       ? t('auth:loginPrompt.message', 'يرجى تسجيل الدخول للمتابعة')
-                      : t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
+                      : popupType === 'register'
+                      ? t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
+                      : t('auth:forgotPassword.description', 'أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.')
                     }
                   </p>
                 </div>
@@ -288,9 +330,71 @@ const LoginPrompt = () => {
                       <p className="text-gray-500 dark:text-slate-400 text-sm animate-pulse">
                         {popupType === 'login'
                           ? t('auth:loginPrompt.message', 'يرجى تسجيل الدخول للمتابعة')
-                          : t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
+                          : popupType === 'register'
+                          ? t('auth:loginPrompt.registerMessage', 'يرجى إنشاء حساب للمتابعة')
+                          : t('auth:forgotPassword.description', 'جاري التحميل...')
                         }
                       </p>
+                    </motion.div>
+                  ) : popupType === 'forgot-password' ? (
+                    <motion.div
+                      key="forgot-password-panel"
+                      variants={formVariants}
+                      initial="initial"
+                      animate="visible"
+                      exit="exit"
+                    >
+                      {forgotPasswordSuccess ? (
+                        <div className="py-2 text-center">
+                          <div className="mb-6 p-4 bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-900/50 text-green-700 dark:text-green-400 rounded-2xl text-sm font-medium leading-relaxed">
+                            {forgotPasswordSuccess}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setForgotPasswordSuccess(null);
+                              switchMode('login');
+                            }}
+                            className="w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
+                          >
+                            {t('auth:forgotPassword.backToLogin', 'العودة إلى تسجيل الدخول')}
+                          </button>
+                        </div>
+                      ) : (
+                        <form onSubmit={handleForgotPassword} noValidate className="flex flex-col space-y-4">
+                          <div className="mb-1">
+                            <TextInput
+                              id="forgot-email"
+                              type="email"
+                              label={t('auth:forgotPassword.emailLabel', 'البريد الإلكتروني')}
+                              value={form.email}
+                              onChange={(e) => handleInputChange('email', e.target.value)}
+                              placeholder={t('auth:forgotPassword.emailPlaceholder', 'أدخل بريدك الإلكتروني')}
+                              error={fieldErrors.email}
+                              icon={<FaEnvelope className="text-gray-400 dark:text-slate-500" />}
+                            />
+                          </div>
+
+                          <button
+                            type="submit"
+                            disabled={loading}
+                            className={`cursor-pointer w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                          >
+                            {loading ? t('common:loading', 'جاري التحميل...') : t('auth:forgotPassword.resetButton', 'إرسال رابط إعادة التعيين')}
+                          </button>
+
+                          <div className="text-center text-sm pt-2">
+                            <button
+                              type="button"
+                              onClick={() => switchMode('login')}
+                              className="inline-flex items-center text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold cursor-pointer transition-colors"
+                            >
+                              {isRTL ? <FaArrowRight className="ml-1.5 text-xs" /> : <FaArrowLeft className="mr-1.5 text-xs" />}
+                              {t('auth:forgotPassword.backToLogin', 'العودة إلى تسجيل الدخول')}
+                            </button>
+                          </div>
+                        </form>
+                      )}
                     </motion.div>
                   ) : (
                     <motion.form
@@ -361,10 +465,7 @@ const LoginPrompt = () => {
                           <div className="text-sm">
                             <button
                               type="button"
-                              onClick={() => {
-                                dispatch(setIsAuthPopupOpen(false));
-                                navigate('/forgot-password');
-                              }}
+                              onClick={() => switchMode('forgot-password')}
                               className="text-[#B12C2E] dark:text-[#E03E41] hover:underline font-semibold cursor-pointer"
                             >
                               {t('auth:login.forgotPassword')}
@@ -391,7 +492,7 @@ const LoginPrompt = () => {
                           }{' '}
                           <button
                             type="button"
-                            onClick={toggleMode}
+                            onClick={() => switchMode(popupType === 'login' ? 'register' : 'login')}
                             className="text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold cursor-pointer ml-1"
                           >
                             {popupType === 'login' ? t('auth:login.signupLink') : t('auth:signup.loginLink')}
