@@ -27,8 +27,9 @@ const LoginPrompt = () => {
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [successPopupTitle, setSuccessPopupTitle] = useState('');
   const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<string | null>(null);
-  const [popupType, setPopupType] = useState<'login' | 'register' | 'forgot-password'>('login');
+  const [popupType, setPopupType] = useState<'login' | 'register' | 'forgot-password' | 'reset-password'>('login');
   const [isFormTransitioning, setIsFormTransitioning] = useState(false);
   const [countdown, setCountdown] = useState<number>(0);
 
@@ -49,6 +50,8 @@ const LoginPrompt = () => {
   const authPopupState = useSelector((state: RootState) => (state as any).isAuthPopupOpen);
   const isAuthPopup = typeof authPopupState === 'boolean' ? authPopupState : !!authPopupState?.isOpen;
   const targetMode = typeof authPopupState === 'object' ? authPopupState?.mode : 'login';
+  const resetToken = typeof authPopupState === 'object' ? authPopupState?.resetToken : null;
+  const resetEmail = typeof authPopupState === 'object' ? authPopupState?.resetEmail : null;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,6 +61,10 @@ const LoginPrompt = () => {
       setFieldErrors({});
       setForgotPasswordSuccess(null);
       setIsFormTransitioning(false);
+
+      if (targetMode === 'reset-password' && (!resetToken || !resetEmail)) {
+        setError(t('auth:resetPassword.errorMessages.invalidToken'));
+      }
     } else {
       setForm({
         email: '',
@@ -71,7 +78,7 @@ const LoginPrompt = () => {
       setPopupType('login');
       setIsFormTransitioning(false);
     }
-  }, [isAuthPopup, targetMode]);
+  }, [isAuthPopup, targetMode, resetToken, resetEmail, t]);
 
   useEffect(() => {
     if (isAuthPopup || showSuccessPopup) {
@@ -106,7 +113,7 @@ const LoginPrompt = () => {
     }
   };
 
-  const switchMode = (target: 'login' | 'register' | 'forgot-password') => {
+  const switchMode = (target: 'login' | 'register' | 'forgot-password' | 'reset-password') => {
     setIsFormTransitioning(true);
     setError(null);
     setFieldErrors({});
@@ -131,6 +138,7 @@ const LoginPrompt = () => {
       setAccessToken(data.access_token.plain_token, data.access_token.expires_at);
 
       setPopupType('login');
+      setSuccessPopupTitle(t('auth:login.successTitle'));
       setSuccessMessage(t('auth:loginPrompt.loginSuccessMessage'));
       setShowSuccessPopup(true);
       setLoading(false);
@@ -181,6 +189,7 @@ const LoginPrompt = () => {
       dispatch(setIsAuth(true));
 
       setPopupType('register');
+      setSuccessPopupTitle(t('auth:signup.successTitle'));
       setSuccessMessage(t('auth:loginPrompt.registerSuccessMessage', { name: form.full_name }));
       setShowSuccessPopup(true);
       setLoading(false);
@@ -259,6 +268,72 @@ const LoginPrompt = () => {
     }
   };
 
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!form.password) {
+      setFieldErrors({ password: t('auth:resetPassword.errorMessages.requiredPassword') });
+      return;
+    }
+
+    if (form.password.length < 8) {
+      setFieldErrors({ password: t('auth:resetPassword.errorMessages.passwordLength') });
+      return;
+    }
+
+    if (form.password !== form.confirmPassword) {
+      setFieldErrors({ confirmPassword: t('auth:resetPassword.errorMessages.passwordMismatch') });
+      return;
+    }
+
+    if (!resetToken || !resetEmail) {
+      setError(t('auth:resetPassword.errorMessages.invalidToken'));
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setFieldErrors({});
+
+    try {
+      const response = await ApiClient.auth.resetPassword({
+        token: resetToken,
+        email: resetEmail,
+        password: form.password,
+        password_confirmation: form.confirmPassword,
+      });
+
+      setSuccessPopupTitle(t('auth:resetPassword.successTitle'));
+      setSuccessMessage(response.data?.message || t('auth:resetPassword.successMessage'));
+      setShowSuccessPopup(true);
+      setForm({
+        email: '',
+        password: '',
+        full_name: '',
+        confirmPassword: '',
+      });
+      switchMode('login');
+    } catch (error: any) {
+      console.error('Password reset failed:', error);
+      const apiErrors = error.response?.data?.errors;
+      const hasFieldErrors = apiErrors && typeof apiErrors === 'object' && !Array.isArray(apiErrors) && Object.keys(apiErrors).length > 0;
+      if (hasFieldErrors) {
+        const formattedFieldErrors: { [key: string]: string } = {};
+        Object.keys(apiErrors).forEach((field) => {
+          const errorMsg = Array.isArray(apiErrors[field]) ? apiErrors[field][0] : apiErrors[field];
+          formattedFieldErrors[field] = errorMsg;
+        });
+        setFieldErrors(formattedFieldErrors);
+        setError(null);
+      } else {
+        setFieldErrors({});
+        setError(error.response?.data?.message || t('auth:resetPassword.errorMessages.failed'));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const formVariants = {
     initial: {
       opacity: 0,
@@ -330,6 +405,8 @@ const LoginPrompt = () => {
                       ? t('auth:loginPrompt.title')
                       : popupType === 'register'
                       ? t('auth:loginPrompt.registerTitle')
+                      : popupType === 'reset-password'
+                      ? t('auth:resetPassword.title')
                       : t('auth:forgotPassword.title')
                     }
                   </h2>
@@ -338,6 +415,8 @@ const LoginPrompt = () => {
                       ? t('auth:loginPrompt.message')
                       : popupType === 'register'
                       ? t('auth:loginPrompt.registerMessage')
+                      : popupType === 'reset-password'
+                      ? t('auth:resetPassword.subtitle')
                       : t('auth:forgotPassword.description')
                     }
                   </p>
@@ -462,6 +541,63 @@ const LoginPrompt = () => {
                         </form>
                       )}
                     </motion.div>
+                  ) : popupType === 'reset-password' ? (
+                    <motion.form
+                      key="reset-password-panel"
+                      onSubmit={handleResetPassword}
+                      variants={formVariants}
+                      initial="initial"
+                      animate="visible"
+                      exit="exit"
+                      noValidate
+                    >
+                      <div className="mb-4">
+                        <PasswordInput
+                          id="reset-password"
+                          label={t('auth:resetPassword.passwordLabel')}
+                          placeholder={t('auth:resetPassword.passwordPlaceholder')}
+                          value={form.password}
+                          onChange={(e) => handleInputChange('password', e.target.value)}
+                          error={fieldErrors.password}
+                          icon={<FaLock className="text-gray-400 dark:text-slate-500" />}
+                        />
+                      </div>
+
+                      <div className="mb-6">
+                        <PasswordInput
+                          id="reset-confirmPassword"
+                          label={t('auth:resetPassword.confirmPasswordLabel')}
+                          placeholder={t('auth:resetPassword.confirmPasswordPlaceholder')}
+                          value={form.confirmPassword}
+                          onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                          error={fieldErrors.confirmPassword || fieldErrors.password_confirmation}
+                          icon={<FaLock className="text-gray-400 dark:text-slate-500" />}
+                        />
+                      </div>
+
+                      <div className="flex flex-col space-y-3">
+                        <button
+                          type="submit"
+                          disabled={loading || !resetToken || !resetEmail}
+                          className={`cursor-pointer w-full bg-[#B12C2E] hover:bg-[#972426] dark:bg-[#B12C2E] dark:hover:bg-[#8F2325] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm ${
+                            loading || !resetToken || !resetEmail ? 'opacity-70 cursor-not-allowed' : ''
+                          }`}
+                        >
+                          {loading ? t('common:loading') : t('auth:resetPassword.resetButton')}
+                        </button>
+
+                        <div className="text-center text-sm pt-2">
+                          <button
+                            type="button"
+                            onClick={() => switchMode('login')}
+                            className="inline-flex items-center text-[#B12C2E] dark:text-[#E03E41] hover:underline font-bold cursor-pointer transition-colors"
+                          >
+                            {isRTL ? <FaArrowRight className="ml-1.5 text-xs" /> : <FaArrowLeft className="mr-1.5 text-xs" />}
+                            {t('auth:forgotPassword.backToLogin')}
+                          </button>
+                        </div>
+                      </div>
+                    </motion.form>
                   ) : (
                     <motion.form
                       key={popupType}
@@ -577,7 +713,14 @@ const LoginPrompt = () => {
       <Popup
         isOpen={showSuccessPopup}
         onClose={() => setShowSuccessPopup(false)}
-        title={popupType === 'login' ? t('auth:login.successTitle') : t('auth:signup.successTitle')}
+        title={
+          successPopupTitle ||
+          (popupType === 'login'
+            ? t('auth:login.successTitle')
+            : popupType === 'register'
+            ? t('auth:signup.successTitle')
+            : t('auth:resetPassword.successTitle'))
+        }
         message={successMessage}
         type="success"
         primaryButtonText={t('common:buttons.continue', { defaultValue: 'متابعة' })}

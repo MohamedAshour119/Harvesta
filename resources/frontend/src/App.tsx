@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate, useSearchParams } from 'react-router-dom'
 import ChatWidget from './components/chatbot/ChatWidget'
 import './App.css'
 import HomePage from './pages/Home/HomePage'
@@ -30,17 +30,29 @@ import { ShowProduct } from './pages/ShowProduct/ShowProduct'
 import CheckoutPage from './pages/Checkout/CheckoutPage'
 import RequireNotAuthRoute from './auth/RequireNotAuthRoute'
 import RequireAuthRoute from './auth/RequireAuthRoute'
-import ResetPassword from './pages/Login/ResetPassword/ResetPassword'
 import Profile from './pages/Profile/Profile';
 import PreventAgentCheckoutRoute from './auth/PreventAgentCheckoutRoute';
 import EmptyCartModal from './components/modals/EmptyCartModal';
-import { openForgotPasswordModal } from './store/slices/isAuthPopupOpenSlice';
+import { openForgotPasswordModal, openResetPasswordModal } from './store/slices/isAuthPopupOpenSlice';
 
 const ForgotPasswordRedirect: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(openForgotPasswordModal());
   }, [dispatch]);
+  return <Navigate to="/" replace />;
+};
+
+const ResetPasswordRedirect: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const token = searchParams.get('token') || '';
+  const email = searchParams.get('email') || '';
+
+  useEffect(() => {
+    dispatch(openResetPasswordModal({ token, email }));
+  }, [dispatch, token, email]);
+
   return <Navigate to="/" replace />;
 };
 
@@ -106,7 +118,7 @@ function App() {
                 <Route path="/login" element={<Navigate to="/" replace />} />
                 <Route path="/signup" element={<Navigate to="/" replace />} />
                 <Route path="/forgot-password" element={<ForgotPasswordRedirect />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/reset-password" element={<ResetPasswordRedirect />} />
               </Route>
               <Route element={<PreventAgentCheckoutRoute />}>
                 <Route path="/checkout" element={<MaxWidthWrapper><CheckoutPage /></MaxWidthWrapper>} />
