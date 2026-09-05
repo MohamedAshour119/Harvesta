@@ -25,6 +25,7 @@ storage/keys/private.pem
 
 # AI Assistant & IDE metadata
 /.agent
+/.agents
 /.claude
 /.cursor
 /.gemini

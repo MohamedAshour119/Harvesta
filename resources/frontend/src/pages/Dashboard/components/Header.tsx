@@ -14,6 +14,7 @@ import i18n, { setDocumentDirection } from "../../../i18n";
 import { FiSearch } from "react-icons/fi";
 import { clearChatbotForLogout } from "../../../utils/chatbotSessionStorage";
 import { triggerLanguageSwitch } from "../../../utils/languageSwitcher";
+import { openLogoutSuccessModal } from "../../../store/slices/isAuthPopupOpenSlice";
 
 interface HeaderProps {
     setSidebarOpen: (open: boolean) => void;
@@ -72,6 +73,7 @@ export default function Header({ setSidebarOpen, title }: HeaderProps) {
             dispatch(clearFavorites());
             dispatch(setIsAuth(false));
             dispatch(setUser(null));
+            dispatch(openLogoutSuccessModal());
             navigate("/");
             setIsDropdownOpen(false);
         }

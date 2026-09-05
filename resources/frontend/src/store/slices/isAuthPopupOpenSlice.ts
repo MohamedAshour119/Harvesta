@@ -5,6 +5,7 @@ export interface AuthPopupState {
   mode: 'login' | 'register' | 'forgot-password' | 'reset-password';
   resetToken?: string | null;
   resetEmail?: string | null;
+  isLogoutSuccessOpen?: boolean;
 }
 
 const initialState: AuthPopupState = {
@@ -12,6 +13,7 @@ const initialState: AuthPopupState = {
   mode: 'login',
   resetToken: null,
   resetEmail: null,
+  isLogoutSuccessOpen: false,
 };
 
 export const isAuthPopupOpenSlice = createSlice({
@@ -87,6 +89,12 @@ export const isAuthPopupOpenSlice = createSlice({
       state.mode = 'login';
       state.resetToken = null;
       state.resetEmail = null;
+    },
+    openLogoutSuccessModal: (state) => {
+      state.isLogoutSuccessOpen = true;
+    },
+    closeLogoutSuccessModal: (state) => {
+      state.isLogoutSuccessOpen = false;
     }
   }
 });
@@ -98,7 +106,9 @@ export const {
   openRegisterModal,
   openForgotPasswordModal,
   openResetPasswordModal,
-  closeAuthModal
+  closeAuthModal,
+  openLogoutSuccessModal,
+  closeLogoutSuccessModal
 } = isAuthPopupOpenSlice.actions;
 
 export default isAuthPopupOpenSlice.reducer;

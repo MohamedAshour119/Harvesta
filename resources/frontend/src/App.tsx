@@ -33,7 +33,9 @@ import RequireAuthRoute from './auth/RequireAuthRoute'
 import Profile from './pages/Profile/Profile';
 import PreventAgentCheckoutRoute from './auth/PreventAgentCheckoutRoute';
 import EmptyCartModal from './components/modals/EmptyCartModal';
-import { openForgotPasswordModal, openResetPasswordModal } from './store/slices/isAuthPopupOpenSlice';
+import Popup from './components/Popup';
+import { useTranslation } from 'react-i18next';
+import { openForgotPasswordModal, openResetPasswordModal, closeLogoutSuccessModal } from './store/slices/isAuthPopupOpenSlice';
 
 const ForgotPasswordRedirect: React.FC = () => {
   const dispatch = useDispatch();
@@ -57,12 +59,14 @@ const ResetPasswordRedirect: React.FC = () => {
 };
 
 function App() {
+  const { t } = useTranslation(['auth', 'common']);
   const pathname = useLocation().pathname;
 
   // State for cart summary visibility
   const [isShowCartSummary, setIsShowCartSummary] = useState(false);
   const isCartSummarySidebarOpen = useSelector((state: RootState) => state.isCartSummarySidebarOpen);
   const isHeaderSidebarOpen = useSelector((state: RootState) => state.isHeaderSidebarOpen);
+  const isLogoutSuccessOpen = useSelector((state: RootState) => (state as any).isAuthPopupOpen?.isLogoutSuccessOpen);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1130);
 
   const dispatch = useDispatch();
@@ -157,6 +161,15 @@ function App() {
       <LoginPrompt />
       <LanguageSwitchModal />
       <EmptyCartModal />
+      <Popup
+        isOpen={!!isLogoutSuccessOpen}
+        onClose={() => dispatch(closeLogoutSuccessModal())}
+        title={t('auth:logout.successTitle')}
+        message={t('auth:logout.successMessage')}
+        type="success"
+        primaryButtonText={t('common:buttons.continue', { defaultValue: 'متابعة' })}
+        autoCloseTime={3000}
+      />
     </div>
   )
 }

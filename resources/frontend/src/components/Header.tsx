@@ -18,7 +18,7 @@ import ThemeToggle from './ThemeToggle';
 import { setIsCartSummarySidebarOpen } from '../store/slices/isCartSummarySidebarOpenSlice';
 import { setIsHeaderSidebarOpen } from '../store/slices/isHeaderSidebarOpenSlice';
 import { openEmptyCartModal } from '../store/slices/emptyCartModalSlice';
-import { openLoginModal, openRegisterModal } from '../store/slices/isAuthPopupOpenSlice';
+import { openLoginModal, openRegisterModal, openLogoutSuccessModal } from '../store/slices/isAuthPopupOpenSlice';
 import { clearChatbotForLogout } from '../utils/chatbotSessionStorage';
 
 const Header: React.FC = () => {
@@ -122,6 +122,7 @@ const Header: React.FC = () => {
       dispatch(clearFavorites());
       dispatch(setIsAuth(false));
       dispatch(setUser(null));
+      dispatch(openLogoutSuccessModal());
       navigate('/');
       setIsDropdownOpen(false);
     }
