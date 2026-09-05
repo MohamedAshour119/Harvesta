@@ -1,14 +1,14 @@
-# Reset Password in Modal Flow - Task Tracker
+# Login Invalid Credentials Message Refinement - Task Tracker
 
 | # | Task | Phase | Status |
 |---|------|-------|--------|
-| 1 | Extend `isAuthPopupOpenSlice.ts` with `reset-password` mode, tokens, and actions | Redux Store | ✅ done |
-| 2 | Add missing reset password error translations in `ar/auth.json` and `en/auth.json` | i18n Locales | ✅ done |
-| 3 | Replace `/reset-password` standalone route with `ResetPasswordRedirect` in `App.tsx` | Routing | ✅ done |
-| 4 | Implement `reset-password` form, state, handlers, and dual-theme UI in `LoginPrompt.tsx` | Frontend UI | ✅ done |
-| 5 | Verify TypeScript compilation (`npx tsc --noEmit`) | Verification | ✅ done |
-| 6 | Generate Mandatory Theoretical & In-Depth Technical Report (`.md`) | Documentation | ✅ done |
-| 7 | User Verification Checkpoint (`ask_question`) & Atomic Git Commit/Push | Git & Release | ✅ done |
+| 1 | Standardize and localize auth failure response in `AuthController.php` | Backend API | ✅ done |
+| 2 | Refine translations in `ar/auth.json` and `en/auth.json` with expressive credentials error message | i18n Locales | ✅ done |
+| 3 | Update error handling in `LoginPrompt.tsx` to ensure localized expressive message displays | Frontend UI | ✅ done |
+| 4 | Run backend PHPUnit tests and frontend TypeScript checks | Verification | ✅ done |
+| 5 | Generate Mandatory Theoretical & In-Depth Technical Report (`.md`) | Documentation | ✅ done |
+| 6 | User Verification Checkpoint (`ask_question`) & Atomic Git Commit/Push | Git & Release | ✅ done |
+
 
 
 

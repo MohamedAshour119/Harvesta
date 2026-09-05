@@ -42,8 +42,10 @@ class AuthController extends Controller
             return $this->response_success($this->publicAuthPayload($result), 'User logged in successfully')
                 ->withCookie($this->makeRefreshCookie($request, $result));
         } catch (\Exception $e) {
-            // return $this->response_error('Invalid email or password', [], 401);
-            return $this->response_error($e->getMessage(), [], 401);
+            $message = app()->getLocale() === 'ar'
+                ? 'البيانات المدخلة غير صحيحة. يرجى التأكد من البريد الإلكتروني وكلمة المرور والمحاولة مرة أخرى.'
+                : 'The entered credentials are incorrect. Please verify your email and password and try again.';
+            return $this->response_error($message, [], 401);
         }
     }
     public function logout(Request $request)

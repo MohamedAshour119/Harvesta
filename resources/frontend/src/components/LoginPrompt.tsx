@@ -160,7 +160,20 @@ const LoginPrompt = () => {
         setError(null);
       } else {
         setFieldErrors({});
-        setError(error.response?.data?.message || t('auth:login.invalidCredentials'));
+        const status = error.response?.status;
+        const rawMessage = error.response?.data?.message;
+
+        if (
+          status === 401 ||
+          rawMessage === 'Invalid password' ||
+          rawMessage === 'User not found' ||
+          rawMessage === 'Invalid email or password' ||
+          !rawMessage
+        ) {
+          setError(t('auth:login.invalidCredentials'));
+        } else {
+          setError(rawMessage);
+        }
       }
       setLoading(false);
     }
