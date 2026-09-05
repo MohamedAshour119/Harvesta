@@ -115,11 +115,21 @@
                   <td style="padding-bottom: 28px;">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FFFBEB; border-radius: 12px; border: 1px solid #FDE68A; padding: 16px;">
                       <tr>
-                        <td align="{{ $isRtl ? 'right' : 'left' }}" style="font-size: 13px; line-height: 1.6; color: #92400E;">
-                          <div style="font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-                            <span>⚠️</span>
-                            <span>{{ $isRtl ? 'معلومات أمنية هامة:' : 'Important Security Notice:' }}</span>
-                          </div>
+                        <td align="{{ $isRtl ? 'right' : 'left' }}">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 6px;">
+                            <tr>
+                              <td align="{{ $isRtl ? 'right' : 'left' }}">
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                  <tr>
+                                    <td valign="middle" style="font-size: 15px; line-height: 1; padding-{{ $isRtl ? 'left' : 'right' }}: 8px;">⚠️</td>
+                                    <td valign="middle" style="font-weight: 700; font-size: 13px; line-height: 1.4; color: #92400E;">
+                                      {{ $isRtl ? 'معلومات أمنية هامة:' : 'Important Security Notice:' }}
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
                           <ul style="margin: 6px 0 0 0; padding-{{ $isRtl ? 'right' : 'left' }}: 18px;">
                             <li style="margin-bottom: 4px;">
                               {{ $isRtl 
