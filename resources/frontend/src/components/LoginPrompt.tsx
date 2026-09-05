@@ -226,7 +226,8 @@ const LoginPrompt = () => {
     try {
       const response = await ApiClient.auth.forgotPassword(form.email);
       setForgotPasswordSuccess(response.data?.message || t('auth:forgotPassword.successMessage'));
-      setCountdown(60);
+      const retryAfter = response.data?.data?.retry_after;
+      setCountdown(typeof retryAfter === 'number' ? retryAfter : 0);
     } catch (error: any) {
       console.error('Forgot password failed:', error);
       const apiErrors = error.response?.data?.errors;
@@ -234,7 +235,8 @@ const LoginPrompt = () => {
       const message = error.response?.data?.message || '';
 
       if (status === 429 || message.includes('wait') || message.includes('انتظار') || message.includes('throttle')) {
-        setCountdown(60);
+        const errorRetryAfter = error.response?.data?.data?.retry_after;
+        setCountdown(typeof errorRetryAfter === 'number' && errorRetryAfter > 0 ? errorRetryAfter : 60);
       }
 
       const hasFieldErrors = apiErrors && typeof apiErrors === 'object' && !Array.isArray(apiErrors) && Object.keys(apiErrors).length > 0;

@@ -91,8 +91,11 @@ class AppServiceProvider extends ServiceProvider
                     'message' => app()->getLocale() === 'ar'
                         ? 'تم تجاوز عدد المحاولات المسموح بها. يرجى الانتظار قليلاً قبل إعادة المحاولة.'
                         : 'Too many requests. Please wait a moment before trying again.',
+                    'data' => [
+                        'retry_after' => 60,
+                    ],
                     'errors' => []
-                ], 429);
+                ], 429, ['Retry-After' => 60]);
             });
         });
 

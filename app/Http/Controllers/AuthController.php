@@ -219,9 +219,20 @@ class AuthController extends Controller
         $request->validate(['email' => 'required|email']);
         try {
             $status = $this->authService->sendPasswordResetLink($request->email);
-            return $this->response_success(null, __($status));
+            $retryAfter = (int) config('auth.passwords.users.throttle', 60);
+            return $this->response_success(['retry_after' => $retryAfter], __($status));
         } catch (\Exception $e) {
-            return $this->response_error($e->getMessage(), [], 400);
+            $isThrottled = str_contains($e->getMessage(), 'throttle')
+                || str_contains($e->getMessage(), 'wait')
+                || str_contains($e->getMessage(), 'انتظار');
+
+            $retryAfter = (int) config('auth.passwords.users.throttle', 60);
+
+            return $this->response_error(
+                $e->getMessage(),
+                $isThrottled && $retryAfter > 0 ? ['retry_after' => $retryAfter] : [],
+                $isThrottled ? 429 : 400
+            );
         }
     }
 
