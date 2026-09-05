@@ -59,7 +59,11 @@ const TextInput: React.FC<TextInputProps> = ({
           className={`w-full ${
             icon && value.length === 0 && name === 'deadline' && isRTL ? 'pl-8 pr-3' :
             icon && value.length === 0 && !isRTL ? 'pl-8 pr-3' : icon && isRTL && value.length === 0 ? 'pr-8 pl-3' : ''
-          } py-2.5 px-3 rounded-xl border border-gray-300 dark:border-slate-700 bg-white dark:bg-[#1C2638] text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-[#B12C2E] focus:ring-2 focus:ring-[#B12C2E]/20 transition-all text-sm ${className}`}
+          } py-2.5 px-3 rounded-xl border ${
+            error
+              ? 'border-red-400 dark:border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+              : 'border-gray-300 dark:border-slate-700 focus:border-[#B12C2E] focus:ring-2 focus:ring-[#B12C2E]/20'
+          } bg-white dark:bg-[#1C2638] text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:outline-none transition-all text-sm ${className}`}
           placeholder={placeholder}
           required={required}
         />

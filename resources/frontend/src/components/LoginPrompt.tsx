@@ -87,6 +87,7 @@ const LoginPrompt = () => {
 
   const handleInputChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+    if (error) setError(null);
     if (fieldErrors[field] || (field === 'confirmPassword' && fieldErrors.password_confirmation)) {
       setFieldErrors((prev) => {
         const updated = { ...prev };
@@ -140,7 +141,8 @@ const LoginPrompt = () => {
     } catch (error: any) {
       console.error('Login failed:', error);
       const apiErrors = error.response?.data?.errors;
-      if (apiErrors && typeof apiErrors === 'object') {
+      const hasFieldErrors = apiErrors && typeof apiErrors === 'object' && !Array.isArray(apiErrors) && Object.keys(apiErrors).length > 0;
+      if (hasFieldErrors) {
         const formattedFieldErrors: { [key: string]: string } = {};
         Object.keys(apiErrors).forEach((field) => {
           const errorMsg = Array.isArray(apiErrors[field]) ? apiErrors[field][0] : apiErrors[field];
@@ -193,7 +195,8 @@ const LoginPrompt = () => {
     } catch (error: any) {
       console.error('Signup failed:', error);
       const apiErrors = error.response?.data?.errors;
-      if (apiErrors && typeof apiErrors === 'object') {
+      const hasFieldErrors = apiErrors && typeof apiErrors === 'object' && !Array.isArray(apiErrors) && Object.keys(apiErrors).length > 0;
+      if (hasFieldErrors) {
         const formattedFieldErrors: { [key: string]: string } = {};
         Object.keys(apiErrors).forEach((field) => {
           const errorMsg = Array.isArray(apiErrors[field]) ? apiErrors[field][0] : apiErrors[field];
@@ -234,15 +237,20 @@ const LoginPrompt = () => {
         setCountdown(60);
       }
 
-      if (apiErrors && typeof apiErrors === 'object') {
+      const hasFieldErrors = apiErrors && typeof apiErrors === 'object' && !Array.isArray(apiErrors) && Object.keys(apiErrors).length > 0;
+
+      if (hasFieldErrors) {
         const formattedFieldErrors: { [key: string]: string } = {};
         Object.keys(apiErrors).forEach((field) => {
           const errorMsg = Array.isArray(apiErrors[field]) ? apiErrors[field][0] : apiErrors[field];
           formattedFieldErrors[field] = errorMsg;
         });
         setFieldErrors(formattedFieldErrors);
+        setError(null);
       } else {
-        setError(error.response?.data?.message || t('auth:forgotPassword.errorMessages.emailNotFound'));
+        const resolvedError = message || t('auth:forgotPassword.errorMessages.emailNotFound');
+        setFieldErrors({});
+        setError(resolvedError);
       }
     } finally {
       setLoading(false);
