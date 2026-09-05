@@ -384,7 +384,7 @@ const LoginPrompt = () => {
           >
             <motion.div
               layout
-              className="bg-white dark:bg-[#151D2C] rounded-2xl shadow-2xl p-0 max-w-md w-full overflow-hidden border border-gray-100 dark:border-slate-800 transition-colors"
+              className="bg-white dark:bg-[#151D2C] rounded-2xl shadow-2xl p-0 max-w-md w-full overflow-hidden border border-[#B12C2E] dark:border-slate-800 transition-colors"
               onClick={(e) => e.stopPropagation()}
               initial={{ y: 20, opacity: 0, scale: 0.96 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}

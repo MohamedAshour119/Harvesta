@@ -1,13 +1,12 @@
-# Login Invalid Credentials Message Refinement - Task Tracker
+# Auth Modal Border Styling in Light Mode - Task Tracker
 
 | # | Task | Phase | Status |
 |---|------|-------|--------|
-| 1 | Standardize and localize auth failure response in `AuthController.php` | Backend API | ✅ done |
-| 2 | Refine translations in `ar/auth.json` and `en/auth.json` with expressive credentials error message | i18n Locales | ✅ done |
-| 3 | Update error handling in `LoginPrompt.tsx` to ensure localized expressive message displays | Frontend UI | ✅ done |
-| 4 | Run backend PHPUnit tests and frontend TypeScript checks | Verification | ✅ done |
-| 5 | Generate Mandatory Theoretical & In-Depth Technical Report (`.md`) | Documentation | ✅ done |
-| 6 | User Verification Checkpoint (`ask_question`) & Atomic Git Commit/Push | Git & Release | ✅ done |
+| 1 | Update `LoginPrompt.tsx` light mode border from `border-gray-100` to `border-[#B12C2E]` | Frontend UI | ✅ done |
+| 2 | Verify TypeScript compilation (`npx tsc --noEmit`) | Verification | ✅ done |
+| 3 | Generate Mandatory Theoretical & In-Depth Technical Report (`.md`) | Documentation | ✅ done |
+| 4 | Provide design options & User Checkpoint (`ask_question`) & Atomic Git Commit/Push | Git & Release | ✅ done |
+
 
 
 
